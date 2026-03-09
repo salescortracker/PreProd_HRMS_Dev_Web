@@ -1,0 +1,215 @@
+<div class="dashboard-header">
+  <h2 class="dashboard-title">Dashboard</h2>
+  <nav class="breadcrumb">
+    <a routerLink="/"><i class="fas fa-home"></i> Home</a> &gt;
+    <span>Dashboard</span>
+  </nav>
+</div>
+
+<div class="dashboard">
+
+  <!-- ================= TOTAL EMPLOYEES ================= -->
+  <div class="card-total-employees">
+    <div class="icon-circle">
+      <i class="fas fa-users"></i>
+    </div>
+    <div class="content">
+      <p class="label">Total Employees</p>
+      <p class="number">{{ totalEmployees }}</p>
+    </div>
+  </div>
+
+  <!-- ================= EMPLOYEE TYPE ================= -->
+  <div class="card-employees">
+    <h3>Employees by Type</h3>
+
+    <div class="employee-type">
+      <div class="type-label">Full-time</div>
+      <div class="type-bar full"
+           [style.width.%]="totalEmployees ? (fullTime/totalEmployees)*100 : 0">
+      </div>
+      <div class="type-count">{{ fullTime }}</div>
+    </div>
+
+    <div class="employee-type">
+      <div class="type-label">Part-time</div>
+      <div class="type-bar part"
+           [style.width.%]="totalEmployees ? (partTime/totalEmployees)*100 : 0">
+      </div>
+      <div class="type-count">{{ partTime }}</div>
+    </div>
+
+    <div class="employee-type">
+      <div class="type-label">Contract</div>
+      <div class="type-bar contract"
+           [style.width.%]="totalEmployees ? (contract/totalEmployees)*100 : 0">
+      </div>
+      <div class="type-count">{{ contract }}</div>
+    </div>
+  </div>
+
+  <!-- ================= NEW EMPLOYEES ================= -->
+  <div class="card-new-employees">
+    <div class="circle-icon">
+      <i class="fas fa-user-plus"></i>
+    </div>
+    <div class="content">
+      <p class="label">New Employees</p>
+      <h2 class="count">{{ newEmployees }}</h2>
+      <p class="subtitle">Recent Hires</p>
+    </div>
+  </div>
+
+  <!-- ================= TIMESHEET CALENDAR ================= -->
+  <div class="card">
+    <h3>Timesheet Updates</h3>
+    <div class="calendar">
+      <div *ngFor="let d of [].constructor(31); let i = index">
+        {{ i + 1 }}
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TABS SECTION ================= -->
+  <div class="card-tabbed full-row">
+
+    <div class="tabs-horizontal">
+
+      <input type="radio" id="tab1" name="hr-tasks" checked>
+      <input type="radio" id="tab2" name="hr-tasks">
+
+      <div class="tab-labels">
+        <label for="tab1">Timesheet Pending</label>
+        <label for="tab2">Help Desk</label>
+      </div>
+
+      <!-- ================= TIMESHEET TABLE ================= -->
+      <div class="tab-content" id="content1">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Employee Code</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let t of timesheets">
+              <td>{{ t.employeeName }}</td>
+              <td>{{ t.employeeCode }}</td>
+              <td>{{ t.timesheetDate | date:'dd-MMM-yyyy' }}</td>
+              <td>
+                <span class="badge bg-warning">
+                  {{ t.status }}
+                </span>
+              </td>
+            </tr>
+
+            <tr *ngIf="timesheets.length === 0">
+              <td colspan="4" class="text-center text-muted">
+                No Pending Timesheets
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ================= HELPDESK TABLE ================= -->
+      <div class="tab-content" id="content2">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Category Name</th>
+              <th>Company ID</th>
+              <th>Region ID</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let h of helpdeskCategories">
+              <td>{{ h.categoryName }}</td>
+              <td>{{ h.companyID }}</td>
+              <td>{{ h.regionID }}</td>
+              <td>
+                <span class="badge"
+                      [ngClass]="h.isActive ? 'bg-success' : 'bg-secondary'">
+                  {{ h.isActive ? 'Active' : 'Inactive' }}
+                </span>
+              </td>
+            </tr>
+
+            <tr *ngIf="helpdeskCategories.length === 0">
+              <td colspan="4" class="text-center text-muted">
+                No Helpdesk Categories
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= CHATBOT ================= -->
+
+  <div class="chatbot-toggle" (click)="toggleChat()">💬</div>
+
+  <div class="chatbot" *ngIf="isOpen">
+
+    <div class="chatbot-header">
+      🤖 HRMS Assistant
+      <span class="close" (click)="toggleChat()">×</span>
+    </div>
+
+    <div class="chatbot-messages">
+
+      <div *ngFor="let msg of messages"
+           class="message"
+           [ngClass]="msg.sender === 'User' ? 'user' : 'bot'">
+
+        <div class="bubble">
+          <span *ngIf="msg.text">{{ msg.text }}</span>
+          <span *ngIf="msg.attachmentName">📎 {{ msg.attachmentName }}</span>
+        </div>
+      </div>
+
+      <div *ngIf="showIntro" class="intro-actions">
+        <button class="primary-btn" (click)="openModules()">
+          📂 View Modules
+        </button>
+      </div>
+
+      <div *ngIf="showModules" class="module-list">
+        <button *ngFor="let m of modules">{{ m }}</button>
+      </div>
+
+    </div>
+
+    <div class="emoji-picker" *ngIf="showEmojiPicker">
+      <span *ngFor="let e of emojis" (click)="addEmoji(e)">
+        {{ e }}
+      </span>
+    </div>
+
+    <div class="chatbot-input">
+      <button class="icon-btn" (click)="toggleEmojiPicker()">😊</button>
+      <button class="icon-btn" (click)="triggerFileUpload()">📎</button>
+
+      <input type="text"
+             [(ngModel)]="userMessage"
+             placeholder="Type your message..."
+             (keyup.enter)="sendMessage()" />
+
+      <button class="send-btn" (click)="sendMessage()">➤</button>
+
+      <input type="file" hidden #fileInput (change)="onFileSelected($event)" />
+    </div>
+
+  </div>
+
+</div>
