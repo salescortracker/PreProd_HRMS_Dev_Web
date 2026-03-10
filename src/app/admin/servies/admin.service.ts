@@ -673,6 +673,16 @@ export interface MaritalStatus {
   regionName?: string;
   userId:Number;
 }
+export interface CompanyNewsCategory {
+  categoryId: number;
+  categoryName: string;
+  companyId: number;
+  regionId: number;
+  isActive: boolean;
+  userId: number;
+  companyName?: string;
+  regionName?: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -2220,8 +2230,23 @@ deleteRecruitmentNoticePeriod(id: number) {
   return this.http.post(`${this.baseUrl}/MasterData/DeleteRecruitmentNoticePeriod?id=${id}`, {});
 }
 
+getCompanyNewsCategoryList(userId: number) {
+  return this.http.get(`${this.baseUrl}/MasterData/companynewscategory-list/${userId}`);
+}
 
-  
+createCompanyNewsCategory(data: any) {
+  return this.http.post(`${this.baseUrl}/MasterData/CreateCompanyNewsCategory`, data);
+}
 
-  
+updateCompanyNewsCategory(data: any) {
+  debugger;
+  return this.http.post(`${this.baseUrl}/MasterData/UpdateCompanyNewsCategory`, data);
+}
+
+deleteCompanyNewsCategory(id: number) {
+  return this.http.post(`${this.baseUrl}/MasterData/DeleteCompanyNewsCategory?id=${id}`, {});
+}
+getCategoriesByCompanyRegion(companyId: number, regionId: number) {
+  return this.http.get(`${this.baseUrl}/MasterData/companynewscategory-by-company-region?companyId=${companyId}&regionId=${regionId}`);
+}
 }

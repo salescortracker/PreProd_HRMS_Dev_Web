@@ -14,12 +14,10 @@ export class CompanyNewsComponent {
   userId!: number;
   companyId!: number;
   regionId!: number;
+  categories: any[] = [];
 
 
-
-  // Departments & Categories
   departments: Department[] = [];
-  // categories: string[] = [];
 
   // News
   newsList: News[] = [];
@@ -46,6 +44,7 @@ export class CompanyNewsComponent {
     this.loadRegions();
     this.loadDepartments();
     this.getNewsList();
+    this.loadCategories();
   }
   loadCompanies(): void {
     this.adminService.getCompanies(null, this.userId).subscribe({
@@ -65,7 +64,15 @@ loadRegions(): void {
     error: () => Swal.fire('Error', 'Failed to load regions', 'error')
   });
 }
-
+loadCategories(): void {
+  this.adminService.getCompanyNewsCategoryList(this.userId).subscribe({
+    next: (res: any) => {
+      console.log("Categories:", res);
+      this.categories = res;
+    },
+    error: () => Swal.fire('Error', 'Failed to load categories', 'error')
+  });
+}
  getDepartmentName(departmentId?: number | null): string {
     if (!departmentId) return '-';
 
