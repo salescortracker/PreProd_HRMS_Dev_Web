@@ -106,6 +106,7 @@ import { ResetPasswordComponent } from './features/login/reset-password/reset-pa
 import { VerifyOtpComponent } from './features/login/verify-otp/verify-otp.component';
 import { CompanyEventsComponent } from './features/company-events/company-events/company-events.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { AttendanceListComponent } from './features/attendance/attendance-list/attendance-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -204,7 +205,8 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     VerifyOtpComponent,
-    CompanyEventsComponent
+    CompanyEventsComponent,
+    AttendanceListComponent
    
     
     
