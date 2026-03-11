@@ -2220,8 +2220,20 @@ deleteRecruitmentNoticePeriod(id: number) {
   return this.http.post(`${this.baseUrl}/MasterData/DeleteRecruitmentNoticePeriod?id=${id}`, {});
 }
 
+getAccountTypes(userId: number) {
+  return this.http.get(`${this.baseUrl}/MasterData/account-type-list?userId=${userId}`);
+}
 
-  
+createAccountType(data: any) {
+  return this.http.post(`${this.baseUrl}/MasterData/CreateAccountType`, data);
+}
 
+updateAccountType(data: any) {
+  return this.http.post(`${this.baseUrl}/MasterData/UpdateAccountType`, data);
+}
+
+deleteAccountType(id: number) {
+  return this.http.post(`${this.baseUrl}/MasterData/DeleteAccountType?id=${id}`, {});
+}
   
 }
