@@ -79,7 +79,8 @@
 
  <div class="profile-menu">
   <span class="profile-name">Welcome, <b>{{userName}}({{roleName}})</b></span>
-  <i class="fas fa-user-circle profile-icon"></i>
+  <img [src]="profileImage" class="profile-icon-img" alt="Profile" 
+     (error)="profileImage='assets/images/default-user.png'" />
   <i class="fas fa-chevron-down dropdown-arrow"></i>
 
   <div class="profile-dropdown" [class.show]="isProfileOpen">
