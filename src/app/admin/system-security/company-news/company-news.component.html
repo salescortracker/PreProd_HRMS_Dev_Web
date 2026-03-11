@@ -80,15 +80,12 @@
       <select class="form-select"
               [(ngModel)]="news.Category"
               name="Category">
+              <option value="">Select Category</option>
 
-        <option value="">Select Category</option>
-        <option value="General">General</option>
-        <option value="HR Announcement">HR Announcement</option>
-        <option value="Policy Update">Policy Update</option>
-        <option value="Event">Event</option>
-        <option value="Holiday Notice">Holiday Notice</option>
-        <option value="Emergency">Emergency</option>
-
+    <option *ngFor="let c of categories"
+            [value]="c.categoryName">
+      {{ c.categoryName }}
+    </option>
       </select>
     </div>
 

@@ -53,7 +53,8 @@ export class AdminLayoutComponent {
        { title: 'My Team Configuration', route: '/admin/hierarchy-config' },
          { title: 'Recruitment Notice Period', route: '/admin/recruitment-notice-period' }, 
        { title: 'Screnning Result', route: '/admin/screening-result' },
-       { title: 'Interview Level', route: '/admin/interview-level' }
+       { title: 'Interview Level', route: '/admin/interview-level' },
+       { title: 'company-news-category', route: '/admin/company-news-category' },
     ],
     // 'Configuration': [
     //   { title: 'Approval Workflows', route: '/admin/approval-workflow' },
