@@ -107,6 +107,8 @@ import { VerifyOtpComponent } from './features/login/verify-otp/verify-otp.compo
 import { CompanyEventsComponent } from './features/company-events/company-events/company-events.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { AccountTypeComponent } from './account-type/account-type.component';
+import { AttendanceListComponent } from './features/attendance/attendance-list/attendance-list.component';
+import { CompanyNewsCategoryComponent } from './company-news-category/company-news-category.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -207,6 +209,8 @@ import { AccountTypeComponent } from './account-type/account-type.component';
     VerifyOtpComponent,
     CompanyEventsComponent,
     AccountTypeComponent
+    AttendanceListComponent
+    CompanyNewsCategoryComponent
    
     
     
