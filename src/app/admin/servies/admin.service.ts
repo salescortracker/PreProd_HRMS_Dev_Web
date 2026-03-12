@@ -2220,7 +2220,11 @@ deleteRecruitmentNoticePeriod(id: number) {
   return this.http.post(`${this.baseUrl}/MasterData/DeleteRecruitmentNoticePeriod?id=${id}`, {});
 }
 
-
+getEmployees(companyId:number, regionId:number){
+  return this.http.get(
+    `${this.baseUrl}/Employee/GetEmployees?companyId=${companyId}&regionId=${regionId}`
+  );
+}
   
 
   
