@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../admin/servies/admin.service';
+import Swal from 'sweetalert2';
 interface NewsItem {
   Title: string;
   Category: string;
@@ -23,6 +24,9 @@ export class ComanyNewsComponent {
 
   userDepartmentId: number = 0
   userId: number = 0
+  categories: any[] = [];
+  userCompanyId: number = 0;
+  userRegionId: number = 0;
 
   constructor(private adminService: AdminService) {}
 
@@ -30,12 +34,12 @@ export class ComanyNewsComponent {
 
     this.userId = Number(sessionStorage.getItem("UserId"))
     this.userDepartmentId = Number(sessionStorage.getItem("DepartmentId"))
-
-    console.log("UserId:", this.userId)
-    console.log("DepartmentId:", this.userDepartmentId)
+    this.userCompanyId = Number(sessionStorage.getItem("CompanyId"));
+    this.userRegionId = Number(sessionStorage.getItem("RegionId"));
 
     this.getNews()
  this.loadUsers();
+ this.loadCategories();
   }
   loadUsers() {
   this.adminService.getAllUsers().subscribe({
@@ -48,7 +52,20 @@ export class ComanyNewsComponent {
     }
   });
 }
+loadCategories(): void {
 
+  const companyId = Number(sessionStorage.getItem("CompanyId"));
+  const regionId = Number(sessionStorage.getItem("RegionId"));
+
+  this.adminService.getCategoriesByCompanyRegion(companyId, regionId).subscribe({
+    next: (res: any) => {
+      console.log("Categories:", res);
+      this.categories = res;
+    },
+    error: () => Swal.fire('Error', 'Failed to load categories', 'error')
+  });
+
+}
   // -----------------------------
   // Get News
   // -----------------------------
