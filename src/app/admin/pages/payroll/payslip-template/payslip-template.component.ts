@@ -219,7 +219,7 @@ downloadPDF(p: any) {
 
   const monthName = this.getMonthName(this.month!);
 
-  /* ================= GET EMPLOYEE DATA ================= */
+  /* ================= EMPLOYEE DATA ================= */
 
   const emp = this.getEmployee(p.employeeId);
 
@@ -236,9 +236,9 @@ downloadPDF(p: any) {
       ? this.designationMap[emp.designationId] || ''
       : '';
 
-  /* ================= HEADER (RED) ================= */
+  /* ================= HEADER ================= */
 
-  doc.setFillColor(179, 0, 0); // Dark Red
+  doc.setFillColor(179, 0, 0);
   doc.rect(0, 0, pageWidth, 35, 'F');
 
   doc.setTextColor(255, 255, 255);
@@ -251,9 +251,9 @@ downloadPDF(p: any) {
 
   doc.setTextColor(0, 0, 0);
 
-  /* ================= EMPLOYEE INFO ================= */
+  /* ================= EMPLOYEE BOX ================= */
 
-  doc.setDrawColor(220, 53, 69); // Light Red Border
+  doc.setDrawColor(220, 53, 69);
   doc.rect(15, 45, pageWidth - 30, 35);
 
   doc.setFontSize(11);
@@ -274,11 +274,28 @@ downloadPDF(p: any) {
   doc.text(department, 20, 79);
   doc.text(designation, pageWidth / 2, 79);
 
-  /* ================= TABLE HEADER (LIGHT RED) ================= */
+  /* ================= ATTENDANCE ================= */
 
-  let startY = 95;
+  doc.setFontSize(10);
 
-  doc.setFillColor(255, 230, 230); // Soft red background
+  doc.setFont('helvetica', 'bold');
+  doc.text('Working Days:', 20, 88);
+  doc.text('Present:', 60, 88);
+  doc.text('Leaves:', 100, 88);
+  doc.text('Half Days:', 140, 88);
+
+  doc.setFont('helvetica', 'normal');
+
+  doc.text(String(p.workingDays ?? 0), 20, 94);
+  doc.text(String(p.presentDays ?? 0), 60, 94);
+  doc.text(String(p.leaveDays ?? 0), 100, 94);
+  doc.text(String(p.halfDays ?? 0), 140, 94);
+
+  /* ================= TABLE HEADER ================= */
+
+  let startY = 105;
+
+  doc.setFillColor(255, 230, 230);
   doc.rect(15, startY, pageWidth - 30, 10, 'F');
 
   doc.setTextColor(139, 0, 0);
@@ -300,7 +317,7 @@ downloadPDF(p: any) {
   let totalEarnings = 0;
   let totalDeductions = 0;
 
-  /* ================= TABLE DATA ================= */
+  /* ================= DETAILS LOOP ================= */
 
   (p.details || []).forEach((d: any) => {
 
@@ -308,7 +325,6 @@ downloadPDF(p: any) {
 
     if (d.type === 'Earning') {
 
-      doc.setFont('helvetica', 'normal');
       doc.text(safeText(d.componentName), 20, earningsY);
       doc.text(currency(amount), pageWidth / 2 - 10, earningsY, { align: 'right' });
 
@@ -327,9 +343,35 @@ downloadPDF(p: any) {
 
   });
 
+  /* ================= EXPENSES (EARNINGS) ================= */
+
+  const expensesAmount = safeNumber(p.expenses);
+
+  if (expensesAmount > 0) {
+
+    doc.text("Expenses Reimbursement", 20, earningsY);
+    doc.text(currency(expensesAmount), pageWidth / 2 - 10, earningsY, { align: 'right' });
+
+    totalEarnings += expensesAmount;
+    earningsY += 8;
+  }
+
+  /* ================= ATTENDANCE DEDUCTION ================= */
+
+  const attendanceDeductionAmount = safeNumber(p.attendanceDeduction);
+
+  if (attendanceDeductionAmount > 0) {
+
+    doc.text("Attendance Deduction", pageWidth / 2 + 10, deductionY);
+    doc.text(currency(attendanceDeductionAmount), pageWidth - 20, deductionY, { align: 'right' });
+
+    totalDeductions += attendanceDeductionAmount;
+    deductionY += 8;
+  }
+
   const finalY = Math.max(earningsY, deductionY) + 5;
 
-  /* ================= TOTAL ROW ================= */
+  /* ================= TOTALS ================= */
 
   doc.setDrawColor(179, 0, 0);
   doc.line(15, finalY, pageWidth - 15, finalY);
@@ -342,7 +384,7 @@ downloadPDF(p: any) {
   doc.text('Total Deductions', pageWidth / 2 + 10, finalY + 10);
   doc.text(currency(totalDeductions), pageWidth - 20, finalY + 10, { align: 'right' });
 
-  /* ================= NET PAY (DARK RED BAR) ================= */
+  /* ================= NET PAY ================= */
 
   const netSalary =
     safeNumber(p.netSalary) ||
@@ -350,7 +392,7 @@ downloadPDF(p: any) {
 
   const netY = finalY + 25;
 
-  doc.setFillColor(220, 53, 69); // Bootstrap red
+  doc.setFillColor(220, 53, 69);
   doc.rect(15, netY, pageWidth - 30, 15, 'F');
 
   doc.setTextColor(255, 255, 255);
@@ -370,6 +412,7 @@ downloadPDF(p: any) {
 
   doc.setFontSize(10);
   doc.setFont('helvetica', 'italic');
+
   doc.text('This is a system generated payslip.', 20, netY + 30);
   doc.text('Authorized Signatory', pageWidth - 20, netY + 30, { align: 'right' });
 
