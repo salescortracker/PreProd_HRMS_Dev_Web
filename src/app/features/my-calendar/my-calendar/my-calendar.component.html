@@ -14,9 +14,9 @@
 <input type="checkbox" [(ngModel)]="showAssets"> Assets
 </label> -->
 
-<label class="legend-item expense">
+<!-- <label class="legend-item expense">
 <input type="checkbox" [(ngModel)]="showExpenses"> Expenses
-</label>
+</label> -->
 <!-- 
 <label class="legend-item companyNews">
 <input type="checkbox" [(ngModel)]="showCompanyNews"> Company News
@@ -26,9 +26,9 @@
 <input type="checkbox" [(ngModel)]="showPolicies"> Policies
 </label> -->
 
-<label class="legend-item helpdesk">
+<!-- <label class="legend-item helpdesk">
 <input type="checkbox" [(ngModel)]="showHelpdesk"> Help Desk
-</label>
+</label> -->
 
 <!-- <label class="legend-item performance">
 <input type="checkbox" [(ngModel)]="showPerformance"> Performance
@@ -37,7 +37,14 @@
 <label class="legend-item leave">
 <input type="checkbox" [(ngModel)]="showLeaves"> Leaves
 </label>
+<label class="legend-item weekoff">
+<input type="checkbox" [(ngModel)]="showWeekoff"> Weekoff
+</label>
 
+<label class="legend-item holiday">
+<input type="checkbox" [(ngModel)]="showHoliday"> Holiday
+
+</label>
 <!-- <label class="legend-item timesheet">
 <input type="checkbox" [(ngModel)]="showTimesheet"> Timesheet
 </label>
@@ -76,10 +83,18 @@
 {{d}}
 </div>
 
-<div class="calendar-cell"
+<!-- <div class="calendar-cell"
      *ngFor="let date of getCalendarDays()"
-     [ngClass]="{'weekend': isWeekend(date), 'today': isToday(date)}">
+     [ngClass]="{'weekend': !isWeekoffDate(date), 'today': isToday(date)}"> -->
 
+
+     <div class="calendar-cell"
+     *ngFor="let date of getCalendarDays()"
+     [ngClass]="{
+       'weekend': isWeekend(date),
+       'today': isToday(date),
+       'disabled-day': isWeekoffDate(date)
+     }">
 <div *ngIf="date" class="date-number">
 {{date.getDate()}}
 </div>
@@ -87,13 +102,20 @@
 <div class="events">
 
 <div
-*ngFor="let item of getItemsForDate(date)"
+*ngFor="let item of isWeekoffDate(date) ? [] : getItemsForDate(date)"
 class="event-text"
 [ngClass]="item.type"
 (click)="!isWeekend(date) && openEvent(item)"
-title="{{item.title}}">
+title="{{item.title}} ({{item.type | titlecase}})"    >
 
 {{item.title}}
+
+
+<span *ngIf="item.status"
+      class="st"
+      [ngClass]="item.status.toLowerCase()">
+ ({{item.status}})
+</span>
 
 </div>
 
