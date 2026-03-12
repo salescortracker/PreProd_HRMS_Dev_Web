@@ -414,9 +414,11 @@ export interface MenuItem {
   children?: MenuItem[];
 }
 export interface CertificationType {
-  CertificationTypeID: number;
+  certificationTypeID: number;
   certificationTypeName: string;
   isActive: boolean;
+  companyID: number;
+  regionID: number;
   userId:number
 }
 export interface BloodGroup {
@@ -2060,6 +2062,23 @@ updateWeekoff(data: any) {
 
 deleteWeekoff(id: number) {
   return this.http.post(`${this.baseUrl}/MasterData/DeleteWeekoff?id=${id}`, {});
+}
+
+// ================= My Calendar ===================e
+getWeekoffs(companyId:number,regionId:number){
+  return this.http.get(
+    `${environment.apiUrl}/masterdata/weekoffCalender?companyId=${companyId}&regionId=${regionId}`
+  )
+}
+
+getHolidays(companyId:number,regionId:number){
+  return this.http.get(
+    `${environment.apiUrl}/masterdata/holiday-listCalender?companyId=${companyId}&regionId=${regionId}`
+  )
+}
+
+getMyLeavecalenderCalendar(userId:number){
+ return this.http.get<any>(`${environment.apiUrl}/masterdata/GetMyLeaves?userId=${userId}`)
 }
 //---------------------- RESIGNATIONS ----------------------//
 

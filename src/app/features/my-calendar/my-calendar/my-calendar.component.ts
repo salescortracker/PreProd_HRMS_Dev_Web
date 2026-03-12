@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CompanyEventsService } from '../../company-events/company-events.service';
+import { AdminService } from '../../../admin/servies/admin.service';
+import { EmployeeResignationService } from '../../employee-profile/employee-services/employee-resignation.service';
+
 interface CalendarItem{
   date:string
   type:string
   title:string
+  status?: string
 }
 @Component({
   selector: 'app-my-calendar',
@@ -16,96 +20,188 @@ today=new Date()
 currentMonth=this.today.getMonth()
 currentYear=this.today.getFullYear()
 
-weekDays=['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+weekDays=['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
 
 monthNames=[
 'January','February','March','April','May','June',
 'July','August','September','October','November','December'
 ]
 
-selectedEvent:any=null
+    selectedEvent:any=null
 
-items:CalendarItem[]=[]
+    items:CalendarItem[]=[]
 
-/* Legend toggles */
+    /* Legend toggles */
 
-showAssets=true
-showExpenses=true
-showCompanyNews=true
-showPolicies=true
-showHelpdesk=true
-showPerformance=true
-showLeaves=true
-showTimesheet=true
-showProfile=true
-showBirthdays=true
-showAnniversary=true
+    showAssets=true
+    showExpenses=true
+    showCompanyNews=true
+    showPolicies=true
+    showHelpdesk=true
+    showPerformance=true
+    showLeaves=true
+    showTimesheet=true
+    showProfile=true
+    showBirthdays=true
+    showAnniversary=true
+    companyId!:number
+    regionId!:number
+    showWeekoff = true;
+    showHoliday = true;
+    constructor(private leaveService: EmployeeResignationService, private calendarService:CompanyEventsService, private adminService:AdminService){}
 
-constructor(private calendarService:CompanyEventsService){}
+    ngOnInit(){
 
-ngOnInit(){
+        const userId=Number(sessionStorage.getItem("UserId"))
+        this.companyId=Number(sessionStorage.getItem("CompanyId"))
+        this.regionId=Number(sessionStorage.getItem("RegionId"))
+        // this.loadCalendar(userId)
+        this.loadWeekoffs(this.companyId, this.regionId)
+        this.loadHolidays(this.companyId, this.regionId)
+        this.loadUserLeaves(userId) 
+       
+    }
 
-const userId=Number(sessionStorage.getItem("UserId"))
+loadUserLeaves(userId:number){
 
-this.loadCalendar(userId)
+this.leaveService.getUserLeaves(userId).subscribe((res:any)=>{
+
+const leaveItems:any[] = []
+
+res.forEach((x:any)=>{
+
+const start = new Date(x.startDate)
+const end = new Date(x.endDate)
+
+for(let d = new Date(start); d <= end; d.setDate(d.getDate()+1)){
+
+leaveItems.push({
+date: d.toLocaleDateString('en-CA'),
+type:'leave',
+title:x.leaveTypeName,
+status:x.status 
+})
 
 }
 
-loadCalendar(userId:number){
+})
 
-this.calendarService.getMyCalendar(userId).subscribe((res:any)=>{
-
-this.items=res.map((x:any)=>({
-
-date:new Date(x.date).toISOString().split('T')[0],
-type:x.type,
-title:x.title
-
-}))
+this.items = [...this.items, ...leaveItems]
 
 })
 
 }
 
-/* Month Navigation */
+    /* Month Navigation */
 
-previousMonth(){
+    previousMonth(){
 
-if(this.currentMonth===0){
-this.currentMonth=11
-this.currentYear--
-}else{
-this.currentMonth--
+    if(this.currentMonth===0){
+    this.currentMonth=11
+    this.currentYear--
+    }else{
+    this.currentMonth--
+    }
+
+    }
+
+    nextMonth(){
+
+    if(this.currentMonth===11){
+    this.currentMonth=0
+    this.currentYear++
+    }else{
+    this.currentMonth++
+    }
+
+    }
+loadWeekoffs(companyId:number, regionId:number){
+
+this.adminService.getWeekoffs(companyId,regionId).subscribe((res:any)=>{
+
+const weekoffDays = res.data
+  .filter((x:any)=>x.isActive && x.weekoffDate)   // ignore null
+  .map((x:any)=>x.weekoffDate)
+
+const calendarDays = this.getCalendarDays()
+
+calendarDays.forEach((d:any)=>{
+
+if(!d) return
+
+const dayName = d.toLocaleDateString('en-US',{weekday:'long'})
+
+if(weekoffDays.includes(dayName)){
+
+this.items.push({
+date:d.toLocaleDateString('en-CA'),
+type:'weekoff',
+title:'Weekoff'
+})
+
 }
 
-}
+})
 
-nextMonth(){
-
-if(this.currentMonth===11){
-this.currentMonth=0
-this.currentYear++
-}else{
-this.currentMonth++
-}
+})
 
 }
 
-/* Calendar Days */
+// Get Holidays
 
-getCalendarDays(){
+isWeekoffDate(date:any){
 
-const firstDay=new Date(this.currentYear,this.currentMonth,1)
-const lastDay=new Date(this.currentYear,this.currentMonth+1,0)
+if(!date) return false
 
-const days:any=[]
+const formatted = date.toLocaleDateString('en-CA')
 
-const startDay=firstDay.getDay()
+return this.items.some(item => 
+  item.date === formatted && item.type === 'weekoff'
+)
 
+}
+
+loadHolidays(companyId:number, regionId:number){
+
+this.adminService.getHolidays(companyId,regionId).subscribe((res:any)=>{
+
+if(res && res.data){
+
+const holidayItems = res.data
+  .filter((x:any)=>x.isActive && x.date)
+  .map((x:any)=>({
+     date:x.date.split('T')[0],
+      type: 'holiday',
+      title: x.holidayListName
+  }))
+
+this.items = [...this.items, ...holidayItems]
+
+}
+
+})
+
+}
+
+    /* Calendar Days */
+
+    getCalendarDays(){
+
+const firstDay = new Date(this.currentYear,this.currentMonth,1)
+const lastDay = new Date(this.currentYear,this.currentMonth+1,0)
+
+const days:any[]=[]
+
+// convert Sunday=0 to last position
+let startDay = firstDay.getDay()
+startDay = startDay === 0 ? 6 : startDay - 1
+
+// empty cells before first date
 for(let i=0;i<startDay;i++){
 days.push(null)
 }
 
+// month days
 for(let i=1;i<=lastDay.getDate();i++){
 days.push(new Date(this.currentYear,this.currentMonth,i))
 }
@@ -114,67 +210,71 @@ return days
 
 }
 
-/* Event Filter */
 
-getItemsForDate(date:any){
+  
+    /* Event Filter */
 
-if(!date) return []
+    getItemsForDate(date:any){
 
-const formatted=date.toISOString().split('T')[0]
+    if(!date) return []
 
-return this.items.filter(item=>{
+    const formatted=date.toLocaleDateString('en-CA')
 
-const matchDate=item.date===formatted
+    return this.items.filter(item=>{
 
-const matchType=
+    const matchDate=item.date===formatted
 
-(item.type==='asset' && this.showAssets) ||
-(item.type==='expense' && this.showExpenses) ||
-(item.type==='companyNews' && this.showCompanyNews) ||
-(item.type==='policy' && this.showPolicies) ||
-(item.type==='helpdesk' && this.showHelpdesk) ||
-(item.type==='performance' && this.showPerformance) ||
-(item.type==='leave' && this.showLeaves) ||
-(item.type==='timesheet' && this.showTimesheet) ||
-(item.type==='profile' && this.showProfile) ||
-(item.type==='birthday' && this.showBirthdays) ||
-(item.type==='workAnniversary' && this.showAnniversary)
+    const matchType=
 
-return matchDate && matchType
+    (item.type==='asset' && this.showAssets) ||
+    (item.type==='expense' && this.showExpenses) ||
+    (item.type==='companyNews' && this.showCompanyNews) ||
+    (item.type==='policy' && this.showPolicies) ||
+    (item.type==='helpdesk' && this.showHelpdesk) ||
+    (item.type==='performance' && this.showPerformance) ||
+    (item.type==='leave' && this.showLeaves) ||
+    (item.type==='timesheet' && this.showTimesheet) ||
+    (item.type==='profile' && this.showProfile) ||
+    (item.type==='birthday' && this.showBirthdays) ||
+    (item.type==='workAnniversary' && this.showAnniversary) ||
+    (item.type==='weekoff' && this.showWeekoff)||
+    (item.type==='holiday' && this.showHoliday) 
 
-})
+    return matchDate && matchType
 
-}
+    })
 
-/* Weekend Check */
+    }
 
-isWeekend(date:any){
+    /* Weekend Check */
 
-if(!date) return false
+    isWeekend(date:any){
 
-const day = date.getDay()
+    if(!date) return false
 
-return day === 0 || day === 6
+    const day = date.getDay()
 
-}
+    return day === 0 || day === 6
 
-/* Today Highlight */
+    }
 
-isToday(date:any){
+    /* Today Highlight */
 
-if(!date) return false
+    isToday(date:any){
 
-return date.toDateString()===new Date().toDateString()
+    if(!date) return false
 
-}
+    return date.toDateString()===new Date().toDateString()
 
-/* Popup */
+    }
 
-openEvent(item:any){
-this.selectedEvent=item
-}
+    /* Popup */
 
-closePopup(){
-this.selectedEvent=null
-}
-}
+    openEvent(item:any){
+    this.selectedEvent=item
+    }
+
+    closePopup(){
+    this.selectedEvent=null
+    }
+    }

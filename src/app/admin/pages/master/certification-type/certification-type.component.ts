@@ -61,12 +61,13 @@ userId:any;
   // ================= FORM =================
   resetForm(): void {
     this.certification = {
-      CertificationTypeID: 0,
+      certificationTypeID: 0,
+      CertificationTypeID: 0,   
       certificationTypeName: '',
       isActive: true,
-      CompanyID: this.companyId,
-      RegionID: this.regionId,
-      userId:Number(sessionStorage.getItem("UserId"))
+      companyID: this.companyId,
+      regionID: this.regionId,
+      userId: Number(sessionStorage.getItem('UserId'))
     };
     this.isEditMode = false;
   }
@@ -74,7 +75,7 @@ userId:any;
   onSubmit(): void {
     const api$ = this.isEditMode
       ? this.adminService.updateCertificationType(
-          this.certification.CertificationTypeID,
+          this.certification.certificationTypeID,
           this.certification
         )
       : this.adminService.createCertificationType(this.certification);
@@ -87,7 +88,11 @@ userId:any;
   }
 
   editCertification(c: CertificationType): void {
-    this.certification = { ...c };
+            // Ensure both casings exist for the merged CertificationType interface
+    this.certification = {
+      ...c,
+      CertificationTypeID: c.certificationTypeID ?? (c as any).CertificationTypeID
+    };
     this.isEditMode = true;
   }
 
@@ -101,9 +106,14 @@ userId:any;
       confirmButtonText: 'Yes, delete',
       cancelButtonText: 'Cancel'
     }).then(result => {
+      debugger;
       if (result.isConfirmed) {
-        this.adminService
-          .deleteCertificationType(c.CertificationTypeID)
+          const id = c.certificationTypeID;
+          console.log('Deleting CertificationType with ID:',c. certificationTypeID);
+                    console.log('Deleting CertificationType with ID:', c);
+
+        
+       this.adminService.deleteCertificationType(id)
           .subscribe({
             next: () => {
               Swal.fire('Deleted', 'Record deleted successfully', 'success');
@@ -123,7 +133,12 @@ userId:any;
       .getCertificationTypes(this.userId, this.regionId)
       .subscribe(res => {
         debugger;
-        this.certifications = (res);
+          // backend may return either camelCase or PascalCase keys; ensure both exist
+        this.certifications = (res as any[]).map(item => ({
+          ...item,
+          certificationTypeID: item.certificationTypeID ?? item.CertificationTypeID,
+          CertificationTypeID: item.CertificationTypeID ?? item.certificationTypeID
+        }));
       });
   }
 
