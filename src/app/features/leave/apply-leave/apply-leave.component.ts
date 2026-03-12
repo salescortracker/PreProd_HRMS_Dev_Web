@@ -60,7 +60,7 @@ startDate: string = "";
   selectedLeaveType: any = null;
   availableLeaves: number = 0;
   usedLeaves: number = 0;
-
+weekoffDays: number[] = []; // store day numbers
 
   ngOnInit(): void {
     this.today = this.formatDate(new Date());
@@ -82,6 +82,7 @@ startDate: string = "";
     this.loadLeaveTypes();
     this.loadMyLeaves();
     this.loadReportingManager();
+    this.loadWeekoffs();
 
   }
 
@@ -201,32 +202,38 @@ debugger;
   }
 
   loadMyLeaves() {
-    this.leaveService.getMyLeaves(this.userId).subscribe({
-      next: (data) => {
-        this.leaveList = data.map(x => ({
-          appliedDate: x.appliedDate,
-          leaveType: x.leaveTypeName || '',
-          fromDate: x.startDate,
-          toDate: x.endDate,
-          totalDays: x.totalDays,
-          reason: x.reason,
-          fileName: x.fileName,
-          status: x.status,
-          isHalfDay: x.isHalfDay ?? false
-        }));
+  this.leaveService.getMyLeaves(this.userId).subscribe({
+    next: (data) => {
 
-        this.calculateLeaveSummary();
-        if (this.leaveType) {
-          this.onLeaveTypeChange();
-        }
+      console.log("API Response:", data); // 👈 check response
 
-      },
-      error: (err) => {
-        console.error("Load leaves failed", err);
+      this.leaveList = data.map(x => ({
+        appliedDate: x.appliedDate,
+        leaveType: x.leaveTypeName || '',
+        fromDate: x.startDate,
+        toDate: x.endDate,
+
+        // ✅ FIX HERE
+        totalDays: x.totalDays ?? x.TotalDays,
+
+        reason: x.reason,
+        fileName: x.fileName,
+        status: x.status,
+        isHalfDay: x.isHalfDay ?? false
+      }));
+
+      this.calculateLeaveSummary();
+
+      if (this.leaveType) {
+        this.onLeaveTypeChange();
       }
-    });
-  }
 
+    },
+    error: (err) => {
+      console.error("Load leaves failed", err);
+    }
+  });
+}
 
 
 
@@ -366,25 +373,39 @@ debugger;
 
 
   // TOTAL DAYS CALCULATION
-  calculateTotalDays() {
+ calculateTotalDays() {
 
-    if (this.isHalfDay) {
-      this.totalDays = 0.5;
-      return;
-    }
-
-    if (!this.startDate || !this.endDate) {
-      this.totalDays = 0;
-      return;
-    }
-
-    const start = new Date(this.startDate);
-    const end = new Date(this.endDate);
-
-    const diff = end.getTime() - start.getTime();
-    this.totalDays = diff / (1000 * 60 * 60 * 24) + 1;
+  if (this.isHalfDay) {
+    this.totalDays = 0.5;
+    return;
   }
 
+  if (!this.startDate || !this.endDate) {
+    this.totalDays = 0;
+    return;
+  }
+
+  const start = new Date(this.startDate);
+  const end = new Date(this.endDate);
+
+  let count = 0;
+  let current = new Date(start);
+
+  while (current <= end) {
+
+    const day = current.getDay(); // 0-6
+
+    // Skip weekoff days
+    if (!this.weekoffDays.includes(day)) {
+      count++;
+    }
+
+    current.setDate(current.getDate() + 1);
+  }
+
+  this.totalDays = count;
+
+}
   // --------------------- CREATE (SUBMIT LEAVE) ---------------------
   onSubmit() {
     debugger;
@@ -528,5 +549,46 @@ debugger;
     this.pageSize = size;
     this.currentPage = 1;
   }
+loadWeekoffs() {
 
+  this.userService.getWeekoffList(this.userId).subscribe((res: any) => {
+
+    const data = res.data || [];
+
+    const dayMap: any = {
+      Sunday: 0,
+      Monday: 1,
+      Tuesday: 2,
+      Wednesday: 3,
+      Thursday: 4,
+      Friday: 5,
+      Saturday: 6
+    };
+
+    this.weekoffDays = [];
+
+    data.forEach((w: any) => {
+
+      if (w.isActive) {
+
+        if (w.weekoff1 && dayMap[w.weekoff1] !== undefined) {
+          this.weekoffDays.push(dayMap[w.weekoff1]);
+        }
+
+        if (w.weekoff2 && dayMap[w.weekoff2] !== undefined) {
+          this.weekoffDays.push(dayMap[w.weekoff2]);
+        }
+
+      }
+
+    });
+
+    console.log("Weekoff Days:", this.weekoffDays);
+
+    // ⭐ IMPORTANT
+    this.calculateTotalDays();
+
+  });
+
+}
 }
