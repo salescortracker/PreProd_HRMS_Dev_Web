@@ -20,7 +20,7 @@ export class AddAssetsComponent {
   private companyId!: number;
   private regionId!: number;
   private userId!: number;
-
+loggedInUserName: string = '';
   // ================= SORTING =================
   sortColumn: keyof AssetDto | null = null;
   sortDirection: 'asc' | 'desc' = 'asc';
@@ -38,6 +38,9 @@ export class AddAssetsComponent {
   ngOnInit(): void {
     this.loadSessionData();
     this.initForm();
+      this.assetForm.patchValue({
+    userID: this.userId
+  });
     this.loadEmployeesAndStatuses(); // load employees & statuses first
   }
 
@@ -58,20 +61,31 @@ export class AddAssetsComponent {
   }
 
   // ================= SESSION =================
+  // private loadSessionData(): void {
+  //   this.companyId = Number(sessionStorage.getItem('CompanyId'));
+  //   this.regionId = Number(sessionStorage.getItem('RegionId'));
+  //   const user = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+  //   this.userId = user.userId;
+  // }
   private loadSessionData(): void {
-    this.companyId = Number(sessionStorage.getItem('CompanyId'));
-    this.regionId = Number(sessionStorage.getItem('RegionId'));
-    const user = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
-    this.userId = user.userId;
-  }
+
+  this.companyId = Number(sessionStorage.getItem('CompanyId'));
+  this.regionId = Number(sessionStorage.getItem('RegionId'));
+
+  const user = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+
+  this.userId = user.userId;
+  this.loggedInUserName = user.fullName;
+
+}
 
   // ================= FORM =================
   private initForm(): void {
     this.assetForm = this.fb.group(
       {
         assetID: [null],
-        userID: [null, Validators.required],
-        employeeName: [''],
+ userID: [this.userId],
+  employeeName: [this.loggedInUserName],
         assetName: ['', [Validators.required, Validators.maxLength(150), Validators.pattern(/^[a-zA-Z0-9\-\/\s]+$/)]],
         assetCode: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^[a-zA-Z0-9]+$/)]],
         assetLocation: ['', [Validators.required, Validators.maxLength(100)]],
@@ -108,17 +122,36 @@ export class AddAssetsComponent {
   }
 
   // ================= LOAD ASSETS =================
+  // private loadAssets(): void {
+  //   this.assetService.getAllAssets$().subscribe(res => {
+  //     // Map employee names and asset status names
+  //     this.assets = res.map(a => ({
+  //       ...a,
+  //       employeeName: this.employees.find(e => e.userId === a.userID)?.fullName ?? '',
+  //       assetStatusName: this.assetStatuses.find(s => s.assetStatusId === a.assetStatusID)?.assetStatusName ?? ''
+  //     }));
+  //     this.currentPage = 1;
+  //   });
+  // }
   private loadAssets(): void {
-    this.assetService.getAllAssets$().subscribe(res => {
-      // Map employee names and asset status names
-      this.assets = res.map(a => ({
-        ...a,
-        employeeName: this.employees.find(e => e.userId === a.userID)?.fullName ?? '',
-        assetStatusName: this.assetStatuses.find(s => s.assetStatusId === a.assetStatusID)?.assetStatusName ?? ''
-      }));
-      this.currentPage = 1;
-    });
-  }
+
+  const loggedUserId = Number(sessionStorage.getItem('UserId'));
+
+  this.assetService.getAllAssets$().subscribe(res => {
+
+    const userAssets = res.filter(a => a.userID === loggedUserId);
+
+    this.assets = userAssets.map(a => ({
+      ...a,
+      employeeName: this.employees.find(e => e.userId === a.userID)?.fullName ?? '',
+      assetStatusName: this.assetStatuses.find(s => s.assetStatusId === a.assetStatusID)?.assetStatusName ?? ''
+    }));
+
+    this.currentPage = 1;
+
+  });
+
+}
 
   // ================= GET STATUS NAME (OPTIONAL) =================
   getStatusName(id: number): string {
@@ -137,8 +170,8 @@ export class AddAssetsComponent {
       assetID: this.isEditMode ? v.assetID : undefined,
       companyID: this.companyId,
       regionID: this.regionId,
-      userID: v.userID,
-      employeeName: this.employees.find(e => e.userId === v.userID)?.fullName ?? '',
+     userID: this.userId,
+employeeName: this.loggedInUserName,
       assetName: v.assetName,
       assetCode: v.assetCode,
       assetLocation: v.assetLocation,

@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class AllExpensesComponent {
 filtersForm!: FormGroup;
-
+userId!: number;
   expenses: any[] = [];
   categories: any[] = [];
   countries: string[] = [];
@@ -36,6 +36,7 @@ filtersForm!: FormGroup;
   // 🔹 INIT
   // ============================================================
   ngOnInit(): void {
+    this.userId = Number(localStorage.getItem('userId')); // logged in user
     this.buildForm();
     this.loadCategories();
     this.loadAllExpenses();

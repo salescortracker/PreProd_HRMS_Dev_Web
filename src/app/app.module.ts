@@ -207,7 +207,7 @@ import { CompanyNewsCategoryComponent } from './company-news-category/company-ne
     ResetPasswordComponent,
     VerifyOtpComponent,
     CompanyEventsComponent,
-    AttendanceListComponent
+    AttendanceListComponent,
     CompanyNewsCategoryComponent
    
     
