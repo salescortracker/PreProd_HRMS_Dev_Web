@@ -84,19 +84,25 @@ getPendingApprovals$(managerUserId: number): Observable<AssetDto[]> {
 }
 
 // ✅ Manager – approve or reject (single API)
-approveOrRejectAsset$(
-  assetId: number,
-  managerUserId: number,
-  action: 'Approve' | 'Reject'
-): Observable<any> {
-  const params = new HttpParams()
-    .set('assetId', assetId)
-    .set('managerUserId', managerUserId)
-    .set('action', action);
+// approveOrRejectAsset$(
+//   assetId: number,
+//   managerUserId: number,
+//   action: 'Approve' | 'Reject'
+// ): Observable<any> {
+//   const params = new HttpParams()
+//     .set('assetId', assetId)
+//     .set('managerUserId', managerUserId)
+//     .set('action', action);
 
-  return this.http.get(
-    `${this.apiUrl}/manager/approval-action`,
-    { params }
+//   return this.http.get(
+//     `${this.apiUrl}/manager/approval-action`,
+//     { params }
+//   );
+// }
+approveRejectAssets(payload: any): Observable<any> {
+  return this.http.post(
+    `${this.apiUrl}/assetsApproveReject`,
+    payload
   );
 }
 

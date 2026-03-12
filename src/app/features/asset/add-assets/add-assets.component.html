@@ -7,13 +7,13 @@
  <!-- Employee Name -->
   <div class="row mb-3"> 
 <div class="col-md-4">
-  <label class="form-label">Employee Name <span class="text-danger">*</span></label>
-  <select class="form-select" formControlName="userID">
-    <option value="">Select Employee</option>
-    <option *ngFor="let emp of employees" [value]="emp.userId">
-      {{ emp.fullName }}
-    </option>
-  </select>
+  <label class="form-label">Employee Name</label>
+  <input 
+    type="text" 
+    class="form-control" 
+    [value]="loggedInUserName"
+    readonly
+  />
 
   <small class="text-danger"
     *ngIf="f['userID'].touched && f['userID'].errors?.['required']">
