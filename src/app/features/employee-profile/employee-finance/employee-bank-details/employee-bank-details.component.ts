@@ -2,6 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BankDetails, AdminService } from '../../../../admin/servies/admin.service';
 import Swal from 'sweetalert2';
+
+export interface AccountType {
+  accountTypeId: number;
+  accountType1: string;
+  companyId: number;
+  regionId: number;
+  isActive: boolean;
+}
 @Component({
   selector: 'app-employee-bank-details',
   standalone: false,
@@ -11,16 +19,17 @@ import Swal from 'sweetalert2';
 export class EmployeeBankDetailsComponent {
  bankForm!: FormGroup;
   bankList: BankDetails[] = [];
+  accountTypes: AccountType[] = [];
   userId!: number;
   companyId = Number(sessionStorage.getItem("CompanyId"));
   regionId = Number(sessionStorage.getItem("RegionId"));
-  accountTypes = [
-    { id: 1, name: 'Savings' },
-    { id: 2, name: 'Current' },
-    { id: 3, name: 'Salary' },
-    { id: 4, name: 'NRE' },
-    { id: 5, name: 'NRO' }
-  ];
+  // accountTypes = [
+  //   { id: 1, name: 'Savings' },
+  //   { id: 2, name: 'Current' },
+  //   { id: 3, name: 'Salary' },
+  //   { id: 4, name: 'NRE' },
+  //   { id: 5, name: 'NRO' }
+  // ];
 
   employeeId = 123; // Replace with actual employee ID
   isAdmin: boolean = true; // Role-based display
@@ -48,6 +57,7 @@ export class EmployeeBankDetailsComponent {
     }
     this.initForm();
     this.loadBankDetails();
+     this.loadAccountTypes();
   }
 
   /** Initialize Bank Form */
@@ -87,6 +97,37 @@ export class EmployeeBankDetailsComponent {
 
   }
 
+loadAccountTypes() {
+
+  this.adminService
+    .getAccountTypesByCompanyRegion(this.companyId, this.regionId)
+    .subscribe({
+
+      next: (res: any) => {
+
+        console.log("API Response:", res);
+
+        const data = res.data || [];
+
+        this.accountTypes = data.map((x: any) => ({
+          accountTypeId: x.accountTypeId,
+          accountType1: x.accountType1,
+          companyId: x.companyId,
+          regionId: x.regionId,
+          isActive: x.isActive
+        }));
+
+        console.log("Account Types:", this.accountTypes);
+
+      },
+
+      error: () => {
+        Swal.fire('Error', 'Failed to load account types', 'error');
+      }
+
+    });
+}
+  
   /** Save / Update Bank Details */
   saveBankDetails() {
     // if (this.bankForm.invalid) {
@@ -175,11 +216,11 @@ export class EmployeeBankDetailsComponent {
   }
 
   /** Get Account Type Name */
-  getAccountTypeName(id: number | undefined) {
-    const type = this.accountTypes.find(t => t.id === id);
-    return type ? type.name : '';
-  }
-
+getAccountTypeName(id: number | undefined) {
+  const type = this.accountTypes.find(t => t.accountTypeId === id);
+  return type ? type.accountType1 : '';
+}
+ 
   /** Mask Account Number for security */
   maskAccountNumber(accountNumber: string): string {
     if (!accountNumber) return '';

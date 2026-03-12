@@ -23,8 +23,10 @@
 
       <div class="col-md-4">
         <label class="form-label">Account Holder Name</label>
-        <input type="text" class="form-control" placeholder="Enter account holder name" formControlName="accountHolderName" />
-        <div *ngIf="bankForm.get('accountHolderName')?.touched && bankForm.get('accountHolderName')?.invalid" class="text-danger">
+        <input type="text" class="form-control" placeholder="Enter account holder name"
+          formControlName="accountHolderName" />
+        <div *ngIf="bankForm.get('accountHolderName')?.touched && bankForm.get('accountHolderName')?.invalid"
+          class="text-danger">
           Account Holder Name is required (letters and spaces only)
         </div>
       </div>
@@ -35,7 +37,8 @@
       <div class="col-md-4">
         <label class="form-label">Account Number</label>
         <input type="text" class="form-control" placeholder="Enter account number" formControlName="accountNumber" />
-        <div *ngIf="bankForm.get('accountNumber')?.touched && bankForm.get('accountNumber')?.invalid" class="text-danger">
+        <div *ngIf="bankForm.get('accountNumber')?.touched && bankForm.get('accountNumber')?.invalid"
+          class="text-danger">
           Account Number is required (9–20 digits)
         </div>
       </div>
@@ -44,9 +47,12 @@
         <label class="form-label">Account Type</label>
         <select class="form-select" formControlName="accountTypeId">
           <option value="">Select account type</option>
-          <option *ngFor="let type of accountTypes" [value]="type.id">{{ type.name }}</option>
+          <option *ngFor="let type of accountTypes" [value]="type.accountTypeId">
+            {{ type.accountType1 }}
+          </option>
         </select>
-        <div *ngIf="bankForm.get('accountTypeId')?.touched && bankForm.get('accountTypeId')?.invalid" class="text-danger">
+        <div *ngIf="bankForm.get('accountTypeId')?.touched && bankForm.get('accountTypeId')?.invalid"
+          class="text-danger">
           Account Type is required
         </div>
       </div>
@@ -76,7 +82,7 @@
     <!-- Buttons -->
     <div class="row">
       <div class="col-md-12 text-end">
-        <button type="submit" class="btn-save" >
+        <button type="submit" class="btn-save">
           {{ bankForm.value.bankDetailsId ? 'Update' : 'Save' }} Bank Details
         </button>
         <button type="button" class="btn btn-secondary ms-2" (click)="resetForm()">Reset</button>
@@ -87,17 +93,14 @@
   <!-- ---------------- FILTERS / SEARCH ---------------- -->
   <div class="mb-3 row g-3 align-items-end mt-4">
     <div class="col-md-4">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Search by Bank, Branch or Holder"
-        [(ngModel)]="searchText"
-      />
+      <input type="text" class="form-control" placeholder="Search by Bank, Branch or Holder" [(ngModel)]="searchText" />
     </div>
     <div class="col-md-4">
       <select class="form-select" [(ngModel)]="statusFilter">
         <option value="">All Account Types</option>
-        <option *ngFor="let type of accountTypes" [ngValue]="type.id">{{ type.name }}</option>
+        <option *ngFor="let type of accountTypes" [ngValue]="type.accountTypeId">
+          {{ type.accountType1 }}
+        </option>
       </select>
     </div>
   </div>
@@ -119,7 +122,8 @@
                 Branch <span *ngIf="sortColumn === 'branchName'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
               </th>
               <th (click)="sortBy('accountHolderName')" style="cursor:pointer">
-                Account Holder <span *ngIf="sortColumn === 'accountHolderName'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                Account Holder <span *ngIf="sortColumn === 'accountHolderName'">{{ sortDirection === 'asc' ? '▲' : '▼'
+                  }}</span>
               </th>
               <th>Account Number</th>
               <th>Account Type</th>
@@ -167,11 +171,15 @@
         </div>
 
         <div class="btn-group">
-          <button class="btn btn-outline-primary btn-sm" (click)="changePage(1)" [disabled]="currentPage === 1">First</button>
-          <button class="btn btn-outline-primary btn-sm" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+          <button class="btn btn-outline-primary btn-sm" (click)="changePage(1)"
+            [disabled]="currentPage === 1">First</button>
+          <button class="btn btn-outline-primary btn-sm" (click)="changePage(currentPage - 1)"
+            [disabled]="currentPage === 1">Previous</button>
           <span class="btn btn-outline-secondary btn-sm disabled">Page {{ currentPage }} of {{ totalPages }}</span>
-          <button class="btn btn-outline-primary btn-sm" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
-          <button class="btn btn-outline-primary btn-sm" (click)="changePage(totalPages)" [disabled]="currentPage === totalPages">Last</button>
+          <button class="btn btn-outline-primary btn-sm" (click)="changePage(currentPage + 1)"
+            [disabled]="currentPage === totalPages">Next</button>
+          <button class="btn btn-outline-primary btn-sm" (click)="changePage(totalPages)"
+            [disabled]="currentPage === totalPages">Last</button>
         </div>
       </div>
     </div>

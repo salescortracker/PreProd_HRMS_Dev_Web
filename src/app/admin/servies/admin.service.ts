@@ -1,5 +1,5 @@
 import { Injectable, model } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,HttpErrorResponse  } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
 
 import { forkJoin } from 'rxjs';
 import { map } from 'rxjs';
@@ -50,9 +50,9 @@ export interface LeaveStatus {
   createdBy: number;
   userID: number;
 }
- // ------------------------------DD LIST-----------------------------------//
- export interface EmployeeDdlist {
- ddlistId: number;
+// ------------------------------DD LIST-----------------------------------//
+export interface EmployeeDdlist {
+  ddlistId: number;
   ddnumber: string;
   dddate: string;
   bankName: string;
@@ -63,7 +63,7 @@ export interface LeaveStatus {
   companyId: number;
   regionId: number;
   employeeId: number;
-    userId: number,
+  userId: number,
   companyName: string,
   regionName: string
 }
@@ -217,11 +217,11 @@ export interface Designation {
   modifiedBy?: string;
   modifiedAt?: Date;
   isDeleted?: boolean;
-  userId:number,
-  companyName:string,
-  regionName:string,
-  departmentId:number,
-  departmentName:string
+  userId: number,
+  companyName: string,
+  regionName: string,
+  departmentId: number,
+  departmentName: string
 }
 
 export interface AssetStatus {
@@ -236,10 +236,10 @@ export interface PolicyCategory {
   CompanyID: number;
   RegionID: number;
   PolicyCategoryName: string;
-    Description?: string;
+  Description?: string;
   IsActive: boolean;
   UserId?: number;
-} 
+}
 export interface AttachmentType {
   AttachmentTypeID?: number;
   AttachmentTypeName: string;
@@ -251,7 +251,7 @@ export interface ProjectStatus {
   ProjectStatusID: number;
   ProjectStatusName: string;
   IsActive: boolean;
-  CompanyId: number; 
+  CompanyId: number;
   RegionId: number;
   UserId: number;
   CompanyName?: string;
@@ -264,10 +264,10 @@ export interface AttendanceStatus {
   companyId: number;
   regionId: number;
   description?: string;
-  createdBy:number;
-  modifiedBy:number;
+  createdBy: number;
+  modifiedBy: number;
 
-  
+
 }
 export interface ExpenseCategory {
   ExpenseCategoryID: number;
@@ -289,7 +289,7 @@ export interface ChangePasswordRequest {
   UserID: number;
   oldPassword: string;
   newPassword: string;
- 
+
 }
 export interface ResignationModel {
   resignationId: number;
@@ -312,9 +312,9 @@ export interface LeaveType {
   LeaveTypeName: string;
   LeaveDays: number;
   IsActive: boolean;
-   CompanyID: number;
+  CompanyID: number;
   RegionID: number;
-  userId:number;
+  userId: number;
 }
 export interface ExpenseStatus {
   ExpenseStatusID: number;
@@ -353,7 +353,7 @@ export interface MenuRoleDto {
   isActive: boolean;
 }
 export interface HelpdeskCategory {
-   HelpdeskCategoryID: number;
+  HelpdeskCategoryID: number;
   CategoryName: string;
   IsActive: boolean;
   CompanyID: number;
@@ -399,11 +399,11 @@ export interface KpiCategory {
 export interface Relationship {
   RelationshipID: number;
   relationshipName: string;
-  companyId:number;
-  regionId:number;
-  userId:number;
-  companyName:string;
-  regionName:string;
+  companyId: number;
+  regionId: number;
+  userId: number;
+  companyName: string;
+  regionName: string;
   isActive: boolean;
 }
 export interface MenuItem {
@@ -417,7 +417,7 @@ export interface CertificationType {
   CertificationTypeID: number;
   certificationTypeName: string;
   isActive: boolean;
-  userId:number
+  userId: number
 }
 export interface BloodGroup {
   bloodGroupID: number;
@@ -433,8 +433,8 @@ export interface Gender {
   genderName: string;
   isActive: boolean;
   companyId: number;
-  regionId: number; 
-   // ✅ add these
+  regionId: number;
+  // ✅ add these
   companyName?: string;
   regionName?: string;
   userId?: number;
@@ -466,8 +466,8 @@ export interface User {
   fullName: string;
   email: string;
   roleId: number;
-  departmentId:number;
-  reportingTo:number;
+  departmentId: number;
+  reportingTo: number;
   password?: string;
   status: string;
   userCompanyId?: number; // ✅ added for tracking which company the user belongs to
@@ -476,7 +476,7 @@ export interface User {
 export interface MenuMaster {
   menuID: number;
   menuName: string;
-  parentMenuID?: number|null;
+  parentMenuID?: number | null;
   url?: string;
   icon?: string;
   orderNo?: number;
@@ -488,7 +488,7 @@ export interface MenuMaster {
 }
 
 export interface RoleMaster {
-  roleId?: number| undefined;
+  roleId?: number | undefined;
   roleName: string;
   roleDescription?: string;
   isActive: boolean;
@@ -499,7 +499,7 @@ export interface RoleMaster {
   companyId?: number;
   regionId?: number;
   userId?: number;
-  companyName?: string;  
+  companyName?: string;
   regionName?: string;
 }
 export interface Department {
@@ -516,7 +516,7 @@ export interface Department {
   isDeleted?: boolean;
 }
 export interface UserReadDto {
-    userID: number;
+  userID: number;
   employeeCode: string;
   fullName: string;
   email: string;
@@ -534,9 +534,9 @@ export interface ShiftMasterDto {
   isActive?: boolean;
   companyID?: number;
   regionID?: number;
-  userId:number;
-  companyName:string;
-  regionName:string;
+  userId: number;
+  companyName: string;
+  regionName: string;
 }
 
 export interface ShiftAllocationDto {
@@ -556,24 +556,24 @@ export interface ShiftAllocationDto {
   modifiedBy?: number;
   modifiedDate?: string;
 }
- // ------------------ Employee Master Interface ------------------ //
-  export interface EmployeeMaster {
-    employeeMasterId: number;
-    fullName: string;
-    role?: string | null;
-      roleId?: number;   // For backend
-    department?: string | null;
-    managerId?: number | null;
-    createdBy?: number | null;
-    updatedBy?: number | null;  // ✅ needed for edit
+// ------------------ Employee Master Interface ------------------ //
+export interface EmployeeMaster {
+  employeeMasterId: number;
+  fullName: string;
+  role?: string | null;
+  roleId?: number;   // For backend
+  department?: string | null;
+  managerId?: number | null;
+  createdBy?: number | null;
+  updatedBy?: number | null;  // ✅ needed for edit
 
-  } 
-  //------------------- Manager Dropdown Interface ------------------ //
-  export interface ManagerDropdown {
-    userId: number;
-    fullName: string;
-  }
-  //---------------------------------My Team Hierarchy Interface---------------------//
+}
+//------------------- Manager Dropdown Interface ------------------ //
+export interface ManagerDropdown {
+  userId: number;
+  fullName: string;
+}
+//---------------------------------My Team Hierarchy Interface---------------------//
 export interface TeamHierarchyDto {
   employeeMasterId: number;
   fullName: string;
@@ -602,22 +602,22 @@ export interface ClockInOutDto {
 }
 
 // ------------------ Employee Master Interface ------------------ //
-  export interface EmployeeMaster {
-    employeeMasterId: number;
-    fullName: string;
-    role?: string | null;
-      roleId?: number;   // For backend
-    department?: string | null;
-    managerId?: number | null;
-    createdBy?: number | null;
-    updatedBy?: number | null;  // ✅ needed for edit
+export interface EmployeeMaster {
+  employeeMasterId: number;
+  fullName: string;
+  role?: string | null;
+  roleId?: number;   // For backend
+  department?: string | null;
+  managerId?: number | null;
+  createdBy?: number | null;
+  updatedBy?: number | null;  // ✅ needed for edit
 
-  } 
-  //------------------- Manager Dropdown Interface ------------------ //
-  export interface ManagerDropdown {
-    userId: number;
-    fullName: string;
-  }
+}
+//------------------- Manager Dropdown Interface ------------------ //
+export interface ManagerDropdown {
+  userId: number;
+  fullName: string;
+}
 
 //---------------------------------My Team Hierarchy Interface---------------------//
 export interface TeamHierarchyDto {
@@ -669,9 +669,16 @@ export interface MaritalStatus {
   statusName: string;
   description?: string;
   isActive: boolean;
-    companyName?: string;
+  companyName?: string;
   regionName?: string;
-  userId:Number;
+  userId: Number;
+}
+export interface AccountType {
+  accountTypeId: number;
+  accountType1: string;
+  companyId: number;
+  regionId: number;
+  isActive: boolean;
 }
 
 @Injectable({
@@ -680,13 +687,13 @@ export interface MaritalStatus {
 export class AdminService {
   private baseUrl = environment.apiUrl; // 🔹 Change this to your actual API URL
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   // -------------------------------------------------------------
   // 🔹 GENERIC HELPERS
   // -------------------------------------------------------------
 
   private buildParams(params?: Record<string, any>): HttpParams {
-    
+
     let httpParams = new HttpParams();
     if (params) {
       Object.keys(params).forEach(key => {
@@ -729,9 +736,16 @@ export class AdminService {
   // -------------------------------------------------------------
   // 🔹 COMPANY OPERATIONS
   // -------------------------------------------------------------
-  getCompanies(params?: any,userId?: number): Observable<Company[]> {
-    return this.getAll<Company>('UserManagement/GetCompany?userId='+userId, params);
+  getCompanies(params?: any, userId?: number): Observable<Company[]> {
+    return this.getAll<Company>('UserManagement/GetCompany?userId=' + userId, params);
   }
+
+getAccountTypesByCompanyRegion(companyId: number, regionId: number, params?: any): Observable<AccountType[]> {
+  return this.getAll<AccountType>(
+    'MasterData/account-type-by-company-region?companyId=' + companyId + '&regionId=' + regionId,
+    params
+  );
+}
 
   getCompanyById(id: number): Observable<Company> {
     return this.getById<Company>('UserManagement/GetCompanyById', id);
@@ -752,8 +766,8 @@ export class AdminService {
   // -------------------------------------------------------------
   // 🔹 REGION OPERATIONS
   // -------------------------------------------------------------
-  getRegions(params?: any,userId?: number): Observable<Region[]> {
-    return this.getAll<Region>('UserManagement/GetRegion?userId='+userId, params);
+  getRegions(params?: any, userId?: number): Observable<Region[]> {
+    return this.getAll<Region>('UserManagement/GetRegion?userId=' + userId, params);
   }
 
   getRegionById(id: number): Observable<Region> {
@@ -795,14 +809,14 @@ export class AdminService {
   //   return this.delete('UserManagement/deleteUser', id);
   // }
   getAllUsers(): Observable<User[]> {
-     const userId = sessionStorage.getItem('UserId') ? Number(sessionStorage.getItem('UserId')) : 0;
-    return this.http.get<User[]>(`${this.baseUrl}/UserManagement/GetAllUsers/${userId}`);  
+    const userId = sessionStorage.getItem('UserId') ? Number(sessionStorage.getItem('UserId')) : 0;
+    return this.http.get<User[]>(`${this.baseUrl}/UserManagement/GetAllUsers/${userId}`);
   }
   GetAllUsersData(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/UserManagement/GetAllUsersData?userCompanyId=`+ (sessionStorage.getItem('UserId') ? Number(sessionStorage.getItem('UserId')) : 0));
+    return this.http.get<User[]>(`${this.baseUrl}/UserManagement/GetAllUsersData?userCompanyId=` + (sessionStorage.getItem('UserId') ? Number(sessionStorage.getItem('UserId')) : 0));
   }
-   GetcmpregAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/UserManagement/GetcmpregAllUsers?companyId=`+ (sessionStorage.getItem('CompanyId') ? Number(sessionStorage.getItem('CompanyId')) : 0)+'&&regionId='+(sessionStorage.getItem('RegionId') ? Number(sessionStorage.getItem('RegionId')) : 0));
+  GetcmpregAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseUrl}/UserManagement/GetcmpregAllUsers?companyId=` + (sessionStorage.getItem('CompanyId') ? Number(sessionStorage.getItem('CompanyId')) : 0) + '&&regionId=' + (sessionStorage.getItem('RegionId') ? Number(sessionStorage.getItem('RegionId')) : 0));
   }
 
   getUserById(id: number): Observable<User> {
@@ -821,7 +835,7 @@ export class AdminService {
     return this.http.delete<void>(`${this.baseUrl}/UserManagement/DeleteUser/${id}`);
   }
   login(username: string, password: string): Observable<any> {
-    const model = {email: username,password: password };
+    const model = { email: username, password: password };
     return this.http.post<any>(`${this.baseUrl}/UserManagement/Login`, model).pipe(
       catchError(this.handleError)
     );
@@ -862,11 +876,11 @@ export class AdminService {
   // -------------------------------------------------------------
   // 🔹 Role MASTER OPERATIONS
   // -------------------------------------------------------------
-getroles(userId: number): Observable<RoleMaster[]> {
-  return this.http.get<RoleMaster[]>(
-    `${this.baseUrl}/UserManagement/GetAllRoles?userId=${userId}`
-  );
-}
+  getroles(userId: number): Observable<RoleMaster[]> {
+    return this.http.get<RoleMaster[]>(
+      `${this.baseUrl}/UserManagement/GetAllRoles?userId=${userId}`
+    );
+  }
 
   getrolesById(id: number): Observable<RoleMaster> {
     return this.getById<RoleMaster>('UserManagement/GetRoleById', id);
@@ -880,15 +894,15 @@ getroles(userId: number): Observable<RoleMaster[]> {
     return this.update<RoleMaster>('UserManagement/UpdateRole', id, model);
   }
 
-    deleteRoles(id: number): Observable<any> {
-  return this.http.post(`${this.baseUrl}/UserManagement/DeleteRole/${id}`, {}); 
-}
+  deleteRoles(id: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/UserManagement/DeleteRole/${id}`, {});
+  }
 
 
 
 
   // ✅ Role Permission APIs
-  getPermissionsByRole(roleId: number|undefined): Observable<any[]> {
+  getPermissionsByRole(roleId: number | undefined): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/UserManagement/get-permissions/${roleId}`);
   }
 
@@ -897,7 +911,7 @@ getroles(userId: number): Observable<RoleMaster[]> {
   }
 
   // ✅ Combined loader: Menus + Role Permissions merged
-  getMenusWithPermissions(roleId: number|undefined): Observable<any[]> {
+  getMenusWithPermissions(roleId: number | undefined): Observable<any[]> {
     return forkJoin({
       menus: this.getMenus(),
       permissions: this.getPermissionsByRole(roleId)
@@ -911,162 +925,162 @@ getroles(userId: number): Observable<RoleMaster[]> {
       .pipe(catchError(this.handleError));
   }
 
-  
+
 
   private mergePermissions(menus: MenuMaster[], permissions: any[]): any[] {
-  // Function recursively maps permissions to each menu item
-  const mapPermissions = (menuList: MenuMaster[]): any[] => {
-    return menuList.map((menu): any => {
-      const perm = permissions.find(p => p.menuId === menu.menuID);
+    // Function recursively maps permissions to each menu item
+    const mapPermissions = (menuList: MenuMaster[]): any[] => {
+      return menuList.map((menu): any => {
+        const perm = permissions.find(p => p.menuId === menu.menuID);
 
-      const mappedMenu: any = {
-        ...menu,
-        expanded: false,
-        selected: perm ? perm.isActive : false,
-        permissions: {
-          view: perm ? perm.canView : false,
-          add: perm ? perm.canAdd : false,
-          edit: perm ? perm.canEdit : false,
-          delete: perm ? perm.canDelete : false,
-          approve: perm ? perm.canApprove : false
-        },
-        children: [] as any[]
-      };
+        const mappedMenu: any = {
+          ...menu,
+          expanded: false,
+          selected: perm ? perm.isActive : false,
+          permissions: {
+            view: perm ? perm.canView : false,
+            add: perm ? perm.canAdd : false,
+            edit: perm ? perm.canEdit : false,
+            delete: perm ? perm.canDelete : false,
+            approve: perm ? perm.canApprove : false
+          },
+          children: [] as any[]
+        };
 
-      // Recursively process children
-      const childMenus = menus.filter(m => m.parentMenuID === menu.menuID);
-      if (childMenus.length > 0) {
-        mappedMenu.children = mapPermissions(childMenus);
+        // Recursively process children
+        const childMenus = menus.filter(m => m.parentMenuID === menu.menuID);
+        if (childMenus.length > 0) {
+          mappedMenu.children = mapPermissions(childMenus);
+        }
+
+        return mappedMenu;
+      });
+    };
+
+    // Start with root-level menus
+    const rootMenus = menus.filter(m => !m.parentMenuID);
+    return mapPermissions(rootMenus);
+  }
+  bulkInsertData(entityName: string, data: any[]): Observable<any> {
+    const payload = {
+      entityName,
+      data
+    };
+    return this.http.post(`${this.baseUrl}/UserManagement/BulkInsert`, payload);
+  }
+  // -------------------------------------------------------------
+  // 🔹 DEPARTMENT OPERATIONS
+  // -------------------------------------------------------------
+  getDepartments(userId: number): Observable<Department[]> {
+    return this.getAll<Department>(`MasterData/GetDepartments?userId=` + userId);
+  }
+
+  getDepartmentById(id: number): Observable<Department> {
+    return this.getById<Department>(`MasterData/GetDepartmentById`, id);
+  }
+
+  createDepartment(model: Department): Observable<any> {
+    return this.create<Department>(`MasterData/CreateDepartment`, model);
+  }
+
+  updateDepartment(id: number, model: Department): Observable<any> {
+    return this.update<Department>(`MasterData/updateDepartment`, id, model);
+  }
+
+  deleteDepartment(id: number): Observable<any> {
+    return this.http.post(`/MasterData/DeleteDepartment/${id}`, {}); // soft delete
+  }
+
+  getDesignations(userId: number): Observable<Designation[]> {
+    debugger;
+    return this.getAll<Designation>(`MasterData/GetDesignations?userId=` + userId);
+  }
+
+  getDesignationById(id: number): Observable<Designation> {
+    return this.getById<Designation>(`MasterData/GetDesignationById`, id);
+  }
+
+  createDesignation(model: Designation): Observable<any> {
+    return this.create<Designation>(`MasterData/CreateDesignation`, model);
+  }
+
+  updateDesignation(id: number, model: Designation): Observable<any> {
+    return this.update<Designation>(`MasterData/UpdateDesignation`, id, model);
+  }
+
+  deleteDesignation(id: number): Observable<any> {
+    // Using POST for soft delete pattern as per your Department delete
+    return this.http.post(`${this.baseUrl}/MasterData/DeleteDesignation/${id}`, {});
+  }
+
+  getGenders(companyId: number, regionId: number, userId: number) {
+    return this.http.get<any>(
+      `${this.baseUrl}/MasterData/GetGenderAll`,
+      {
+        params: {
+          companyId: companyId,
+          regionId: regionId,
+          userId: userId
+        }
       }
+    );
+  }
 
-      return mappedMenu;
-    });
-  };
+  createGender(gender: Gender) {
+    return this.http.post(`${this.baseUrl}/MasterData/CreateGender`, gender);
+  }
 
-  // Start with root-level menus
-  const rootMenus = menus.filter(m => !m.parentMenuID);
-  return mapPermissions(rootMenus);
-}
-bulkInsertData(entityName: string, data: any[]): Observable<any> {
-  const payload = {
-    entityName,
-    data
-  };
-  return this.http.post(`${this.baseUrl}/UserManagement/BulkInsert`, payload);
-}
-// -------------------------------------------------------------
-// 🔹 DEPARTMENT OPERATIONS
-// -------------------------------------------------------------
-getDepartments(userId:number): Observable<Department[]> {
-  return this.getAll<Department>(`MasterData/GetDepartments?userId=`+userId);
-}
+  updateGender(gender: Gender) {
+    return this.http.post(`${this.baseUrl}/MasterData/UpdateGender`, gender);
+  }
 
-getDepartmentById(id: number): Observable<Department> {
-  return this.getById<Department>(`MasterData/GetDepartmentById`, id);
-}
-
-createDepartment(model: Department): Observable<any> {
-  return this.create<Department>(`MasterData/CreateDepartment`, model);
-}
-
-updateDepartment(id: number, model: Department): Observable<any> {
-  return this.update<Department>(`MasterData/updateDepartment`, id, model);
-}
-
-deleteDepartment(id: number): Observable<any> {
-  return this.http.post(`/MasterData/DeleteDepartment/${id}`, {}); // soft delete
-}
-
-getDesignations(userId:number): Observable<Designation[]> {
-  debugger;
-  return this.getAll<Designation>(`MasterData/GetDesignations?userId=`+userId);
-}
-
-getDesignationById(id: number): Observable<Designation> {
-  return this.getById<Designation>(`MasterData/GetDesignationById`, id);
-}
-
-createDesignation(model: Designation): Observable<any> {
-  return this.create<Designation>(`MasterData/CreateDesignation`, model);
-}
-
-updateDesignation(id: number, model: Designation): Observable<any> {
-  return this.update<Designation>(`MasterData/UpdateDesignation`, id, model);
-}
-
-deleteDesignation(id: number): Observable<any> {
-  // Using POST for soft delete pattern as per your Department delete
-  return this.http.post(`${this.baseUrl}/MasterData/DeleteDesignation/${id}`,{} );
-}
-
-getGenders(companyId: number, regionId: number,userId: number) {
-  return this.http.get<any>(
-    `${this.baseUrl}/MasterData/GetGenderAll`,
-    {
-      params: {
-        companyId: companyId,
-        regionId: regionId,
-        userId: userId
-      }
-    }
-  );
-}
-
-createGender(gender: Gender) {
-  return this.http.post(`${this.baseUrl}/MasterData/CreateGender`, gender);
-}
-
-updateGender(gender: Gender) {
-  return this.http.post(`${this.baseUrl}/MasterData/UpdateGender`, gender);
-}
-
-deleteGender(id: number) {
-  return this.http.post(`${this.baseUrl}/MasterData/DeleteGender?id=${id}`, {});
-}
- getBloodGroupsbyID(userID: number): Observable<any> {
+  deleteGender(id: number) {
+    return this.http.post(`${this.baseUrl}/MasterData/DeleteGender?id=${id}`, {});
+  }
+  getBloodGroupsbyID(userID: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/MasterData/GetBloodGroupsById/${userID}`);
   }
-//   // ✅ CREATE
+  //   // ✅ CREATE
   createBloodGroup(data: BloodGroup): Observable<any> {
     return this.http.post(`${this.baseUrl}/MasterData/AddBloodGroups`, data);
   }
 
-//   // ✅ UPDATE
+  //   // ✅ UPDATE
   updateBloodGroup(id: number, data: BloodGroup): Observable<any> {
     return this.http.put(`${this.baseUrl}/MasterData/UpdateBloodGroups?id=${id}`, data);
   }
 
-//   // ✅ DELETE (Soft delete)
+  //   // ✅ DELETE (Soft delete)
   deleteBloodGroup(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/MasterData/DeleteBloodGroups/${id}`);
   }
-// getBloodGroups() {
-//   return this.http.get(`${this.baseUrl}/bloodgroups`);
-// }
+  // getBloodGroups() {
+  //   return this.http.get(`${this.baseUrl}/bloodgroups`);
+  // }
 
-// createBloodGroup(data: any) {
-//   return this.http.post(`${this.baseUrl}/bloodgroups`, data);
-// }
+  // createBloodGroup(data: any) {
+  //   return this.http.post(`${this.baseUrl}/bloodgroups`, data);
+  // }
 
-// updateBloodGroup(id: number, data: any) {
-//   return this.http.put(`${this.baseUrl}/bloodgroups/${id}`, data);
-// }
+  // updateBloodGroup(id: number, data: any) {
+  //   return this.http.put(`${this.baseUrl}/bloodgroups/${id}`, data);
+  // }
 
-// deleteBloodGroup(id: number) {
-//   return this.http.delete(`${this.baseUrl}/bloodgroups/${id}`);
-// }
-//martital status CRUD operations
+  // deleteBloodGroup(id: number) {
+  //   return this.http.delete(`${this.baseUrl}/bloodgroups/${id}`);
+  // }
+  //martital status CRUD operations
 
-   // ----------------- Marital Status -----------------
-  getMaritalStatuses(userId:Number): Observable<MaritalStatus[]> {
+  // ----------------- Marital Status -----------------
+  getMaritalStatuses(userId: Number): Observable<MaritalStatus[]> {
     // Must POST {} because backend uses [HttpPost("getall")]
-   // return this.http.post<MaritalStatus[]>(`${this.baseUrl}/UserManagement/getall?userId=`+userId, {});
-    return this.http.post<MaritalStatus[]>(`${this.baseUrl}/UserManagement/getallMaritalStatus?userId=`+userId, {});
+    // return this.http.post<MaritalStatus[]>(`${this.baseUrl}/UserManagement/getall?userId=`+userId, {});
+    return this.http.post<MaritalStatus[]>(`${this.baseUrl}/UserManagement/getallMaritalStatus?userId=` + userId, {});
   }
-  getMaritalStatusesbycmp(companyId: number,regionId: number): Observable<MaritalStatus[]> {
+  getMaritalStatusesbycmp(companyId: number, regionId: number): Observable<MaritalStatus[]> {
     // Must POST {} because backend uses [HttpPost("getall")]
-   // return this.http.post<MaritalStatus[]>(`${this.baseUrl}/UserManagement/getall?userId=`+userId, {});
-    return this.http.post<MaritalStatus[]>(`${this.baseUrl}/UserManagement/getallMaritalStatusByCmp?companyId=`+companyId+"&regionId="+regionId, {});
+    // return this.http.post<MaritalStatus[]>(`${this.baseUrl}/UserManagement/getall?userId=`+userId, {});
+    return this.http.post<MaritalStatus[]>(`${this.baseUrl}/UserManagement/getallMaritalStatusByCmp?companyId=` + companyId + "&regionId=" + regionId, {});
   }
 
   createMaritalStatus(data: MaritalStatus): Observable<any> {
@@ -1077,7 +1091,7 @@ deleteGender(id: number) {
     fd.append('maritalStatusName', data.statusName);
     fd.append('description', data.description ?? '');
     fd.append('isActive', data.isActive.toString());
-    fd.append('userId',data.userId.toString());
+    fd.append('userId', data.userId.toString());
     return this.http.post(`${this.baseUrl}/UserManagement/create`, fd);
   }
 
@@ -1097,49 +1111,51 @@ deleteGender(id: number) {
     fd.append('id', id.toString());
     return this.http.post(`${this.baseUrl}/UserManagement/delete`, fd);
   }
-// ---------------- RELATIONSHIP MASTER ---------------- //
+  // ---------------- RELATIONSHIP MASTER ---------------- //
 
-getRelationships(userId: number, companyId: number, regionId: number) {
-  return this.http.get<any>(`${this.baseUrl}/UserManagement/GetAllRelationShip`,{
+  getRelationships(userId: number, companyId: number, regionId: number) {
+    return this.http.get<any>(`${this.baseUrl}/UserManagement/GetAllRelationShip`, {
       params: {
         userId: userId,
         companyId: companyId,
         regionId: regionId
-      }})
-}
+      }
+    })
+  }
 
-getcmpregRelationships(userId: number) {
-  return this.http.get<any>(`${this.baseUrl}/UserManagement/GetAllUserIdrelatiopnshipByUserAsync`,{
+  getcmpregRelationships(userId: number) {
+    return this.http.get<any>(`${this.baseUrl}/UserManagement/GetAllUserIdrelatiopnshipByUserAsync`, {
       params: {
         userId: userId
-      }})
-}
+      }
+    })
+  }
 
-createRelationship(data: any) {
-  return this.http.post<any>(`${this.baseUrl}/UserManagement/AddRelationship`, data);
-}
+  createRelationship(data: any) {
+    return this.http.post<any>(`${this.baseUrl}/UserManagement/AddRelationship`, data);
+  }
 
-updateRelationship(data: any) {
-  return this.http.post<any>(`${this.baseUrl}/UpdateRelationship`, data);
-}
+  updateRelationship(data: any) {
+    return this.http.post<any>(`${this.baseUrl}/UpdateRelationship`, data);
+  }
 
-deleteRelationship(id: number) {
-  return this.http.post<any>(`${this.baseUrl}/UserManagement/DeleteRelationship?id=${id}`, {});
-}
- 
+  deleteRelationship(id: number) {
+    return this.http.post<any>(`${this.baseUrl}/UserManagement/DeleteRelationship?id=${id}`, {});
+  }
+
   // Policy Category
-createPolicyCategory(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/CreatePolicyCategory`, data);
-}
+  createPolicyCategory(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/CreatePolicyCategory`, data);
+  }
 
-updatePolicyCategory(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/UpdatePolicyCategory`, data);
-}
+  updatePolicyCategory(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/UpdatePolicyCategory`, data);
+  }
 
-deletePolicyCategory(id: number) {
-  return this.http.post(`${this.baseUrl}/MasterData/DeletePolicyCategory?id=${id}`, {});
-}
-// ===================== POLICIES =====================
+  deletePolicyCategory(id: number) {
+    return this.http.post(`${this.baseUrl}/MasterData/DeletePolicyCategory?id=${id}`, {});
+  }
+  // ===================== POLICIES =====================
 
   // Get All Policies
   getAllPolicies(userId: number) {
@@ -1202,38 +1218,38 @@ deletePolicyCategory(id: number) {
     return this.http.post<PolicyCategory[]>(`${this.baseUrl}/Attendance/GetPolicyCategoryDropdown`, formData);
   }
 
-// Get policy categories by company and region
+  // Get policy categories by company and region
   getPolicyCategories(userId: number) {
-  return this.http.get(`${this.baseUrl}/MasterData/policy-category?userId=${userId}`);
-}
-getAttachmentTypes(companyId: number, regionId: number) {
-  return this.http.get<any>(`${this.baseUrl}/AttachmentType/Get?companyId=${companyId}&regionId=${regionId}`);
-}
+    return this.http.get(`${this.baseUrl}/MasterData/policy-category?userId=${userId}`);
+  }
+  getAttachmentTypes(companyId: number, regionId: number) {
+    return this.http.get<any>(`${this.baseUrl}/AttachmentType/Get?companyId=${companyId}&regionId=${regionId}`);
+  }
 
-createAttachmentType(data: AttachmentType) {
-  return this.http.post<any>(`${this.baseUrl}/AttachmentType/Create`, data);
-}
+  createAttachmentType(data: AttachmentType) {
+    return this.http.post<any>(`${this.baseUrl}/AttachmentType/Create`, data);
+  }
 
-updateAttachmentType(data: AttachmentType) {
-  return this.http.put<any>(`${this.baseUrl}/AttachmentType/Update`, data);
-}
+  updateAttachmentType(data: AttachmentType) {
+    return this.http.put<any>(`${this.baseUrl}/AttachmentType/Update`, data);
+  }
 
-deleteAttachmentType(id: number) {
-  return this.http.delete<any>(`${this.baseUrl}/AttachmentType/Delete/${id}`);
-}
-// GET all project statuses
- getProjectStatuses(userId: number): Observable<any> {
+  deleteAttachmentType(id: number) {
+    return this.http.delete<any>(`${this.baseUrl}/AttachmentType/Delete/${id}`);
+  }
+  // GET all project statuses
+  getProjectStatuses(userId: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/MasterData/project-status?userId=${userId}`);
   }
 
   // CREATE
   createProjectStatus(status: ProjectStatus): Observable<any> {
-   return this.http.post(`${this.baseUrl}/MasterData/project-status`, status);
+    return this.http.post(`${this.baseUrl}/MasterData/project-status`, status);
   }
 
   // UPDATE
   updateProjectStatus(status: ProjectStatus): Observable<any> {
-     return this.http.put(`${this.baseUrl}/MasterData/project-status/${status.ProjectStatusID}`, status);
+    return this.http.put(`${this.baseUrl}/MasterData/project-status/${status.ProjectStatusID}`, status);
   }
 
   // DELETE
@@ -1262,13 +1278,13 @@ deleteAttachmentType(id: number) {
   }
 
   // GET all helpdesk categories
-   getHelpdeskCategories(userId: number): Observable<any> {
-  return this.http.get(`${this.baseUrl}/MasterData/helpdesk-category?userId=${userId}`);
-}
+  getHelpdeskCategories(userId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/MasterData/helpdesk-category?userId=${userId}`);
+  }
 
   // CREATE
   createHelpdeskCategory(category: HelpdeskCategory): Observable<any> {
-     return this.http.post(`${this.baseUrl}/MasterData/helpdesk-category`, category);
+    return this.http.post(`${this.baseUrl}/MasterData/helpdesk-category`, category);
   }
 
   // UPDATE
@@ -1278,57 +1294,57 @@ deleteAttachmentType(id: number) {
 
   // DELETE
   deleteHelpdeskCategory(id: number): Observable<any> {
-   return this.http.delete(`${this.baseUrl}/MasterData/helpdesk-category/${id}`);
+    return this.http.delete(`${this.baseUrl}/MasterData/helpdesk-category/${id}`);
   }
- getAttendanceStatus(companyId: number, regionId: number) {
- return this.http.get<any>(`${this.baseUrl}/MasterData/GetAllAttendanceStatus?companyId=${companyId}&regionId=${regionId}`); 
-}
+  getAttendanceStatus(companyId: number, regionId: number) {
+    return this.http.get<any>(`${this.baseUrl}/MasterData/GetAllAttendanceStatus?companyId=${companyId}&regionId=${regionId}`);
+  }
 
-createAttendanceStatus(model: AttendanceStatus) {
-  return this.http.post(`${this.baseUrl}/MasterData/AddAttendanceStatus`, model);
-}
+  createAttendanceStatus(model: AttendanceStatus) {
+    return this.http.post(`${this.baseUrl}/MasterData/AddAttendanceStatus`, model);
+  }
 
-updateAttendanceStatus(model: AttendanceStatus) {
-  return this.http.put(`${this.baseUrl}/MasterData/UpdateAttendanceStatus`, model);
-}
+  updateAttendanceStatus(model: AttendanceStatus) {
+    return this.http.put(`${this.baseUrl}/MasterData/UpdateAttendanceStatus`, model);
+  }
 
-deleteAttendanceStatus(id: number) {
- return this.http.delete(`${this.baseUrl}/MasterData/DeleteAttendanceStatus/${id}`);
-}
-// ================= LEAVE STATUS ===================
+  deleteAttendanceStatus(id: number) {
+    return this.http.delete(`${this.baseUrl}/MasterData/DeleteAttendanceStatus/${id}`);
+  }
+  // ================= LEAVE STATUS ===================
 
-// Get All
-getLeaveStatus(companyId: number, regionId: number) {
-  return this.http.get<any>(
-    `${this.baseUrl}/MasterData/GetAllLeaveStatus?companyId=${companyId}&regionId=${regionId}`
-  );
-}
+  // Get All
+  getLeaveStatus(companyId: number, regionId: number) {
+    return this.http.get<any>(
+      `${this.baseUrl}/MasterData/GetAllLeaveStatus?companyId=${companyId}&regionId=${regionId}`
+    );
+  }
 
-// Create
-createLeaveStatus(data: LeaveStatus) {
-   return this.http.post<any>(
-    `${this.baseUrl}/MasterData/AddLeaveStatus`,
-    data
-  );
-}
+  // Create
+  createLeaveStatus(data: LeaveStatus) {
+    return this.http.post<any>(
+      `${this.baseUrl}/MasterData/AddLeaveStatus`,
+      data
+    );
+  }
 
-// Update
-updateLeaveStatus(id: number, data: LeaveStatus) {
-  return this.http.put<any>(
-    `${this.baseUrl}/MasterData/UpdateLeaveStatus?id=${id}`,
-    data
-  );
-}
+  // Update
+  updateLeaveStatus(id: number, data: LeaveStatus) {
+    return this.http.put<any>(
+      `${this.baseUrl}/MasterData/UpdateLeaveStatus?id=${id}`,
+      data
+    );
+  }
 
-// Delete
-deleteLeaveStatus(id: number) {
-  return this.http.delete<any>(
-   `${this.baseUrl}/MasterData/DeleteLeaveStatus/${id}`
-  );
-}
+  // Delete
+  deleteLeaveStatus(id: number) {
+    return this.http.delete<any>(
+      `${this.baseUrl}/MasterData/DeleteLeaveStatus/${id}`
+    );
+  }
 
- getLeaveType(): Observable<LeaveType[]> {
-    return this.http.get<LeaveType[]>(`${this.baseUrl}/MasterData/GetLeaveTypesByuserIdAsync?userId=`+(sessionStorage.getItem('UserId') ? Number(sessionStorage.getItem('UserId')) : 0));
+  getLeaveType(): Observable<LeaveType[]> {
+    return this.http.get<LeaveType[]>(`${this.baseUrl}/MasterData/GetLeaveTypesByuserIdAsync?userId=` + (sessionStorage.getItem('UserId') ? Number(sessionStorage.getItem('UserId')) : 0));
   }
   createLeaveType(model: LeaveType): Observable<any> {
     return this.http.post(`${this.baseUrl}/MasterData/CreateLeaveType`, model);
@@ -1337,153 +1353,153 @@ deleteLeaveStatus(id: number) {
   updateLeaveType(model: LeaveType): Observable<any> {
     return this.http.post(`${this.baseUrl}/MasterData/UpdateLeaveType`, model);
   }
-deleteLeaveType(id: number) {
-  
-  return this.http.post(
-    `${this.baseUrl}/MasterData/DeleteLeaveType?id=${id}`,{}
-  );
-}
-// EXPENSE STATUS CRUD
+  deleteLeaveType(id: number) {
 
-getExpenseStatus(companyId: number, regionId: number) {
-  return this.http.get<any>(`${this.baseUrl}/GetExpenseStatus?companyId=${companyId}&regionId=${regionId}`);
-}
+    return this.http.post(
+      `${this.baseUrl}/MasterData/DeleteLeaveType?id=${id}`, {}
+    );
+  }
+  // EXPENSE STATUS CRUD
 
-createExpenseStatus(data: ExpenseStatus) {
-  return this.http.post<any>(`${this.baseUrl}/CreateExpenseStatus`, data);
-}
+  getExpenseStatus(companyId: number, regionId: number) {
+    return this.http.get<any>(`${this.baseUrl}/GetExpenseStatus?companyId=${companyId}&regionId=${regionId}`);
+  }
 
-updateExpenseStatus(data: ExpenseStatus) {
-  return this.http.put<any>(`${this.baseUrl}/UpdateExpenseStatus`, data);
-}
+  createExpenseStatus(data: ExpenseStatus) {
+    return this.http.post<any>(`${this.baseUrl}/CreateExpenseStatus`, data);
+  }
 
-deleteExpenseStatus(id: number) {
-  return this.http.delete<any>(`${this.baseUrl}/DeleteExpenseStatus/${id}`);
-}
- // ------------------ EXPENSE CATEGORY TYPE ------------------
+  updateExpenseStatus(data: ExpenseStatus) {
+    return this.http.put<any>(`${this.baseUrl}/UpdateExpenseStatus`, data);
+  }
 
-createExpenseCategoryType(model: ExpenseCategory) {
-  return this.http.post(`${this.baseUrl}/ExpenseCategoryType/Create`, model);
-}
+  deleteExpenseStatus(id: number) {
+    return this.http.delete<any>(`${this.baseUrl}/DeleteExpenseStatus/${id}`);
+  }
+  // ------------------ EXPENSE CATEGORY TYPE ------------------
 
-updateExpenseCategoryType(model: ExpenseCategory) {
-  return this.http.put(`${this.baseUrl}/ExpenseCategoryType/Update`, model);
-}
+  createExpenseCategoryType(model: ExpenseCategory) {
+    return this.http.post(`${this.baseUrl}/ExpenseCategoryType/Create`, model);
+  }
 
-deleteExpenseCategoryType(id: number) {
-  return this.http.delete<any>(`${this.baseUrl}/ExpenseCategoryType/Delete/${id}`);
-}
+  updateExpenseCategoryType(model: ExpenseCategory) {
+    return this.http.put(`${this.baseUrl}/ExpenseCategoryType/Update`, model);
+  }
 
-getAllExpenseCategoryTypes(companyId: number, regionId: number) {
-  return this.http.get<any>(
-    `${this.baseUrl}/ExpenseCategoryType/GetAll/${companyId}/${regionId}`
-  );
-}
+  deleteExpenseCategoryType(id: number) {
+    return this.http.delete<any>(`${this.baseUrl}/ExpenseCategoryType/Delete/${id}`);
+  }
 
-// Get All
-    getAllEmployeeImmigrations(): Observable<EmployeeImmigration[]> {
-      return this.http.get<EmployeeImmigration[]>(`${this.baseUrl}/Employee/GetImmigration`);
-    }
+  getAllExpenseCategoryTypes(companyId: number, regionId: number) {
+    return this.http.get<any>(
+      `${this.baseUrl}/ExpenseCategoryType/GetAll/${companyId}/${regionId}`
+    );
+  }
 
-  getEmployeeImmigrationById(id: number) : Observable <EmployeeImmigration> {
+  // Get All
+  getAllEmployeeImmigrations(): Observable<EmployeeImmigration[]> {
+    return this.http.get<EmployeeImmigration[]>(`${this.baseUrl}/Employee/GetImmigration`);
+  }
+
+  getEmployeeImmigrationById(id: number): Observable<EmployeeImmigration> {
     return this.http.get<EmployeeImmigration>(`${this.baseUrl}/UserManagement/GetByIdImmigration/${id}`);
   }
 
-CreateEmployeeImmigration(formData: FormData): Observable<any> {
-  return this.http.post(
-    `${this.baseUrl}/Employee/CreateImmigration`,
-    formData
-  );
-}
- UpdateEmployeeImmigration(id: number, formData: FormData): Observable<any> {
-  return this.http.post(`${this.baseUrl}/Employee/UpdateImmigration/${id}`, formData, {
-    responseType: 'text'  // Add this line
-  });
-}
-  DeleteEmployeeImmigration(id: number, companyId: number, regionId: number): Observable <any> {
+  CreateEmployeeImmigration(formData: FormData): Observable<any> {
+    return this.http.post(
+      `${this.baseUrl}/Employee/CreateImmigration`,
+      formData
+    );
+  }
+  UpdateEmployeeImmigration(id: number, formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/Employee/UpdateImmigration/${id}`, formData, {
+      responseType: 'text'  // Add this line
+    });
+  }
+  DeleteEmployeeImmigration(id: number, companyId: number, regionId: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/Employee/DeleteImmigration/${id}`)
   }
-// Visa Types Dropdown
-getVisaTypes(): Observable<any[]> {
-  return this.http.get<any[]>(`${this.baseUrl}/Employee/GetVisaTypes`);
-}
+  // Visa Types Dropdown
+  getVisaTypes(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/Employee/GetVisaTypes`);
+  }
 
-// Status Dropdown
-getStatuses(): Observable<any[]> {
-  return this.http.get<any[]>(`${this.baseUrl}/Employee/GetStatuses`);
-}
+  // Status Dropdown
+  getStatuses(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/Employee/GetStatuses`);
+  }
 
-DownloadImmigrationFile(id: number, fileType: string): Observable<Blob> {
-  return this.http.get(
-    `${this.baseUrl}/UserManagement/DownloadImmigrationFile/${id}/${fileType}`,
-    { responseType: 'blob' }
-  );
-}
-getFileBaseUrl(): string {
-  return this.baseUrl + '/uploads/';
-}
+  DownloadImmigrationFile(id: number, fileType: string): Observable<Blob> {
+    return this.http.get(
+      `${this.baseUrl}/UserManagement/DownloadImmigrationFile/${id}/${fileType}`,
+      { responseType: 'blob' }
+    );
+  }
+  getFileBaseUrl(): string {
+    return this.baseUrl + '/uploads/';
+  }
 
-// -------------------------------------------------------------
-// 🔹 EMPLOYEE JOB HISTORY OPERATIONS
-// -------------------------------------------------------------
-
-
-// Get ALL job history records
-getAllJobHistory(params?: any): Observable<EmployeeJobHistoryDto[]> {
-  return this.getAll<EmployeeJobHistoryDto>('UserManagement/GetAllJobHistory', params);
-}
+  // -------------------------------------------------------------
+  // 🔹 EMPLOYEE JOB HISTORY OPERATIONS
+  // -------------------------------------------------------------
 
 
-getJobHistoryByEmployeeId(employeeId: number): Observable<EmployeeJobHistoryDto[]> {
-  return this.http.get<EmployeeJobHistoryDto[]>(
-    `${this.baseUrl}/employee/user/${employeeId}/jobhistory`
-  );
-}
+  // Get ALL job history records
+  getAllJobHistory(params?: any): Observable<EmployeeJobHistoryDto[]> {
+    return this.getAll<EmployeeJobHistoryDto>('UserManagement/GetAllJobHistory', params);
+  }
 
 
-// Get a single job history by ID
-getJobHistoryById(id: number): Observable<EmployeeJobHistoryDto> {
-  return this.getById<EmployeeJobHistoryDto>('employee/GetJobHistoryById', id);
-}
+  getJobHistoryByEmployeeId(employeeId: number): Observable<EmployeeJobHistoryDto[]> {
+    return this.http.get<EmployeeJobHistoryDto[]>(
+      `${this.baseUrl}/employee/user/${employeeId}/jobhistory`
+    );
+  }
 
 
-
-addJobHistory(formData: FormData): Observable<any> {
-  return this.http.post(`${this.baseUrl}/Employee/AddJobHistory`, formData);
-}
+  // Get a single job history by ID
+  getJobHistoryById(id: number): Observable<EmployeeJobHistoryDto> {
+    return this.getById<EmployeeJobHistoryDto>('employee/GetJobHistoryById', id);
+  }
 
 
 
-// Update job history (with file upload)
-updateJobHistory(id: number, model: any): Observable<any> {
-  const formData = new FormData();
-
-  Object.keys(model).forEach(key => {
-    if (key === 'uploadDocument' && model[key]) {
-      formData.append('UploadDocument', model[key]);
-    } else {
-      formData.append(key, model[key]);
-    }
-  });
-
-  return this.http.post(`${this.baseUrl}/employee/updatejobhistory/${id}`, formData);
-}
+  addJobHistory(formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/Employee/AddJobHistory`, formData);
+  }
 
 
-// Delete job history
-deleteJobHistory(id: number): Observable<void> {
-  return this.http.post<void>(`${this.baseUrl}/employee/deletejobhistory?id=${id}`, {});
-}
 
-//-----------Education Details APIs -----------------//
+  // Update job history (with file upload)
+  updateJobHistory(id: number, model: any): Observable<any> {
+    const formData = new FormData();
+
+    Object.keys(model).forEach(key => {
+      if (key === 'uploadDocument' && model[key]) {
+        formData.append('UploadDocument', model[key]);
+      } else {
+        formData.append(key, model[key]);
+      }
+    });
+
+    return this.http.post(`${this.baseUrl}/employee/updatejobhistory/${id}`, formData);
+  }
+
+
+  // Delete job history
+  deleteJobHistory(id: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/employee/deletejobhistory?id=${id}`, {});
+  }
+
+  //-----------Education Details APIs -----------------//
 
   // Get education by userId
- getEducationByUserId(userId: number): Observable<EmployeeEducationDto[]> {
+  getEducationByUserId(userId: number): Observable<EmployeeEducationDto[]> {
     return this.http.get<EmployeeEducationDto[]>(`${this.baseUrl}/Employee/user/${userId}/education`);
-}
-GetAllEducation(): Observable<EmployeeEducationDto[]> {
-  return this.getAll<EmployeeEducationDto>('Employee/GetAllEducation');
-}
+  }
+  GetAllEducation(): Observable<EmployeeEducationDto[]> {
+    return this.getAll<EmployeeEducationDto>('Employee/GetAllEducation');
+  }
   // Add new education
   addEducation(formData: FormData): Observable<any> {
     return this.http.post(`${this.baseUrl}/Employee/AddEducation`, formData);
@@ -1494,169 +1510,169 @@ GetAllEducation(): Observable<EmployeeEducationDto[]> {
     return this.http.post(`${this.baseUrl}/Employee/UpdateEducation/${id}`, formData);
   }
 
-deleteEducation(id: number): Observable<any> {
-  return this.http.post(
-    `${this.baseUrl}/Employee/DeleteEducation?id=${id}`,
-    {}
-  );
-}
+  deleteEducation(id: number): Observable<any> {
+    return this.http.post(
+      `${this.baseUrl}/Employee/DeleteEducation?id=${id}`,
+      {}
+    );
+  }
   // Mode of Study
   // getModeOfStudy(): Observable<any[]> {
   //   return this.http.get<any[]>(`${this.baseUrl}/employee/modeofstudy`);
   // }
-// ================= CERTIFICATION APIs =================
+  // ================= CERTIFICATION APIs =================
 
 
 
-getCertificationsByUserId(userId: number): Observable<EmployeeCertificationDto[]> {
-  return this.http.get<EmployeeCertificationDto[]>(
-    `${this.baseUrl}/employee/user/${userId}/certifications`
-  );
-}
+  getCertificationsByUserId(userId: number): Observable<EmployeeCertificationDto[]> {
+    return this.http.get<EmployeeCertificationDto[]>(
+      `${this.baseUrl}/employee/user/${userId}/certifications`
+    );
+  }
 
-addCertification(formData: FormData): Observable<any> {
-  return this.http.post(`${this.baseUrl}/Employee/AddCertification`, formData);
-}
+  addCertification(formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/Employee/AddCertification`, formData);
+  }
 
-updateCertification(id: number, formData: FormData): Observable<any> {
-  return this.http.post(`${this.baseUrl}/Employee/UpdateCertification/${id}`, formData);
-}
+  updateCertification(id: number, formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/Employee/UpdateCertification/${id}`, formData);
+  }
 
-deleteCertification(id: number): Observable<any> {
-  return this.http.post(
-    `${this.baseUrl}/Employee/DeleteCertification?id=${id}`,
-    { }
-  );
-}
- 
-// -------------------------------------------------------------
-// 🔹 EMPLOYEE  Letters  OPERATIONS
-// -------------------------------------------------------------
-// ✅ Get Active Document Types for Dropdown
-getActiveDocumentTypes(): Observable<any[]> {
-  return this.http.get<any[]>(`${this.baseUrl}/employee/GetActiveDocumentTypes`);
-}
-getEmployeeLettersByEmployeeId(employeeId: number): Observable<EmployeeLetter[]> {
-  return this.http.get<EmployeeLetter[]>(
-    `${this.baseUrl}/employee/GetLettersByUser/${employeeId}`
-  );
-}
-// POST - Add new employee letter
-addEmployeeLetter(formData: FormData): Observable<any> {
-  return this.http.post(`${this.baseUrl}/employee/AddLetter`, formData);
-}
+  deleteCertification(id: number): Observable<any> {
+    return this.http.post(
+      `${this.baseUrl}/Employee/DeleteCertification?id=${id}`,
+      {}
+    );
+  }
 
-// UPDATE letter (FIXED)
-updateEmployeeLetter(id: number, formData: FormData): Observable<any> {
-  return this.http.post(`${this.baseUrl}/employee/UpdateLetter/${id}`, formData);
-}
+  // -------------------------------------------------------------
+  // 🔹 EMPLOYEE  Letters  OPERATIONS
+  // -------------------------------------------------------------
+  // ✅ Get Active Document Types for Dropdown
+  getActiveDocumentTypes(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/employee/GetActiveDocumentTypes`);
+  }
+  getEmployeeLettersByEmployeeId(employeeId: number): Observable<EmployeeLetter[]> {
+    return this.http.get<EmployeeLetter[]>(
+      `${this.baseUrl}/employee/GetLettersByUser/${employeeId}`
+    );
+  }
+  // POST - Add new employee letter
+  addEmployeeLetter(formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/employee/AddLetter`, formData);
+  }
 
-// DELETE letter (FIXED)
-deleteEmployeeLetter(id: number): Observable<any> {
-  return this.http.post(`${this.baseUrl}/employee/deleteletters?id=${id}`, {});
-}
+  // UPDATE letter (FIXED)
+  updateEmployeeLetter(id: number, formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/employee/UpdateLetter/${id}`, formData);
+  }
 
-// -------------------------------------------------------------
-// 🔹 EMPLOYEE  Forms  OPERATIONS
-// -------------------------------------------------------------
+  // DELETE letter (FIXED)
+  deleteEmployeeLetter(id: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/employee/deleteletters?id=${id}`, {});
+  }
 
-getEmployeeFormsByEmployeeId(employeeId: number): Observable<EmployeeForm[]> {
-  return this.http.get<EmployeeForm[]>(
-    `${this.baseUrl}/employee/GetUserForms/${employeeId}`
-  );
-}
-addEmployeeForms(formData: FormData): Observable<any> {
-  return this.http.post(`${this.baseUrl}/employee/AddForm`, formData);
-}
+  // -------------------------------------------------------------
+  // 🔹 EMPLOYEE  Forms  OPERATIONS
+  // -------------------------------------------------------------
 
-// UPDATE letter (FIXED)
-updateEmployeeForms(id: number, formData: FormData): Observable<any> {
-  return this.http.post(`${this.baseUrl}/employee/UpdateForm/${id}`, formData);
-}
+  getEmployeeFormsByEmployeeId(employeeId: number): Observable<EmployeeForm[]> {
+    return this.http.get<EmployeeForm[]>(
+      `${this.baseUrl}/employee/GetUserForms/${employeeId}`
+    );
+  }
+  addEmployeeForms(formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/employee/AddForm`, formData);
+  }
 
-// DELETE letter (FIXED)
-deleteEmployeeForms(id: number): Observable<any> {
-  return this.http.post(`${this.baseUrl}/employee/DeleteForm?id=${id}`, {});
-}
-// -------------------------------------------------------------
-// 🔹 EMPLOYEE  Document  OPERATIONS
-// -------------------------------------------------------------
-getEmployeeDocumentByEmployeeId(employeeId: number): Observable<EmployeeDocument[]> {
-  return this.http.get<EmployeeDocument[]>(
-    `${this.baseUrl}/employee/user/${employeeId}/documents`
-  );
-}
-addEmployeeDocument(formData: FormData): Observable<any> {
-  return this.http.post(`${this.baseUrl}/employee/AddDocument`, formData);
-}
-updateEmployeeDocument(id: number, formData: FormData): Observable<any> {
-  return this.http.post(`${this.baseUrl}/employee/UpdateDocument/${id}`, formData);
-}
+  // UPDATE letter (FIXED)
+  updateEmployeeForms(id: number, formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/employee/UpdateForm/${id}`, formData);
+  }
 
-// DELETE letter (FIXED)
-deleteEmployeeDocument(id: number): Observable<any> {
-  return this.http.delete(`${this.baseUrl}/employee/DeleteDocument/${id}`);
-}
+  // DELETE letter (FIXED)
+  deleteEmployeeForms(id: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/employee/DeleteForm?id=${id}`, {});
+  }
+  // -------------------------------------------------------------
+  // 🔹 EMPLOYEE  Document  OPERATIONS
+  // -------------------------------------------------------------
+  getEmployeeDocumentByEmployeeId(employeeId: number): Observable<EmployeeDocument[]> {
+    return this.http.get<EmployeeDocument[]>(
+      `${this.baseUrl}/employee/user/${employeeId}/documents`
+    );
+  }
+  addEmployeeDocument(formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/employee/AddDocument`, formData);
+  }
+  updateEmployeeDocument(id: number, formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/employee/UpdateDocument/${id}`, formData);
+  }
 
-//--------------------------------BANK - DETAILS-----------------------------------//
-getBankDetails(userId: number): Observable<BankDetails[]> {
-  return this.http.get<BankDetails[]>(`${this.baseUrl}/employee/GetAllBankDetails/${userId}`);
-}
-getBankDetailById(id: number): Observable<BankDetails> {
-  return this.http.get<BankDetails>(`${this.baseUrl}/employee/GetBankDetailsById/${id}`);
-}
+  // DELETE letter (FIXED)
+  deleteEmployeeDocument(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/employee/DeleteDocument/${id}`);
+  }
 
-createBankDetail(bank: FormData | BankDetails): Observable<BankDetails> {
-  return this.http.post<BankDetails>(`${this.baseUrl}/employee/CreateBankDetails`, bank);
-}
+  //--------------------------------BANK - DETAILS-----------------------------------//
+  getBankDetails(userId: number): Observable<BankDetails[]> {
+    return this.http.get<BankDetails[]>(`${this.baseUrl}/employee/GetAllBankDetails/${userId}`);
+  }
+  getBankDetailById(id: number): Observable<BankDetails> {
+    return this.http.get<BankDetails>(`${this.baseUrl}/employee/GetBankDetailsById/${id}`);
+  }
 
-updateBankDetail(bank: FormData | BankDetails): Observable<BankDetails> {
-  return this.http.post<BankDetails>(`${this.baseUrl}/employee/UpdateBankDetails`, bank);
-}
+  createBankDetail(bank: FormData | BankDetails): Observable<BankDetails> {
+    return this.http.post<BankDetails>(`${this.baseUrl}/employee/CreateBankDetails`, bank);
+  }
 
-deleteBankDetail(id: number): Observable<void> {
-  return this.http.post<void>(`${this.baseUrl}/employee/DeleteBankDetails?id=${id}`, {});
-}
+  updateBankDetail(bank: FormData | BankDetails): Observable<BankDetails> {
+    return this.http.post<BankDetails>(`${this.baseUrl}/employee/UpdateBankDetails`, bank);
+  }
 
- 
-   
-//------------------------------DD LIST -----------------------------------------//
+  deleteBankDetail(id: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/employee/DeleteBankDetails?id=${id}`, {});
+  }
 
-getAllDdlist(userId: number): Observable<EmployeeDdlist[]> {
-  return this.http.get<EmployeeDdlist[]>(`${this.baseUrl}/employee/GetAllDdlist/${userId}`);
-}
 
-createDdlist(dd: EmployeeDdlist): Observable<EmployeeDdlist> {
-  return this.http.post<EmployeeDdlist>(`${this.baseUrl}/employee/CreateDdlist`, dd);
-}
 
-updateDdlist(dd: EmployeeDdlist): Observable<EmployeeDdlist> {
-  return this.http.post<EmployeeDdlist>(`${this.baseUrl}/employee/UpdateDdlist`, dd);
-}
+  //------------------------------DD LIST -----------------------------------------//
 
-deleteDdlist(id: number): Observable<void> {
-  return this.http.post<void>(`${this.baseUrl}/employee/DeleteDdlist?id=${id}`, {});
-}
+  getAllDdlist(userId: number): Observable<EmployeeDdlist[]> {
+    return this.http.get<EmployeeDdlist[]>(`${this.baseUrl}/employee/GetAllDdlist/${userId}`);
+  }
 
-/// -------------------- DD COPY UPLOAD / DOWNLOAD --------------------
+  createDdlist(dd: EmployeeDdlist): Observable<EmployeeDdlist> {
+    return this.http.post<EmployeeDdlist>(`${this.baseUrl}/employee/CreateDdlist`, dd);
+  }
 
-// Upload DD Copy
-uploadDDCopy(formData: FormData): Observable<{ fileName: string }> {
-  return this.http.post<{ fileName: string }>(
-    `${this.baseUrl}/employee/UploadDDCopy`,
-    formData
-  );
-}
+  updateDdlist(dd: EmployeeDdlist): Observable<EmployeeDdlist> {
+    return this.http.post<EmployeeDdlist>(`${this.baseUrl}/employee/UpdateDdlist`, dd);
+  }
 
-// Download DD Copy (not mandatory for View button)
-downloadDDCopy(fileName: string): Observable<Blob> {
-  return this.http.get(`${this.baseUrl}/employee/DownloadDDCopy/${fileName}`, { responseType: 'blob' });
-}
+  deleteDdlist(id: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/employee/DeleteDdlist?id=${id}`, {});
+  }
+
+  /// -------------------- DD COPY UPLOAD / DOWNLOAD --------------------
+
+  // Upload DD Copy
+  uploadDDCopy(formData: FormData): Observable<{ fileName: string }> {
+    return this.http.post<{ fileName: string }>(
+      `${this.baseUrl}/employee/UploadDDCopy`,
+      formData
+    );
+  }
+
+  // Download DD Copy (not mandatory for View button)
+  downloadDDCopy(fileName: string): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/employee/DownloadDDCopy/${fileName}`, { responseType: 'blob' });
+  }
 
 
   //-------------------------------------W4 usa ---------------------------------//
 
- getW4List(userId: number): Observable<W4Details[]> {
+  getW4List(userId: number): Observable<W4Details[]> {
     debugger;
     return this.http.get<W4Details[]>(`${this.baseUrl}/employee/GetAllW4s/${userId}`);
   }
@@ -1695,7 +1711,7 @@ downloadDDCopy(fileName: string): Observable<Blob> {
   }
 
 
-// -------------------------------
+  // -------------------------------
   // SHIFT MASTER
   // -------------------------------
   getAllShifts(userId: number): Observable<ShiftMasterDto[]> {
@@ -1705,16 +1721,16 @@ downloadDDCopy(fileName: string): Observable<Blob> {
     return this.http.get<ShiftMasterDto>(`${this.baseUrl}/UserManagement/GetShiftById/${shiftId}`);
   }
 
- addShift(model: ShiftMasterDto): Observable<any> {
-   
+  addShift(model: ShiftMasterDto): Observable<any> {
+
     return this.http.post(`${this.baseUrl}/Attendance/AddShift`, model);
   }
-    updateShift(model: ShiftMasterDto): Observable<any> {
+  updateShift(model: ShiftMasterDto): Observable<any> {
     return this.http.post(`${this.baseUrl}/Attendance/UpdateShift`, model);
   }
 
   deleteShift(shiftId: number): Observable<any> {
-   
+
     return this.http.post(`${this.baseUrl}/Attendance/DeleteShift?shiftId=${shiftId}`, {});
   }
 
@@ -1725,11 +1741,11 @@ downloadDDCopy(fileName: string): Observable<Blob> {
   deactivateShift(shiftId: number): Observable<any> {
     return this.http.put(`${this.baseUrl}/UserManagement/DeactivateShift/${shiftId}`, {});
   }
-getShiftsForDropdown(companyId: number, regionId: number): Observable<ShiftMasterDto[]> {
-  return this.http.get<ShiftMasterDto[]>(
-    `${environment.apiUrl}/Attendance/GetShiftsForDropdown?companyId=${companyId}&regionId=${regionId}`
-  );
-}
+  getShiftsForDropdown(companyId: number, regionId: number): Observable<ShiftMasterDto[]> {
+    return this.http.get<ShiftMasterDto[]>(
+      `${environment.apiUrl}/Attendance/GetShiftsForDropdown?companyId=${companyId}&regionId=${regionId}`
+    );
+  }
   // -------------------------------
   // SHIFT ALLOCATION
   // -------------------------------
@@ -1755,129 +1771,129 @@ getShiftsForDropdown(companyId: number, regionId: number): Observable<ShiftMaste
   }
 
   // ---------- KPI CATEGORY ----------
-getKpiCategories(userId: number) {
-  return this.http.get(`${this.baseUrl}/MasterData/kpi-categories?userId=${userId}`);
-}
+  getKpiCategories(userId: number) {
+    return this.http.get(`${this.baseUrl}/MasterData/kpi-categories?userId=${userId}`);
+  }
 
-getKpiCategoryById(id: number) {
-  return this.http.get(`${this.baseUrl}/MasterData/kpi-categories/${id}`);
-}
+  getKpiCategoryById(id: number) {
+    return this.http.get(`${this.baseUrl}/MasterData/kpi-categories/${id}`);
+  }
 
-createKpiCategory(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/CreateKpiCategory`, data);
-}
+  createKpiCategory(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/CreateKpiCategory`, data);
+  }
 
-updateKpiCategory(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/UpdateKpiCategory`, data);
-}
+  updateKpiCategory(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/UpdateKpiCategory`, data);
+  }
 
-deleteKpiCategory(id: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/DeleteKpiCategory?id=${id}`, {});
-}
+  deleteKpiCategory(id: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/DeleteKpiCategory?id=${id}`, {});
+  }
 
-//------------------------------EmployeeMasterService-------------------------------------//
-getAllEmployees(userId: number): Observable<EmployeeMaster[]> {
-  return this.http.get<EmployeeMaster[]>(
-    `${environment.apiUrl}/UserManagement/GetAllEmployees?userId=${userId}`
-  );
-}
+  //------------------------------EmployeeMasterService-------------------------------------//
+  getAllEmployees(userId: number): Observable<EmployeeMaster[]> {
+    return this.http.get<EmployeeMaster[]>(
+      `${environment.apiUrl}/UserManagement/GetAllEmployees?userId=${userId}`
+    );
+  }
 
-createEmployee(dto: EmployeeMaster) {
-  return this.http.post(
-    `${environment.apiUrl}/UserManagement/CreateEmployee`,
-    dto
-  );
-}
+  createEmployee(dto: EmployeeMaster) {
+    return this.http.post(
+      `${environment.apiUrl}/UserManagement/CreateEmployee`,
+      dto
+    );
+  }
 
-updateEmployee(id: number, userId: number, dto: EmployeeMaster) {
-  return this.http.post(
-    `${environment.apiUrl}/UserManagement/UpdateEmployee/${id}?userId=${userId}`,
-    dto
-  );
-}
+  updateEmployee(id: number, userId: number, dto: EmployeeMaster) {
+    return this.http.post(
+      `${environment.apiUrl}/UserManagement/UpdateEmployee/${id}?userId=${userId}`,
+      dto
+    );
+  }
 
- deleteEmployee(id: number, userId: number) {
-  return this.http.post(
-    `${environment.apiUrl}/UserManagement/DeleteEmployee/${id}?userId=${userId}`,
-    {}
-  );
-}
+  deleteEmployee(id: number, userId: number) {
+    return this.http.post(
+      `${environment.apiUrl}/UserManagement/DeleteEmployee/${id}?userId=${userId}`,
+      {}
+    );
+  }
 
-getManagers(userId: number) {
-  return this.http.get<ManagerDropdown[]>(
-    `${environment.apiUrl}/UserManagement/GetManagers?userId=${userId}`
-  );
-}
-//------------------------------My Team Hierarchy Service-------------------------------------//
-getMyTeam(managerUserId: number): Observable<TeamHierarchyDto> {
-  return this.http.get<TeamHierarchyDto>(`${environment.apiUrl}/UserManagement/MyTeam/${managerUserId}`);
-}
+  getManagers(userId: number) {
+    return this.http.get<ManagerDropdown[]>(
+      `${environment.apiUrl}/UserManagement/GetManagers?userId=${userId}`
+    );
+  }
+  //------------------------------My Team Hierarchy Service-------------------------------------//
+  getMyTeam(managerUserId: number): Observable<TeamHierarchyDto> {
+    return this.http.get<TeamHierarchyDto>(`${environment.apiUrl}/UserManagement/MyTeam/${managerUserId}`);
+  }
 
- // ================= CERTIFICATION TYPE =================
+  // ================= CERTIFICATION TYPE =================
 
-getCertificationTypes(companyId: number, regionId: number) {
-  return this.http.get<any>(
-    `${this.baseUrl}/MasterData/certification-types?companyId=${companyId}&regionId=${regionId}`
-  );
-}
+  getCertificationTypes(companyId: number, regionId: number) {
+    return this.http.get<any>(
+      `${this.baseUrl}/MasterData/certification-types?companyId=${companyId}&regionId=${regionId}`
+    );
+  }
 
-getcmpregionCertificationTypes(companyId: number, regionId: number) {
-  return this.http.get<any>(
-    `${this.baseUrl}/MasterData/GetCmpregionAllAsync?companyId=${companyId}&regionId=${regionId}`
-  );
-}
+  getcmpregionCertificationTypes(companyId: number, regionId: number) {
+    return this.http.get<any>(
+      `${this.baseUrl}/MasterData/GetCmpregionAllAsync?companyId=${companyId}&regionId=${regionId}`
+    );
+  }
 
 
 
-createCertificationType(data: CertificationType) {
-  return this.http.post(
-    `${this.baseUrl}/MasterData/CreateCertificationType`,
-    data
-  );
-}
+  createCertificationType(data: CertificationType) {
+    return this.http.post(
+      `${this.baseUrl}/MasterData/CreateCertificationType`,
+      data
+    );
+  }
 
-updateCertificationType(id: number, data: CertificationType) {
-  return this.http.post(
-    `${this.baseUrl}/MasterData/UpdateCertificationType`,
-    data
-  );
-}
+  updateCertificationType(id: number, data: CertificationType) {
+    return this.http.post(
+      `${this.baseUrl}/MasterData/UpdateCertificationType`,
+      data
+    );
+  }
 
-// DELETE (HARD DELETE – no query params)
-deleteCertificationType(id: number) {
-  return this.http.post(
-    `${this.baseUrl}/MasterData/DeleteCertificationType?id=${id}`,
-    {}
-  );
-}
-// ---------------- CLOCK IN / CLOCK OUT ----------------
+  // DELETE (HARD DELETE – no query params)
+  deleteCertificationType(id: number) {
+    return this.http.post(
+      `${this.baseUrl}/MasterData/DeleteCertificationType?id=${id}`,
+      {}
+    );
+  }
+  // ---------------- CLOCK IN / CLOCK OUT ----------------
 
-getTodayAttendanceSummary(employeeCode: string) {
-  return this.http.get<{ clockIn: string, clockOut: string, totalHours: string }>(
-    `${this.baseUrl}/Attendance/TodaySummary/${employeeCode}`
-  );
-}
-changePassword(payload: ChangePasswordRequest): Observable<any>{
-  return this.http.post<any>(`${this.baseUrl}/UserManagement/change-password`, payload, { withCredentials: true });
-}
+  getTodayAttendanceSummary(employeeCode: string) {
+    return this.http.get<{ clockIn: string, clockOut: string, totalHours: string }>(
+      `${this.baseUrl}/Attendance/TodaySummary/${employeeCode}`
+    );
+  }
+  changePassword(payload: ChangePasswordRequest): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/UserManagement/change-password`, payload, { withCredentials: true });
+  }
 
-// Captcha validation
- captchaValidation(): string {
-  return `${this.baseUrl}/UserManagement/Captcha?` + new Date().getTime();
- }
-getAllClockInOutRecords() {
-  return this.http.get<any[]>(`${this.baseUrl}/Attendance/GetAll`);
-}
-// Update Clock In / Clock Out entry
-updateClockInOut(id: number, data: { clockIn: string, clockOut: string, totalHours: string }) {
-  return this.http.put(`${this.baseUrl}/Attendance/Update/${id}`, data);
-}
+  // Captcha validation
+  captchaValidation(): string {
+    return `${this.baseUrl}/UserManagement/Captcha?` + new Date().getTime();
+  }
+  getAllClockInOutRecords() {
+    return this.http.get<any[]>(`${this.baseUrl}/Attendance/GetAll`);
+  }
+  // Update Clock In / Clock Out entry
+  updateClockInOut(id: number, data: { clockIn: string, clockOut: string, totalHours: string }) {
+    return this.http.put(`${this.baseUrl}/Attendance/Update/${id}`, data);
+  }
 
-// Delete attendance record
-deleteClockInOut(id: number) {
-  return this.http.delete(`${this.baseUrl}/Attendance/Delete/${id}`);
-}
- getTodayAttendance(employeeCode: string, companyId: number, regionId: number): Observable<any[]> {
+  // Delete attendance record
+  deleteClockInOut(id: number) {
+    return this.http.delete(`${this.baseUrl}/Attendance/Delete/${id}`);
+  }
+  getTodayAttendance(employeeCode: string, companyId: number, regionId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/Attendance/GetTodayByEmployee`, {
       params: { employeeCode, companyId, regionId }
     });
@@ -1886,84 +1902,84 @@ deleteClockInOut(id: number) {
   createClockInOut(payload: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/Attendance/CreateClockInOut`, payload);
   }
-   submitDemoRequest(data: any): Observable<any> {
+  submitDemoRequest(data: any): Observable<any> {
     return this.http.post(environment.apiUrl + '/UserManagement/DemoRequest', data);
   }
-// BULK UPLOAD
-bulkUploadCertificationTypes(data: CertificationType[]): Observable<any> {
-  return this.http.post(
-    `${this.baseUrl}/MasterData/certification-types/bulk`,
-    data
-  );
-}
+  // BULK UPLOAD
+  bulkUploadCertificationTypes(data: CertificationType[]): Observable<any> {
+    return this.http.post(
+      `${this.baseUrl}/MasterData/certification-types/bulk`,
+      data
+    );
+  }
 
   ViewDocument(documentPath: string, download = false): void {
     if (!documentPath) return;
 
-  const baseUrl = environment.baseurl;
-  const cleanPath = documentPath.startsWith('/')
-    ? documentPath.substring(1)
-    : documentPath;
+    const baseUrl = environment.baseurl;
+    const cleanPath = documentPath.startsWith('/')
+      ? documentPath.substring(1)
+      : documentPath;
 
-  const fileUrl = `${baseUrl}/${cleanPath}`;
+    const fileUrl = `${baseUrl}/${cleanPath}`;
 
-  if (download) {
-    const a = document.createElement('a');
-    a.href = fileUrl;
-    a.download = this.getFileName(cleanPath);
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  } else {
-    window.open(fileUrl, '_blank');
-  }
+    if (download) {
+      const a = document.createElement('a');
+      a.href = fileUrl;
+      a.download = this.getFileName(cleanPath);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } else {
+      window.open(fileUrl, '_blank');
+    }
   }
   private getFileName(path: string): string {
-  return path.split('/').pop() || 'download';
-}
-saveDraft(data: any) {
-  return this.http.post(`${this.baseUrl}/EmployeeKpi/SaveDraft`, data);
-}
+    return path.split('/').pop() || 'download';
+  }
+  saveDraft(data: any) {
+    return this.http.post(`${this.baseUrl}/EmployeeKpi/SaveDraft`, data);
+  }
 
-submit(data: any) {
-  return this.http.post(`${this.baseUrl}/EmployeeKpi/Submit`, data);
-}
+  submit(data: any) {
+    return this.http.post(`${this.baseUrl}/EmployeeKpi/Submit`, data);
+  }
 
-getByUser(userId: number) {
-  return this.http.get(`${this.baseUrl}/EmployeeKpi/GetByUser/${userId}`);
-}
+  getByUser(userId: number) {
+    return this.http.get(`${this.baseUrl}/EmployeeKpi/GetByUser/${userId}`);
+  }
 
-getManagerReviews(userId: number) {
-  return this.http.get<any>(`${this.baseUrl}/EmployeeKpi/managerReview/${userId}`);
-}
+  getManagerReviews(userId: number) {
+    return this.http.get<any>(`${this.baseUrl}/EmployeeKpi/managerReview/${userId}`);
+  }
 
 
-approve(reviewId: number, managerId: number, remarks: string) {
-  return this.http.post(
-    `${this.baseUrl}/EmployeeKpi/Approve?reviewId=${reviewId}&managerId=${managerId}&remarks=${encodeURIComponent(remarks)}`,
-    {}
-  );
-}
+  approve(reviewId: number, managerId: number, remarks: string) {
+    return this.http.post(
+      `${this.baseUrl}/EmployeeKpi/Approve?reviewId=${reviewId}&managerId=${managerId}&remarks=${encodeURIComponent(remarks)}`,
+      {}
+    );
+  }
 
-reject(reviewId: number, managerId: number, remarks: string) {
-  return this.http.post(
-    `${this.baseUrl}/EmployeeKpi/Reject?reviewId=${reviewId}&managerId=${managerId}&remarks=${encodeURIComponent(remarks)}`,
-    {}
-  );
-}
-request(reviewId: number) {
-  return this.http.post(
-    `${this.baseUrl}/EmployeeKpi/Request?reviewId=${reviewId}`,
-    {}
-  );
-}
- // Company News
-// Company News Service
-getallDepartments(): Observable<Department[]> {
-  return this.http.get<Department[]>(`${this.baseUrl}/Attendance/departments`);
-}
+  reject(reviewId: number, managerId: number, remarks: string) {
+    return this.http.post(
+      `${this.baseUrl}/EmployeeKpi/Reject?reviewId=${reviewId}&managerId=${managerId}&remarks=${encodeURIComponent(remarks)}`,
+      {}
+    );
+  }
+  request(reviewId: number) {
+    return this.http.post(
+      `${this.baseUrl}/EmployeeKpi/Request?reviewId=${reviewId}`,
+      {}
+    );
+  }
+  // Company News
+  // Company News Service
+  getallDepartments(): Observable<Department[]> {
+    return this.http.get<Department[]>(`${this.baseUrl}/Attendance/departments`);
+  }
 
-//---  // ================= NEWS APIs =================
+  //---  // ================= NEWS APIs =================
 
   // Get All News
   getAllNews(userId: number): Observable<any[]> {
@@ -2011,114 +2027,114 @@ getallDepartments(): Observable<Department[]> {
   // Inside your existing service, e.g., AdminService or CompanyNewsService
 
 
- getPriorities(userId: number) {
-  return this.http.get(`${this.baseUrl}/MasterData/priorities?userId=${userId}`);
-}
+  getPriorities(userId: number) {
+    return this.http.get(`${this.baseUrl}/MasterData/priorities?userId=${userId}`);
+  }
 
-createPriority(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/CreatePriority`, data);
-}
+  createPriority(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/CreatePriority`, data);
+  }
 
-updatePriority(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/UpdatePriority`, data);
-}
+  updatePriority(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/UpdatePriority`, data);
+  }
 
-deletePriority(id: number) {
-  return this.http.post(`${this.baseUrl}/MasterData/DeletePriority?id=${id}`, {});
-}
-getHolidayList(userId: number) {
-  return this.http.get(`${this.baseUrl}/MasterData/holiday-list?userId=${userId}`);
-}
+  deletePriority(id: number) {
+    return this.http.post(`${this.baseUrl}/MasterData/DeletePriority?id=${id}`, {});
+  }
+  getHolidayList(userId: number) {
+    return this.http.get(`${this.baseUrl}/MasterData/holiday-list?userId=${userId}`);
+  }
 
-createHoliday(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/CreateHoliday`, data);
-}
+  createHoliday(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/CreateHoliday`, data);
+  }
 
-updateHoliday(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/UpdateHoliday`, data);
-}
+  updateHoliday(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/UpdateHoliday`, data);
+  }
 
-deleteHoliday(id: number) {
-  return this.http.post(`${this.baseUrl}/MasterData/DeleteHoliday?id=${id}`, {});
-}
-
-
+  deleteHoliday(id: number) {
+    return this.http.post(`${this.baseUrl}/MasterData/DeleteHoliday?id=${id}`, {});
+  }
 
 
 
-getWeekoffList(userId: number) {
-  return this.http.get(`${this.baseUrl}/MasterData/weekoff-list?userId=${userId}`);
-}
 
-createWeekoff(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/CreateWeekoff`, data);
-}
 
-updateWeekoff(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/UpdateWeekoff`, data);
-}
+  getWeekoffList(userId: number) {
+    return this.http.get(`${this.baseUrl}/MasterData/weekoff-list?userId=${userId}`);
+  }
 
-deleteWeekoff(id: number) {
-  return this.http.post(`${this.baseUrl}/MasterData/DeleteWeekoff?id=${id}`, {});
-}
-//---------------------- RESIGNATIONS ----------------------//
+  createWeekoff(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/CreateWeekoff`, data);
+  }
 
-getResignations(companyId: number, regionId: number) {
-  return this.http.get<ResignationModel[]>(
-    `${this.baseUrl}/MasterData/GetResignations?companyId=${companyId}&regionId=${regionId}`
-  );
-}
+  updateWeekoff(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/UpdateWeekoff`, data);
+  }
 
-getResignationById(id: number) {
-  return this.http.get<ResignationModel>(
-    `${this.baseUrl}/MasterData/GetResignationById/${id}`
-  );
-}
+  deleteWeekoff(id: number) {
+    return this.http.post(`${this.baseUrl}/MasterData/DeleteWeekoff?id=${id}`, {});
+  }
+  //---------------------- RESIGNATIONS ----------------------//
 
-createResignation(formData: FormData, userId: number) {
-  return this.http.post(
-    `${this.baseUrl}/MasterData/CreateResignation?userId=${userId}`,
-    formData
-  );
-}
+  getResignations(companyId: number, regionId: number) {
+    return this.http.get<ResignationModel[]>(
+      `${this.baseUrl}/MasterData/GetResignations?companyId=${companyId}&regionId=${regionId}`
+    );
+  }
 
-updateResignation(id: number, formData: FormData, userId: number) {
-  return this.http.post(
-    `${this.baseUrl}/MasterData/UpdateResignation/${id}?userId=${userId}`,
-    formData
-  );
-}
+  getResignationById(id: number) {
+    return this.http.get<ResignationModel>(
+      `${this.baseUrl}/MasterData/GetResignationById/${id}`
+    );
+  }
 
-deleteResignation(id: number, userId: number) {
-  return this.http.post(
-    `${this.baseUrl}/MasterData/DeleteResignation/${id}?userId=${userId}`,
-    {}
-  );
-}
-// SEND OTP
-forgotPassword(email: string) {
-  return this.http.post<any>(
-    `${this.baseUrl}/UserManagement/forgot-password`,
-    { email }
-  );
-}
+  createResignation(formData: FormData, userId: number) {
+    return this.http.post(
+      `${this.baseUrl}/MasterData/CreateResignation?userId=${userId}`,
+      formData
+    );
+  }
 
-// VERIFY OTP
-verifyOtp(email: string, otp: string) {
-  return this.http.post<any>(
-    `${this.baseUrl}/UserManagement/verify-otp`,
-    { email, otp }
-  );
-}
+  updateResignation(id: number, formData: FormData, userId: number) {
+    return this.http.post(
+      `${this.baseUrl}/MasterData/UpdateResignation/${id}?userId=${userId}`,
+      formData
+    );
+  }
 
-// RESET PASSWORD
-resetPassword(email: string, newPassword: string) {
-  return this.http.post<any>(
-    `${this.baseUrl}/UserManagement/reset-password`,
-    { email, newPassword }
-  );
-}
- createEvent(data: any) {
+  deleteResignation(id: number, userId: number) {
+    return this.http.post(
+      `${this.baseUrl}/MasterData/DeleteResignation/${id}?userId=${userId}`,
+      {}
+    );
+  }
+  // SEND OTP
+  forgotPassword(email: string) {
+    return this.http.post<any>(
+      `${this.baseUrl}/UserManagement/forgot-password`,
+      { email }
+    );
+  }
+
+  // VERIFY OTP
+  verifyOtp(email: string, otp: string) {
+    return this.http.post<any>(
+      `${this.baseUrl}/UserManagement/verify-otp`,
+      { email, otp }
+    );
+  }
+
+  // RESET PASSWORD
+  resetPassword(email: string, newPassword: string) {
+    return this.http.post<any>(
+      `${this.baseUrl}/UserManagement/reset-password`,
+      { email, newPassword }
+    );
+  }
+  createEvent(data: any) {
     return this.http.post(`${this.baseUrl}/MasterData/CreateEvents`, data);
   }
 
@@ -2131,109 +2147,109 @@ resetPassword(email: string, newPassword: string) {
   }
 
   deleteEvent(id: number) {
-    return this.http.post(`${this.baseUrl}/MasterData/DeleteEvents?id=${id}`,{});
+    return this.http.post(`${this.baseUrl}/MasterData/DeleteEvents?id=${id}`, {});
   }
-getAllUsersForMyTeamConfigurations(userId: number) {
-  return this.http.get<MyTeamUsers[]>(
-    `${environment.apiUrl}/UserManagement/GetAllUsers/${userId}`
-  );
-}
+  getAllUsersForMyTeamConfigurations(userId: number) {
+    return this.http.get<MyTeamUsers[]>(
+      `${environment.apiUrl}/UserManagement/GetAllUsers/${userId}`
+    );
+  }
   getBloodGroupsbyALL(companyId: number): Observable<any> {
-  return this.http.get(
-    `${this.baseUrl}/MasterData/GetAllBloodGroups?companyId=${companyId}`
-  );
-}
-GetAllCmpRegAsync(companyId: number,regionId: number): Observable<any> {
-  return this.http.get(
-    `${this.baseUrl}/MasterData/GetAllCmpRegAsync?companyId=${companyId}&regionId=${regionId}`
-  );
-}
-GetAlluserIdAsync(userId: number): Observable<any> {
-  return this.http.get(
-    `${this.baseUrl}/MasterData/GetAlluserIdAsync?userId=${userId}`
-  );
-}
-getModeOfStudy(companyId: number, regionId: number): Observable<any[]> {
-  return this.http.get<any[]>(
-    `${this.baseUrl}/employee/modeofstudy?companyId=${companyId}&regionId=${regionId}`
-  );
-}
- // ===================== POLICIES =====================
+    return this.http.get(
+      `${this.baseUrl}/MasterData/GetAllBloodGroups?companyId=${companyId}`
+    );
+  }
+  GetAllCmpRegAsync(companyId: number, regionId: number): Observable<any> {
+    return this.http.get(
+      `${this.baseUrl}/MasterData/GetAllCmpRegAsync?companyId=${companyId}&regionId=${regionId}`
+    );
+  }
+  GetAlluserIdAsync(userId: number): Observable<any> {
+    return this.http.get(
+      `${this.baseUrl}/MasterData/GetAlluserIdAsync?userId=${userId}`
+    );
+  }
+  getModeOfStudy(companyId: number, regionId: number): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.baseUrl}/employee/modeofstudy?companyId=${companyId}&regionId=${regionId}`
+    );
+  }
+  // ===================== POLICIES =====================
 
-////////////screening result CRUD operations
+  ////////////screening result CRUD operations
 
-getScreeningResults(userId: number) {
-  return this.http.get(`${this.baseUrl}/MasterData/screening-result?userId=${userId}`);
-}
+  getScreeningResults(userId: number) {
+    return this.http.get(`${this.baseUrl}/MasterData/screening-result?userId=${userId}`);
+  }
 
-createScreeningResult(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/CreateScreeningResult`, data);
-}
+  createScreeningResult(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/CreateScreeningResult`, data);
+  }
 
-updateScreeningResult(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/UpdateScreeningResult`, data);
-}
+  updateScreeningResult(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/UpdateScreeningResult`, data);
+  }
 
-deleteScreeningResult(id: number) {
-  return this.http.post(`${this.baseUrl}/MasterData/DeleteScreeningResult?id=${id}`, {});
-}
+  deleteScreeningResult(id: number) {
+    return this.http.post(`${this.baseUrl}/MasterData/DeleteScreeningResult?id=${id}`, {});
+  }
 
 
 
-///////////////Interview Level// CRUD operations
+  ///////////////Interview Level// CRUD operations
 
-getInterviewLevels(userId: number) {
-  return this.http.get(`${this.baseUrl}/MasterData/interview-levels?userId=${userId}`);
-}
+  getInterviewLevels(userId: number) {
+    return this.http.get(`${this.baseUrl}/MasterData/interview-levels?userId=${userId}`);
+  }
 
-createInterviewLevel(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/CreateInterviewLevel`, data);
-}
+  createInterviewLevel(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/CreateInterviewLevel`, data);
+  }
 
-updateInterviewLevel(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/UpdateInterviewLevel`, data);
-}
+  updateInterviewLevel(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/UpdateInterviewLevel`, data);
+  }
 
-deleteInterviewLevel(id: number) {
-  return this.http.post(`${this.baseUrl}/MasterData/DeleteInterviewLevel?id=${id}`, {});
-}
-getDepartmentsForDropdown(companyId: number, regionId: number) {
-  return this.http.get(
-    `${this.baseUrl}/MasterData/GetDepartmentsForDropdown?companyId=${companyId}&regionId=${regionId}`
-  );
-}
-// ================= Recruitment Notice Period =================
+  deleteInterviewLevel(id: number) {
+    return this.http.post(`${this.baseUrl}/MasterData/DeleteInterviewLevel?id=${id}`, {});
+  }
+  getDepartmentsForDropdown(companyId: number, regionId: number) {
+    return this.http.get(
+      `${this.baseUrl}/MasterData/GetDepartmentsForDropdown?companyId=${companyId}&regionId=${regionId}`
+    );
+  }
+  // ================= Recruitment Notice Period =================
 
-getRecruitmentNoticePeriodList(userId: number) {
-  return this.http.get(`${this.baseUrl}/MasterData/recruitmentnoticeperiod-list?userId=${userId}`);
-}
+  getRecruitmentNoticePeriodList(userId: number) {
+    return this.http.get(`${this.baseUrl}/MasterData/recruitmentnoticeperiod-list?userId=${userId}`);
+  }
 
-createRecruitmentNoticePeriod(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/CreateRecruitmentNoticePeriod`, data);
-}
+  createRecruitmentNoticePeriod(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/CreateRecruitmentNoticePeriod`, data);
+  }
 
-updateRecruitmentNoticePeriod(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/UpdateRecruitmentNoticePeriod`, data);
-}
+  updateRecruitmentNoticePeriod(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/UpdateRecruitmentNoticePeriod`, data);
+  }
 
-deleteRecruitmentNoticePeriod(id: number) {
-  return this.http.post(`${this.baseUrl}/MasterData/DeleteRecruitmentNoticePeriod?id=${id}`, {});
-}
+  deleteRecruitmentNoticePeriod(id: number) {
+    return this.http.post(`${this.baseUrl}/MasterData/DeleteRecruitmentNoticePeriod?id=${id}`, {});
+  }
 
-getAccountTypes(userId: number) {
-  return this.http.get(`${this.baseUrl}/MasterData/account-type-list?userId=${userId}`);
-}
+  getAccountTypes(userId: number) {
+    return this.http.get(`${this.baseUrl}/MasterData/account-type-list?userId=${userId}`);
+  }
 
-createAccountType(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/CreateAccountType`, data);
-}
+  createAccountType(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/CreateAccountType`, data);
+  }
 
-updateAccountType(data: any) {
-  return this.http.post(`${this.baseUrl}/MasterData/UpdateAccountType`, data);
-}
+  updateAccountType(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/UpdateAccountType`, data);
+  }
 
-deleteAccountType(id: number) {
-  return this.http.post(`${this.baseUrl}/MasterData/DeleteAccountType?id=${id}`, {});
-}
-  
+  deleteAccountType(id: number) {
+    return this.http.post(`${this.baseUrl}/MasterData/DeleteAccountType?id=${id}`, {});
+  }
+
 }
