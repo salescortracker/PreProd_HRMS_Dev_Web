@@ -1292,9 +1292,12 @@ export class AdminService {
   deleteHelpdeskCategory(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/MasterData/helpdesk-category/${id}`);
   }
-  getAttendanceStatus(companyId: number, regionId: number) {
-    return this.http.get<any>(`${this.baseUrl}/MasterData/GetAllAttendanceStatus?companyId=${companyId}&regionId=${regionId}`);
-  }
+  // getAttendanceStatus(userId: number) {
+  //   return this.http.get<any>(`${this.baseUrl}/MasterData/GetAllAttendanceStatus?companyId=${userId}`);
+  // }
+  getAttendanceStatus(userId: number) {
+  return this.http.get<any>(`${this.baseUrl}/MasterData/GetAllAttendanceStatus?userId=${userId}`);
+}
 
   createAttendanceStatus(model: AttendanceStatus) {
     return this.http.post(`${this.baseUrl}/MasterData/AddAttendanceStatus`, model);

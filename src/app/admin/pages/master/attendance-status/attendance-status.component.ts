@@ -88,16 +88,11 @@ checkDuplicate(): void {
   /** Load Data */
   loadAttendanceStatus(): void {
     this.spinner.show();
-    this.admin.getAttendanceStatus(this.companyId, this.regionId).subscribe({
-      next: res => {
-        this.attendanceList = res.data;
-        this.spinner.hide();
-      },
-      error: () => {
-        this.spinner.hide();
-        Swal.fire('Error', 'Failed to load Attendance Status.', 'error');
-      }
-    });
+    this.admin.getAttendanceStatus(this.userId).subscribe({
+  next: res => {
+    this.attendanceList = res.data;
+  }
+});
   }
 
   /** Submit Create / Update */
