@@ -1310,11 +1310,16 @@ export class AdminService {
   // ================= LEAVE STATUS ===================
 
   // Get All
-  getLeaveStatus(companyId: number, regionId: number) {
-    return this.http.get<any>(
-      `${this.baseUrl}/MasterData/GetAllLeaveStatus?companyId=${companyId}&regionId=${regionId}`
-    );
-  }
+  // getLeaveStatus(companyId: number, regionId: number) {
+  //   return this.http.get<any>(
+  //     `${this.baseUrl}/MasterData/GetAllLeaveStatus?companyId=${companyId}&regionId=${regionId}`
+  //   );
+  // }
+  getLeaveStatus(userId: number) {
+  return this.http.get<any>(
+    `${this.baseUrl}/MasterData/GetAllLeaveStatus?userId=${userId}`
+  );
+}
 
   // Create
   createLeaveStatus(data: LeaveStatus) {

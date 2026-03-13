@@ -71,8 +71,8 @@ export class LeaveStatusComponent {
   loadLeaveStatus(): void {
     this.spinner.show();
 
-    this.adminService
-      .getLeaveStatus(this.companyID, this.regionID)
+this.adminService
+  .getLeaveStatus(this.userId)
       .subscribe({
         next: (res: any) => {
           if (res.success) {
