@@ -83,10 +83,17 @@ export class LoginComponent {
            }
 
           // ✅ Navigate by role or response route
-          const route =
-            response.user.roleName === 'Admin'
-              ? '/admin/dashboard'
-              : '/dashboard';
+          let route = '/dashboard';
+
+            if (response.user.roleId === 0) {
+              route = '/superadmin-dashboard';
+            }
+            else if (response.user.roleName === 'Admin') {
+              route = '/admin/dashboard';
+            }
+            else {
+              route = '/dashboard';
+            }
 
           this.router.navigate([route]);
         } else {
@@ -100,5 +107,4 @@ export class LoginComponent {
       }
     });
   }
-  
 }

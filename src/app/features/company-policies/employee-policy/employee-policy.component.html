@@ -20,13 +20,9 @@
           <select class="form-select"
                   [(ngModel)]="selectedCategory">
 
-            <option value="">All Categories</option>
-            <option>HR Policy</option>
-            <option>Leave Policy</option>
-            <option>Attendance Policy</option>
-            <option>IT Security Policy</option>
-            <option>Work From Home Policy</option>
-            <option>Travel Policy</option>
+            <option *ngFor="let c of categories" [value]="c">
+              {{ c }}
+            </option>
 
           </select>
 

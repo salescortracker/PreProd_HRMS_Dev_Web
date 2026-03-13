@@ -111,8 +111,8 @@
               <td>{{ i + 1 }}</td>
               <td>{{ c.PolicyCategoryName }}</td>
               <td>{{ c.Description || '—' }}</td>
-              <td>{{ companyMap[c.CompanyID] }}</td>
-              <td>{{ regionMap[c.RegionID] }}</td>
+              <td>{{ c.companyName || '—' }}</td>
+              <td>{{ c.regionName || '—' }}</td>
               <td class="text-center">
                 <i class="fa-solid"
                   [ngClass]="c.IsActive ? 'fa-circle-check text-success' : 'fa-circle-xmark text-danger'"></i>

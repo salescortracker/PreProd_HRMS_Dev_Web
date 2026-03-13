@@ -9,6 +9,8 @@ interface Policy {
   FileName?: string
   FileUrl?: string
   DepartmentId: number
+  CompanyId: number
+  RegionId: number
 }
 @Component({
   selector: 'app-employee-policy',
@@ -28,6 +30,8 @@ export class EmployeePolicyComponent {
 
   userId: number = 0
   userDepartmentId: number = 0
+  userCompanyId: number = 0
+  userRegionId: number = 0
 
   constructor(private adminService: AdminService) {}
 
@@ -35,9 +39,12 @@ export class EmployeePolicyComponent {
 
     this.userId = Number(sessionStorage.getItem("UserId"))
     this.userDepartmentId = Number(sessionStorage.getItem("DepartmentId"))
+    this.userCompanyId = Number(sessionStorage.getItem("CompanyId"))
+    this.userRegionId = Number(sessionStorage.getItem("RegionId"))
 
     console.log("UserId:", this.userId)
     console.log("DepartmentId:", this.userDepartmentId)
+    this.loadCategories()
 
     this.getPolicies()
 
@@ -48,40 +55,48 @@ export class EmployeePolicyComponent {
   // -----------------------------
   getPolicies() {
 
-    this.adminService.getTodayPolicies(this.userId)
-      .subscribe((res: any[]) => {
+  this.adminService.getTodayPolicies(this.userId)
+    .subscribe((res: any[]) => {
 
-        console.log("Policy API Response:", res)
+      console.log("Policy API Response:", res)
 
-        this.policies = res.map(p => ({
+      this.policies = res.map(p => ({
 
-          Title: p.policyTitle,
-          Category: p.category,
-          EffectiveDate: new Date(p.effectiveDate),
-          Description: p.policyDescription,
-          FileName: p.fileName,
-          FileUrl: p.fileUrl,
-          DepartmentId: Number(p.departmentId)
+        Title: p.policyTitle,
+        Category: p.categoryName,
+        EffectiveDate: new Date(p.effectiveDate),
+        Description: p.policyDescription,
+        FileName: p.fileName,
+        FileUrl: p.fileUrl,
+        DepartmentId: Number(p.departmentId),
+        CompanyId: Number(p.companyId),
+        RegionId: Number(p.regionId)
 
-        }))
+      }))
 
-        this.loadCategories()
+      this.loadCategories()
+      this.filterTodayPolicies()
 
-        this.filterTodayPolicies()
+    })
 
-      })
-
-  }
+}
 
   // -----------------------------
   // Load Categories
   // -----------------------------
   loadCategories() {
 
-    this.categories = [...new Set(this.policies.map(x => x.Category))]
+  this.adminService
+    .getUserPolicyCategories(this.userCompanyId, this.userRegionId)
+    .subscribe((res: string[]) => {
 
-  }
+      console.log("Categories API:", res);
 
+      this.categories = res;
+
+    });
+
+}
   // -----------------------------
   // Show Today's Policies
   // -----------------------------
@@ -106,32 +121,14 @@ export class EmployeePolicyComponent {
   // Apply Filter
   // -----------------------------
   applyFilter() {
+  this.filteredPoliciesList = this.policies.filter(p => {
+    const matchCompany = p.CompanyId === this.userCompanyId;
+    const matchRegion = p.RegionId === this.userRegionId;
+    const matchCategory = this.selectedCategory ? p.Category === this.selectedCategory : true;
+    const matchFrom = this.fromDate ? new Date(p.EffectiveDate) >= new Date(this.fromDate) : true;
+    const matchTo = this.toDate ? new Date(p.EffectiveDate) <= new Date(this.toDate) : true;
 
-    this.filteredPoliciesList = this.policies.filter(p => {
-
-      const policyDate = new Date(p.EffectiveDate)
-
-      const matchDept =
-        p.DepartmentId === this.userDepartmentId
-
-      const matchCategory =
-        this.selectedCategory
-          ? p.Category === this.selectedCategory
-          : true
-
-      const matchFrom =
-        this.fromDate
-          ? policyDate >= new Date(this.fromDate)
-          : true
-
-      const matchTo =
-        this.toDate
-          ? policyDate <= new Date(this.toDate)
-          : true
-
-      return matchDept && matchCategory && matchFrom && matchTo
-
-    })
-
-  }
+    return matchCompany && matchRegion && matchCategory && matchFrom && matchTo;
+  });
+}
 }
