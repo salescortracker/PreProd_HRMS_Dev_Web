@@ -232,13 +232,15 @@ export interface AssetStatus {
   RegionID: number;
 }
 export interface PolicyCategory {
-  PolicyCategoryID: number;
+  PolicyCategoryId: number;
   CompanyID: number;
   RegionID: number;
   PolicyCategoryName: string;
   Description?: string;
   IsActive: boolean;
   UserId?: number;
+  companyName?: string;
+  regionName?: string;
 }
 export interface AttachmentType {
   AttachmentTypeID?: number;
@@ -1146,6 +1148,7 @@ export class AdminService {
   }
 
   updatePolicyCategory(data: any) {
+    debugger;
     return this.http.post(`${this.baseUrl}/MasterData/UpdatePolicyCategory`, data);
   }
 
@@ -1160,6 +1163,13 @@ export class AdminService {
       `${this.baseUrl}/MasterData/GetAllPolicies?userId=${userId}`
     )
   }
+
+  getUserPolicyCategories(companyId: number, regionId: number) {
+  return this.http.get<string[]>(
+    `${this.baseUrl}/MasterData/GetPolicyCategoriesByCompanyRegion?companyId=${companyId}&regionId=${regionId}`
+  );
+}
+  
 
   // Get Today's Policies
   getTodayPolicies(userId: number) {

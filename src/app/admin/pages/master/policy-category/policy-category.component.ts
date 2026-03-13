@@ -37,7 +37,7 @@ export class PolicyCategoryComponent {
     this.regionId = Number(sessionStorage.getItem("RegionId"));
 
     this.category = {
-      PolicyCategoryID: 0,
+      PolicyCategoryId: 0,
       CompanyID: this.companyId,
       RegionID: this.regionId,
       PolicyCategoryName: '',
@@ -61,7 +61,9 @@ export class PolicyCategoryComponent {
           RegionId: x.regionId,
           PolicyCategoryName: x.policyCategoryName,
           Description: x.description,
-          IsActive: x.isActive
+          IsActive: x.isActive,
+          companyName: x.companyName,
+          regionName: x.regionName  
         }));
         this.spinner.hide();
       },
@@ -120,7 +122,7 @@ export class PolicyCategoryComponent {
     }).then(result => {
       if (result.isConfirmed) {
         this.spinner.show();
-        this.adminService.deletePolicyCategory(c.PolicyCategoryID).subscribe({
+        this.adminService.deletePolicyCategory(c.PolicyCategoryId).subscribe({
           next: () => {
             this.spinner.hide();
             Swal.fire('Deleted!', 'Deleted successfully.', 'success');
@@ -172,7 +174,7 @@ export class PolicyCategoryComponent {
 
   clearForm() {
     this.category = {
-      PolicyCategoryID: 0,
+      PolicyCategoryId: 0,
       CompanyID: this.companyId,
       RegionID: this.regionId,
       PolicyCategoryName: '',
