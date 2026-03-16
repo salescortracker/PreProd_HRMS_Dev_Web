@@ -106,6 +106,14 @@ import { ResetPasswordComponent } from './features/login/reset-password/reset-pa
 import { VerifyOtpComponent } from './features/login/verify-otp/verify-otp.component';
 import { CompanyEventsComponent } from './features/company-events/company-events/company-events.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { AttendanceListComponent } from './features/attendance/attendance-list/attendance-list.component';
+import { CompanyNewsCategoryComponent } from './company-news-category/company-news-category.component';
+import { SuperAdminTopbarComponent } from './super-admin-topbar/super-admin-topbar.component';
+import { SuperAdminSubmenuComponent } from './super-admin-submenu/super-admin-submenu.component';
+import { SuperAdminSidebarComponent } from './super-admin-sidebar/super-admin-sidebar.component';
+import { SuperAdminLayoutComponent } from './super-admin-layout/super-admin-layout.component';
+import { SuperAdminFooterComponent } from './super-admin-footer/super-admin-footer.component';
+import { SuperadminModule } from './features/superadmin/superadmin.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -204,15 +212,15 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     VerifyOtpComponent,
-    CompanyEventsComponent
-   
-    
+    CompanyEventsComponent,
+    AttendanceListComponent,
+    CompanyNewsCategoryComponent   
     
   ],
   imports: [
     BrowserModule, ReactiveFormsModule,FullCalendarModule,
     AppRoutingModule, FormsModule, HttpClientModule, NgxSpinnerModule,
-    StrongPasswordDirective
+    StrongPasswordDirective,SuperadminModule
 ],
   providers: [
     provideClientHydration(withEventReplay()),

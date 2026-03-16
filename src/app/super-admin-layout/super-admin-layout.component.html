@@ -1,0 +1,39 @@
+<div class="admin-layout">
+
+  <app-super-admin-topbar (toggleSidebar)="toggleSidebar()">
+  </app-super-admin-topbar>
+
+  <div class="main-area d-flex">
+
+    <app-super-admin-sidebar
+      [collapsed]="collapsed"
+      [activeMenu]="activeMenu"
+      (menuSelected)="onMenuSelected($event)">
+    </app-super-admin-sidebar>
+
+    <div class="flex-grow-1 d-flex flex-column">
+
+      <!-- Submenu bar -->
+      <div class="submenu-wrapper"
+           *ngIf="selectedSubmenus && selectedSubmenus.length > 0">
+        <app-super-admin-submenu
+          *ngIf="selectedMenu"
+          [submenus]="selectedSubmenus"
+          [activeRoute]="activeRoute"
+          (submenuSelected)="onSubmenuSelected($event)"
+          [attr.key]="selectedMenu">
+        </app-super-admin-submenu>
+      </div>
+
+      <!-- ✅ content-body only shows when showContent = true -->
+      <div class="content-body flex-grow-1 p-3" *ngIf="showContent">
+        <router-outlet></router-outlet>
+      </div>
+
+    </div>
+
+  </div>
+
+  <app-super-admin-footer></app-super-admin-footer>
+
+</div>

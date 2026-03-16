@@ -49,6 +49,8 @@ import { EarningDeductionsComponent } from './pages/payroll/earning-deductions/e
 import { TaxSettingsComponent } from './admin/pages/payroll/tax-settings/tax-settings.component';
 import { PayGroupsComponent } from './pages/payroll/pay-groups/pay-groups.component';
 import { PayslipTemplateComponent } from './admin/pages/payroll/payslip-template/payslip-template.component';
+import { AttendanceListComponent } from './features/attendance/attendance-list/attendance-list.component';
+import { SuperAdminLayoutComponent } from './super-admin-layout/super-admin-layout.component';
 const routes: Routes = [
   { path: '', component: LoginComponent },
    { path: 'forgot-password', component: ForgotPasswordComponent },
@@ -87,6 +89,7 @@ const routes: Routes = [
 { path: 'company-news', component: ComanyNewsComponent },
 { path: 'company-policies', component: EmployeePolicyComponent },
 { path: 'my-team', component: MyTeamHierarchyComponent },
+{ path: 'attendance-list', component: AttendanceListComponent },
 { path: 'my-event', component: MyEventsComponent },
 {
   path: 'compensation',
@@ -100,7 +103,7 @@ const routes: Routes = [
   ]
 },
 { path: 'recruitment', component: RecruitmentProcessComponent },
-
+// {path:'superadmin-dashboard',component:SuperAdminLayoutComponent},
 { path: 'my-calendar', component: MyCalendarComponent },
 { path: 'financedashboard', component: FinanceDashboardComponent },
 { path: 'managerdashboard', component: ManagerDashboardComponent },
@@ -109,6 +112,14 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
+  
+ {
+  path: 'superadmin',
+  loadChildren: () =>
+    import('./superadmin/superadmin.module')
+      .then(m => m.SuperadminModule)
+},
+{ path: '', redirectTo: 'login', pathMatch: 'full' }
   
 ];
 

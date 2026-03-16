@@ -17,15 +17,16 @@
       <!-- Category -->
       <div class="col-md-4">
         <label class="form-label">Category</label>
-        <select class="form-select" [(ngModel)]="searchCategory">
-          <option value="">All Categories</option>
-          <option value="General">General</option>
-          <option value="HR Announcement">HR Announcement</option>
-          <option value="Policy Update">Policy Update</option>
-          <option value="Event">Event</option>
-          <option value="Holiday Notice">Holiday Notice</option>
-          <option value="Emergency">Emergency</option>
-        </select>
+      <select class="form-select"
+              [(ngModel)]="searchCategory"
+              name="searchCategory">
+              <option value="">Select Category</option>
+
+    <option *ngFor="let c of categories"
+            [value]="c.categoryName">
+      {{ c.categoryName }}
+    </option>
+      </select>
       </div>
 
       <!-- Date -->
