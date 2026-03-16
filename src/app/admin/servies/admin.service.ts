@@ -232,13 +232,15 @@ export interface AssetStatus {
   RegionID: number;
 }
 export interface PolicyCategory {
-  PolicyCategoryID: number;
+  PolicyCategoryId: number;
   CompanyID: number;
   RegionID: number;
   PolicyCategoryName: string;
   Description?: string;
   IsActive: boolean;
   UserId?: number;
+  companyName?: string;
+  regionName?: string;
 }
 export interface AttachmentType {
   AttachmentTypeID?: number;
@@ -270,7 +272,8 @@ export interface AttendanceStatus {
 
 }
 export interface ExpenseCategory {
-  ExpenseCategoryID: number;
+  UserId: number;
+  expenseCategoryID: number;
   expenseCategoryName: string;
   isActive: boolean;
   CompanyID: number;
@@ -1145,6 +1148,7 @@ export class AdminService {
   }
 
   updatePolicyCategory(data: any) {
+    debugger;
     return this.http.post(`${this.baseUrl}/MasterData/UpdatePolicyCategory`, data);
   }
 
@@ -1159,6 +1163,13 @@ export class AdminService {
       `${this.baseUrl}/MasterData/GetAllPolicies?userId=${userId}`
     )
   }
+
+  getUserPolicyCategories(companyId: number, regionId: number) {
+  return this.http.get<string[]>(
+    `${this.baseUrl}/MasterData/GetPolicyCategoriesByCompanyRegion?companyId=${companyId}&regionId=${regionId}`
+  );
+}
+  
 
   // Get Today's Policies
   getTodayPolicies(userId: number) {
@@ -1688,11 +1699,11 @@ export class AdminService {
   deleteW4(id: number): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/employee/DeleteW4?id=${id}`, {});
   }
-  getexpensecategoryAll(companyId: number, regionId: number) {
-    return this.http.get<any>(
-      `${this.baseUrl}/MasterData/GetexpenseCategoryAll?companyId=${companyId}&regionId=${regionId}`
-    );
-  }
+  getexpensecategoryAll(userId: number) {
+  return this.http.get<any>(
+    `${this.baseUrl}/MasterData/GetexpenseCategoryAll?userId=${userId}`
+  );
+}
 
   addexpenseCategory(payload: any) {
     return this.http.post<any>(`${this.baseUrl}/MasterData/AddexpenseCategory`, payload);
@@ -1702,9 +1713,10 @@ export class AdminService {
     return this.http.post<any>(`${this.baseUrl}/MasterData/UpdateexpenseCategory`, payload);
   }
 
-  deleteexpenseCategory(id: number) {
-    return this.http.post<any>(`${this.baseUrl}/MasterData/DeleteexpenseCategory?id=${id}`, {});
-  }
+  deleteexpenseCategory(expenseCategoryID: number) {
+    
+  return this.http.delete<any>(`${this.baseUrl}/MasterData/DeleteexpenseCategory?id=${expenseCategoryID}`);
+}
 
 
   // -------------------------------

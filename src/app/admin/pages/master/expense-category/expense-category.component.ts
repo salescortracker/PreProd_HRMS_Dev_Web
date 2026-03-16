@@ -18,18 +18,18 @@ companyId!: number;
 
   companies: any[] = [];
   regions: any[] = [];
+  userId: number = sessionStorage.getItem('UserId') ? Number(sessionStorage.getItem('UserId') ) : 0;
 
   expense: ExpenseCategory = this.getEmptyExpenseCategory();
   expenseList: ExpenseCategory[] = [];
-
+expenseCategoryID:any
   isEditMode = false;
   searchText = '';
   statusFilter: boolean | '' = '';
 
   currentPage = 1;
   pageSize = 5;
-userId = Number(sessionStorage.getItem("UserId"));
-  sortColumn = 'ExpenseCategoryID';
+  sortColumn = 'expenseCategoryID';
   sortDirection: 'asc' | 'desc' = 'asc';
 
   showUploadPopup = false;
@@ -64,25 +64,25 @@ onRegionChange(): void {
 
   getEmptyExpenseCategory(): ExpenseCategory {
     return {
-      ExpenseCategoryID: 0,
+      expenseCategoryID: 0,
       expenseCategoryName: '',
       isActive: true,
       CompanyID: this.companyId,
       RegionID: this.regionId,
       SortOrder: 0,
-      Description: ''
+      Description: '',
+      UserId: this.userId
     };
   }
 
   loadExpenseCategory(): void {
-    debugger;
     this.spinner.show();
 
-    this.admin.getexpensecategoryAll(this.companyId, this.regionId).subscribe({
+    this.admin.getexpensecategoryAll(this.userId).subscribe({
       next: res => {
-        debugger;
         this.expenseList = res.data;
         this.spinner.hide();
+        console.log(res);
       },
       error: () => {
         this.spinner.hide();
@@ -92,11 +92,11 @@ onRegionChange(): void {
   }
 
   onSubmit(): void {
-    debugger;
     this.spinner.show();
 
     this.expense.CompanyID = this.companyId;
     this.expense.RegionID = this.regionId;
+    this.expense.UserId = this.userId;
 
     const request = this.isEditMode
       ? this.admin.updateexpensecategory(this.expense)
@@ -126,28 +126,28 @@ onRegionChange(): void {
   }
 
   deleteExpenseCategory(item: ExpenseCategory): void {
-    Swal.fire({
-      title: `Delete "${item.expenseCategoryName}"?`,
-      showCancelButton: true,
-      confirmButtonText: 'Delete'
-    }).then(result => {
-      if (result.isConfirmed) {
-        this.spinner.show();
-        this.admin.deleteExpenseCategoryType(item.ExpenseCategoryID).subscribe({
-          next: () => {
-            this.spinner.hide();
-            Swal.fire('Deleted', 'Expense Category deleted successfully.', 'success');
-            this.loadExpenseCategory();
-          },
-          error: () => {
-            this.spinner.hide();
-            Swal.fire('Error', 'Delete failed.', 'error');
-          }
-        });
-      }
-    });
-  }
+  Swal.fire({
+    title: `Delete "${item.expenseCategoryName}"?`,
+    showCancelButton: true,
+    confirmButtonText: 'Delete'
+  }).then(result => {
+    if (result.isConfirmed) {
+      this.spinner.show();
 
+      this.admin.deleteexpenseCategory(item.expenseCategoryID).subscribe({
+        next: () => {
+          this.spinner.hide();
+          Swal.fire('Deleted', 'Expense Category deleted successfully.', 'success');
+          this.loadExpenseCategory();
+        },
+        error: () => {
+          this.spinner.hide();
+          Swal.fire('Error', 'Delete failed.', 'error');
+        }
+      });
+    }
+  });
+}
   resetForm(): void {
     this.expense = this.getEmptyExpenseCategory();
     this.isEditMode = false;
@@ -167,7 +167,6 @@ onRegionChange(): void {
   }
 
   get pagedExpenseCategory(): ExpenseCategory[] {
-    debugger;
     const start = (this.currentPage - 1) * this.pageSize;
     return this.filteredExpenseCategory().slice(start, start + this.pageSize);
   }
@@ -251,16 +250,11 @@ sortTable(column: string): void {
 }
   loadCompanies(): void {
       this.admin.getCompanies(null,this.userId).subscribe({
-          next: (res: any) => {
-      this.regions = res;
-      this.filteredRegions = this.regions.filter(r =>
-        Number(r.companyID) === Number(this.companyId)
-      ); 
-    },
+        next: (res:any) => (this.companies = res),
         error: () => Swal.fire('Error', 'Failed to load companies.', 'error')
       });
     }
-
+  
     loadRegions(): void {
       this.admin.getRegions(null,this.userId).subscribe({
         next: (res:any) => (this.regions = res),

@@ -44,14 +44,14 @@
         Category <span class="text-danger">*</span>
       </label>
       <select
-        class="form-select"
-        formControlName="expenseCategoryId"
-        (change)="onCategoryChange($event)">
-        <option value="">Select category</option>
-        <option *ngFor="let cat of categories" [value]="cat.expenseCategoryID">
-          {{ cat.expenseCategoryName }}
-        </option>
-      </select>
+      class="form-select"
+      formControlName="expenseCategoryId"
+      (change)="onCategoryChange($event)">
+      <option value="">Select category</option>
+      <option *ngFor="let cat of categories" [value]="cat.expenseCategoryID">
+        {{ cat.expenseCategoryName }}
+      </option>
+    </select>
 
       <small *ngIf="categoryLimit" class="text-muted">
         Max allowed:

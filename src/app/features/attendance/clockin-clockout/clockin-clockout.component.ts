@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
-import { AdminService } from '../../../admin/servies/admin.service';
+import { AdminService, ShiftMasterDto } from '../../../admin/servies/admin.service';
 import { EmployeeResignationService } from '../../employee-profile/employee-services/employee-resignation.service';
 import { timeEnd } from 'node:console';
 
@@ -41,7 +41,9 @@ records: any[] = [];
     this.initForm();
     this.patchEmployeeData();
     this.loadAttendance();
+    if (this.currentUser) {
     this.getshiftallocationName();
+  }
   }
 
   initForm() {
@@ -187,22 +189,51 @@ records: any[] = [];
 shiftAllocationName: string = '';
 ShiftstartTime: string = '';
 ShiftendTime: string = '';
+
 getshiftallocationName() {
-  debugger;
-    this.employeeCode=sessionStorage.getItem('EmployeeCode') as unknown as string;
-    this.employeeResignationService.getShiftallocationName(this.employeeCode).subscribe(res => {
-      console.log('Shift Allocation Name:', res);
-      this.shiftAllocationName = res.shiftName;
-      this.ShiftstartTime = res.shiftStartTime;
-      this.ShiftendTime = res.shiftEndTime;
+  const empCode = sessionStorage.getItem('EmployeeCode');
 
+  this.employeeResignationService.getAllAllocations(this.currentUser.userId)
+    .subscribe((allocations: any[]) => {
+
+      const userShift = allocations.find(x => x.employeeCode === empCode);
+      console.log('userShift:', userShift);
+
+      if (!userShift || userShift.shiftID == null) {
+        console.warn('No user shift found!');
+        return;
+      }
+
+      this.shiftAllocationName = userShift.shiftName;
+
+      this.adminService.getShiftsForDropdown(this.currentUser.companyId, this.currentUser.regionId)
+        .subscribe((shifts: ShiftMasterDto[]) => {
+          console.log('Shifts array:', shifts);
+
+          const shiftDetails = shifts.find((s: ShiftMasterDto) => s.shiftID === Number(userShift.shiftID));
+
+          console.log('Matched shiftDetails:', shiftDetails);
+
+          if (shiftDetails) {
+            this.ShiftstartTime = shiftDetails.shiftStartTime ?? '--:--';
+            this.ShiftendTime   = shiftDetails.shiftEndTime ?? '--:--';
+            console.log('Shift timings set:', this.ShiftstartTime, this.ShiftendTime);
+          } else {
+            console.warn('No matching shift found for userShiftID:', userShift.shiftID);
+            this.ShiftstartTime = '--:--';
+            this.ShiftendTime = '--:--';
+          }
+        });
     });
-  }
-
+}
   loadSessionUser() {
-    const user = sessionStorage.getItem('currentUser');
-    if (user) this.currentUser = JSON.parse(user);
+  const user = sessionStorage.getItem('currentUser');
+
+  if (user) {
+    this.currentUser = JSON.parse(user);
+    console.log("Logged User:", this.currentUser);
   }
+}
    loadAll() {
     this.employeeResignationService.getClockInOutAll().subscribe(res => {
       this.records = res;
