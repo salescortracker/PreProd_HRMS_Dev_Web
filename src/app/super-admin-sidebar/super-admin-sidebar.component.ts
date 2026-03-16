@@ -7,21 +7,19 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './super-admin-sidebar.component.css'
 })
 export class SuperAdminSidebarComponent {
-  @Input() Collapsed = false;
+  @Input() collapsed = false;
+  @Input() activeMenu: string = '';
+
   @Output() menuSelected = new EventEmitter<string>();
 
-  controlPanelOpen = false;
-  securityOpen = false;
-  toggleControlPanel(){
-this.controlPanelOpen = !this.controlPanelOpen;
-}
+  selectMenu(menu:string){
 
-toggleSecurity(){
-this.securityOpen = !this.securityOpen;
-}
+    this.activeMenu = menu;
 
-selectMenu(menu:string){
-console.log(menu);
-}
+    this.menuSelected.emit(menu);
+
+  }
+
+
 
 }

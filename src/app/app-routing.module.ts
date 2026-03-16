@@ -103,7 +103,7 @@ const routes: Routes = [
   ]
 },
 { path: 'recruitment', component: RecruitmentProcessComponent },
-{path:'superadmin-dashboard',component:SuperAdminLayoutComponent},
+// {path:'superadmin-dashboard',component:SuperAdminLayoutComponent},
 { path: 'my-calendar', component: MyCalendarComponent },
 { path: 'financedashboard', component: FinanceDashboardComponent },
 { path: 'managerdashboard', component: ManagerDashboardComponent },
@@ -113,10 +113,11 @@ const routes: Routes = [
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
   
-  {
+ {
   path: 'superadmin',
   loadChildren: () =>
-    import('./features/superadmin/superadmin.module').then(m => m.SuperadminModule)
+    import('./superadmin/superadmin.module')
+      .then(m => m.SuperadminModule)
 },
 { path: '', redirectTo: 'login', pathMatch: 'full' }
   

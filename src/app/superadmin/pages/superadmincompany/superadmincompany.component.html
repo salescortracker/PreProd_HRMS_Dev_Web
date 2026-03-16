@@ -1,0 +1,71 @@
+<div class="card shadow-sm">
+
+    <div class="container-fluid p-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h4 class="fw-semibold mb-0">
+                <i class="fa-solid fa-building me-2 text-primary"></i>
+                Company Management
+            </h4>
+
+        </div>
+
+        <hr>
+
+        <div class="card shadow-sm">
+
+            <div class="card-body">
+
+                <div class="mb-3 d-flex justify-content-end">
+                    <input class="form-control w-25" placeholder="Search Company" [(ngModel)]="searchText">
+                </div>
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th>S.No</th>
+                            <th>Company Name</th>
+                            <th>Company Code</th>
+                            <th>Industry</th>
+                            <th>Headquarters</th>
+                            <th class="text-center">Active</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let c of filteredCompanies(); let i = index">
+
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ c.companyName }}</td>
+                            <td>{{ c.companyCode }}</td>
+                            <td>{{ c.industryType }}</td>
+                            <td>{{ c.headquarters }}</td>
+
+                            <td class="text-center">
+                                <i class="fa-solid"
+                                    [ngClass]="c.isActive ? 'fa-circle-check text-success' : 'fa-circle-xmark text-danger'">
+                                </i>
+                            </td>
+
+                        </tr>
+
+                        <tr *ngIf="filteredCompanies().length === 0">
+                            <td colspan="6" class="text-center text-muted">
+                                No records found
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
