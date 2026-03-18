@@ -22,9 +22,11 @@ export class SidebarComponent {
   }
   loadMenus(roleId: number): void {
     this.menuService.getMenusByRoleId(roleId).subscribe({
-      next: (menus: MenuRoleDto[]) => {
-       
+      next: (menus: any) => {
+      debugger;
         this.menuItems =this.sortMenuItems(this.mapToMenuItems(menus));
+         sessionStorage.setItem("Menus",JSON.stringify(menus));
+         //sessionStorage.setItem("currentMenu", JSON.stringify(menus));
       },
       error: (err) => console.error('Error loading menus', err)
     });
@@ -38,23 +40,65 @@ export class SidebarComponent {
     }));
 }
 
-  private mapToMenuItems(menuDtos: MenuRoleDto[]): MenuItem[] {
-  // Build a flat map for quick access
+//   private mapToMenuItems(menuDtos: MenuRoleDto[]): MenuItem[] {
+//   // Build a flat map for quick access
+//   const menuMap: { [key: number]: MenuItem } = {};
+//   const rootMenus: MenuItem[] = [];
+
+//   for (const dto of menuDtos) {
+//     const item: MenuItem = {
+//         menuId: dto.menuId, 
+//       label: dto.menuName,
+//       link: dto.menuUrl,
+//       icon: dto.icon,
+//       orderNo: dto.orderNo, // 👈 include order field
+//       children: []
+//     };
+//     menuMap[dto.menuId] = item;
+//   }
+
+//   // Link children to parents
+//   for (const dto of menuDtos) {
+//     if (dto.parentId && menuMap[dto.parentId]) {
+//       menuMap[dto.parentId].children!.push(menuMap[dto.menuId]);
+//     } else {
+//       rootMenus.push(menuMap[dto.menuId]);
+//     }
+//   }
+
+//   // Sort recursively by orderNo
+//   const sortByOrder = (items: MenuItem[]) => {
+//     items.sort((a, b) => (a.orderNo ?? 0) - (b.orderNo ?? 0));
+//     items.forEach(item => {
+//       if (item.children?.length) {
+//         sortByOrder(item.children);
+//       }
+//     });
+//   };
+
+//   sortByOrder(rootMenus);
+
+//   return rootMenus;
+// }
+
+private mapToMenuItems(menuDtos: MenuRoleDto[]): MenuItem[] {
+
   const menuMap: { [key: number]: MenuItem } = {};
   const rootMenus: MenuItem[] = [];
 
   for (const dto of menuDtos) {
     const item: MenuItem = {
+      menuId: dto.menuId,   // 👈 store menuId
       label: dto.menuName,
       link: dto.menuUrl,
       icon: dto.icon,
-      orderNo: dto.orderNo, // 👈 include order field
+      orderNo: dto.orderNo,
       children: []
     };
+
     menuMap[dto.menuId] = item;
   }
 
-  // Link children to parents
   for (const dto of menuDtos) {
     if (dto.parentId && menuMap[dto.parentId]) {
       menuMap[dto.parentId].children!.push(menuMap[dto.menuId]);
@@ -63,21 +107,8 @@ export class SidebarComponent {
     }
   }
 
-  // Sort recursively by orderNo
-  const sortByOrder = (items: MenuItem[]) => {
-    items.sort((a, b) => (a.orderNo ?? 0) - (b.orderNo ?? 0));
-    items.forEach(item => {
-      if (item.children?.length) {
-        sortByOrder(item.children);
-      }
-    });
-  };
-
-  sortByOrder(rootMenus);
-
   return rootMenus;
 }
-
   setMenuByRole(role: string) {
      const superadminMenu: MenuItem[] = [
       { label: 'Dashboard', link: '/dashboard',icon: 'fas fa-home' },
@@ -230,4 +261,11 @@ export class SidebarComponent {
 
     this.menuItems = roleBasedMenu[role] || commonMenu;
   }
+  setMenu(menu: MenuItem) {
+
+  if(menu.menuId){
+    sessionStorage.setItem("menuId", menu.menuId.toString());
+  }
+
+}
 }
