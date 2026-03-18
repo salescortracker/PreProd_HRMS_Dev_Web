@@ -1,0 +1,40 @@
+/* Full layout */
+.admin-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* full screen height */
+}
+
+/* Topbar fixed height */
+app-super-admin-topbar {
+  height: 77px;
+  flex-shrink: 0;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Body contains sidebar + content */
+.body {
+  display: flex;
+  flex: 1; /* take all remaining vertical space */
+  overflow: hidden; /* only dashboard scrolls */
+}
+
+/* Sidebar fixed width */
+app-super-admin-sidebar {
+  width: 250px; /* adjust width */
+  flex-shrink: 0;
+  height: 100%;
+  background-color: #b02828;
+  color: #fff;
+  overflow-y: auto; /* scroll sidebar if content long */
+}
+
+/* Dashboard / main content scrollable */
+.main-content {
+  flex: 1; /* fill remaining space */
+  overflow-y: auto; /* only dashboard scrolls */
+  background-color: #f5f5f5;
+  padding: 20px;
+}

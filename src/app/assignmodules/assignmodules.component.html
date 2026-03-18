@@ -1,0 +1,80 @@
+<div class="container mt-4">
+
+  <h3>Assign Modules To Plan : {{planId}}</h3>
+
+  <div class="row mt-3">
+
+    <!-- <div class="col-md-3 mb-3" *ngFor="let m of modules">
+
+      <div class="card module-card p-3">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+          <h6 class="mb-0">{{m.moduleName}}</h6>
+
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              [checked]="m.selected"
+              (change)="toggleModule(m.moduleId,$event)">
+          </div>
+
+        </div>
+
+      </div>
+
+    </div> -->
+
+<div *ngFor="let m of modules" class="menu-card">
+
+  <div class="menu-header">
+
+    <label class="menu-title">
+
+      <input type="checkbox"
+        [checked]="selectedModules.includes(m.moduleId)"
+        (change)="toggleModule(m.moduleId,$event)">
+
+      <span>{{m.moduleName}}</span>
+
+    </label>
+
+  </div>
+
+  <div class="submenu" *ngIf="m.children?.length">
+
+    <div class="submenu-item"
+      *ngFor="let child of m.children">
+
+      <label>
+
+        <input type="checkbox"
+          [checked]="selectedModules.includes(child.moduleId)"
+          (change)="toggleModule(child.moduleId,$event,m.moduleId)">
+
+        {{child.moduleName}}
+
+      </label>
+
+    </div>
+
+  </div>
+
+</div>
+
+  </div>
+
+  <div class="mt-4">
+
+    <button class="btn btn-success me-2" (click)="saveModules()">
+      Save Modules
+    </button>
+
+    <button class="btn btn-secondary" (click)="cancel()">
+      Cancel
+    </button>
+
+  </div>
+
+</div>

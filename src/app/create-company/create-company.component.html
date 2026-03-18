@@ -1,0 +1,68 @@
+<div class="container mt-5">
+
+    <div class="card shadow-lg">
+
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Create Company</h4>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Company Name -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        <i class="fa fa-building me-1"></i> Company Name
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="company.companyName"
+                        placeholder="Enter company name">
+                </div>
+
+                <!-- Company Email -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Company Email</label>
+                    <input type="email" class="form-control" [(ngModel)]="company.companyEmail"
+                        placeholder="Enter company email">
+                </div>
+
+                <!-- Plan -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Select Plan</label>
+                    <select class="form-select" [(ngModel)]="company.planId">
+
+                        <option value="">Select Plan</option>
+
+                        <option *ngFor="let p of plans" [value]="p.planId">
+                            {{p.planName}}
+                        </option>
+
+                    </select>
+                </div>
+
+                <!-- Expiry Date -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Expiry Date</label>
+                    <input type="date" class="form-control" [(ngModel)]="company.expiryDate">
+                </div>
+
+            </div>
+
+            <!-- Buttons -->
+            <div class="mt-4 text-end">
+
+                <button class="btn btn-secondary me-2" routerLink="/superadmin/companies">
+                    Cancel
+                </button>
+
+                <button class="btn btn-success" (click)="saveCompany()">
+                    Create Company
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,16 @@
+.card {
+  border-radius: 10px;
+}
+
+table {
+  background: white;
+}
+
+th {
+  font-weight: 600;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 6px 10px;
+}

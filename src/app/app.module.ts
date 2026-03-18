@@ -58,7 +58,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CommonUploadComponent } from './shared/common-upload/common-upload.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LocationStrategy,HashLocationStrategy } from '@angular/common';
+import { LocationStrategy,HashLocationStrategy, DatePipe } from '@angular/common';
 import { EmployeeCertificationsComponent } from './features/employee-profile/employee-skills/employee-certifications/employee-certifications.component';
 import { EmployeeEducationComponent } from './features/employee-profile/employee-skills/employee-education/employee-education.component';
 import { EmployeeJobhistoryComponent } from './features/employee-profile/employee-skills/employee-jobhistory/employee-jobhistory.component';
@@ -108,6 +108,17 @@ import { CompanyEventsComponent } from './features/company-events/company-events
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { AttendanceListComponent } from './features/attendance/attendance-list/attendance-list.component';
 import { CompanyNewsCategoryComponent } from './company-news-category/company-news-category.component';
+import { SuperAdminTopbarComponent } from './super-admin-topbar/super-admin-topbar.component';
+import { SuperAdminSubmenuComponent } from './super-admin-submenu/super-admin-submenu.component';
+import { SuperAdminSidebarComponent } from './super-admin-sidebar/super-admin-sidebar.component';
+import { SuperAdminLayoutComponent } from './super-admin-layout/super-admin-layout.component';
+import { SuperAdminFooterComponent } from './super-admin-footer/super-admin-footer.component';
+import { SuperadminModule } from './features/superadmin/superadmin.module';
+import { CreateCompanyComponent } from './create-company/create-company.component';
+import { PlanComponent } from './plan/plan.component';
+import { AssignmodulesComponent } from './assignmodules/assignmodules.component';
+import { CompanyListingComponent } from './company-listing/company-listing.component';
+import { TotalCompaniesComponent } from './total-companies/total-companies.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -207,24 +218,28 @@ import { CompanyNewsCategoryComponent } from './company-news-category/company-ne
     ResetPasswordComponent,
     VerifyOtpComponent,
     CompanyEventsComponent,
-    AttendanceListComponent
-    CompanyNewsCategoryComponent
-   
-    
+    AttendanceListComponent,
+    CompanyNewsCategoryComponent,
+    CreateCompanyComponent,
+    PlanComponent,
+    AssignmodulesComponent,
+    CompanyListingComponent,
+    TotalCompaniesComponent   
     
   ],
   imports: [
     BrowserModule, ReactiveFormsModule,FullCalendarModule,
     AppRoutingModule, FormsModule, HttpClientModule, NgxSpinnerModule,
-    StrongPasswordDirective
+    StrongPasswordDirective,SuperadminModule
 ],
-  providers: [
+  providers: [DatePipe,
     provideClientHydration(withEventReplay()),
    {provide: LocationStrategy, useClass: HashLocationStrategy},
      { provide: MAT_DATE_FORMATS, useValue: {
     parse: { dateInput: 'DD/MM/YYYY' },
-    display: { dateInput: 'DD/MM/YYYY' }
-  }}
+    display: { dateInput: 'DD/MM/YYYY' },
+  },
+  }
 
   ],
   bootstrap: [AppComponent]
