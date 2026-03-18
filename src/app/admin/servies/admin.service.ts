@@ -2311,4 +2311,56 @@ deleteCompanyNewsCategory(id: number) {
 getCategoriesByCompanyRegion(companyId: number, regionId: number) {
   return this.http.get(`${this.baseUrl}/MasterData/companynewscategory-by-company-region?companyId=${companyId}&regionId=${regionId}`);
 }
+createCompanys(data: any) {
+  return this.http.post(
+    `${this.baseUrl}/SuperAdmin/create-company`,
+    data
+  );
+}
+getPlans() {
+  return this.http.get<any[]>(
+    `${this.baseUrl}/Plans/GetPlans`
+  );
+}
+getPlanss(){
+    return this.http.get(`${this.baseUrl}/Plans/GetPlans`);
+  }
+
+  createPlan(data:any){
+    return this.http.post(`${this.baseUrl}/Plans/CreatePlan`, data);
+  }
+
+  updatePlan(data:any){
+    return this.http.put(`${this.baseUrl}/Plans/UpdatePlan`, data);
+// Plans/UpdatePlan
+
+  }
+
+  deletePlan(id:number){
+    return this.http.delete(`${this.baseUrl}/Plans/DeletePlan/${id}`);
+  }
+   getPlanModules(planId:number){
+  return this.http.get(`${this.baseUrl}/Plans/GetPlanMenus/${planId}`);
+}
+
+assignModules(data:any){
+  return this.http.post(`${this.baseUrl}/Plans/AssignModules`,data);
+}
+toggleCompany(companyId: number) {
+  return this.http.put(
+    `${this.baseUrl}/SuperAdmin/toggle-company/${companyId}`,
+    {}
+  );
+}
+getallCompanies() {
+  return this.http.get(`${this.baseUrl}/SuperAdmin/GetAllCompanies`);
+}
+ updateCompanys(company:any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/SuperAdmin/update-company`, company);
+  }
+  getUserMenus(companyId:any, roleId:any){
+return this.http.get<any>(
+this.baseUrl + "/GetUserMenus?companyId="+companyId+"&roleId="+roleId
+);
+}
 }

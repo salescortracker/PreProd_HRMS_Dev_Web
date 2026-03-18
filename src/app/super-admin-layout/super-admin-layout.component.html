@@ -1,21 +1,18 @@
 <div class="admin-layout">
 
-  <!-- Topbar -->
   <app-super-admin-topbar (toggleSidebar)="toggleSidebar()"></app-super-admin-topbar>
 
-  <!-- Body: Sidebar + Dashboard -->
   <div class="body">
-    <!-- Sidebar fixed left -->
+
     <app-super-admin-sidebar
       [Collapsed]="collapsed"
       (menuSelected)="onMenuSelected($event)">
     </app-super-admin-sidebar>
 
-    <!-- Dashboard / Main content scrollable -->
     <div class="main-content">
-      <!-- Dashboard component rendered here -->
-      <app-super-admin-dashboard></app-super-admin-dashboard>
+      <router-outlet></router-outlet>
     </div>
+
   </div>
 
 </div>

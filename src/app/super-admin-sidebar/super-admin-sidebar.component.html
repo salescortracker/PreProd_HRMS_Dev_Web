@@ -16,15 +16,32 @@
 
 <div class="submenu" *ngIf="controlPanelOpen && !Collapsed">
 
-<div class="submenu-item" (click)="selectMenu('CompanyMaster')">
+<!-- <div class="submenu-item" (click)="selectMenu('CompanyMaster')">
 Company Management
+</div> -->
+<div class="submenu-item"
+     routerLink="/superadmin/create-company"
+   routerLinkActive="active-menu"  >
+  Create Company
+</div>
+<div class="submenu-item"
+     routerLink="/superadmin/company-list"
+    routerLinkActive="active-menu" >
+  Company management
+</div>
+<div class="submenu-item"
+     routerLink="/superadmin/company-listing"
+    routerLinkActive="active-menu" >
+  Total companies
+</div>
+<div class="submenu-item"
+     routerLink="/superadmin/subscription-plans"
+    routerLinkActive="active-menu" >
+  subscription Plans
 </div>
 
-<div class="submenu-item" (click)="selectMenu('DepartmentMaster')">
-Department Master
-</div>
 
-<div class="submenu-item" (click)="selectMenu('DesignationMaster')">
+<!-- <div class="submenu-item" (click)="selectMenu('DesignationMaster')">
 Designation Master
 </div>
 
@@ -54,7 +71,7 @@ Project Master
 
 <div class="submenu-item" (click)="selectMenu('AnnouncementCategory')">
 Announcement Categories
-</div>
+</div> -->
 
 </div>
 

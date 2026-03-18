@@ -1,0 +1,252 @@
+<div class="container mt-4">
+
+    <h3 class="mb-4">Company Management</h3>
+
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+
+            <input class="form-control" placeholder="Search company..." [(ngModel)]="searchText"
+                (input)="filterCompanies()" />
+
+        </div>
+
+        <div class="col-md-3">
+
+            <select class="form-control" [(ngModel)]="statusFilter" (change)="filterCompanies()">
+
+                <option value="all">All Companies</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="expiring">Expiring Soon</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+    <!-- <div class="row">
+
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let company of filteredCompanies">
+
+            <div class="company-card" (click)="openModal(company)">
+
+                <div class="company-header">
+
+                    <div class="company-avatar">
+
+                        {{ company.companyName?.charAt(0) }}
+                    </div>
+
+                    <span class="status-dot" [ngClass]="company.isActive ? 'active' : 'inactive'">
+
+                    </span>
+
+                </div>
+
+                <h5 class="company-name">
+                    {{ company.companyName }}
+                </h5>
+
+                <p class="company-plan">
+
+                    {{ company.plan?.planName || 'No Plan' }}
+
+                </p>
+
+
+                <div class="usage-bar">
+
+                    <div class="usage-fill" [style.width.%]="getUsage(company)">
+
+                    </div>
+
+                </div>
+
+                <p class="usage-text">
+
+                    {{ company.users?.length || 0 }} /
+                    {{ company.plan?.maxUsers }}
+
+                    Users
+
+                </p>
+
+
+                <div class="expiry-warning" *ngIf="company.expiryDate && isExpiringSoon(company.expiryDate)">
+
+                    ⚠ Expiring in {{ getDaysLeft(company.expiryDate) }} days
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div> -->
+
+<div class="row">
+
+  <div
+    class="col-lg-3 col-md-4 col-sm-6 mb-4"
+    *ngFor="let company of filteredCompanies">
+
+    <div class="company-card">
+
+      <!-- HEADER -->
+      <div class="company-header">
+
+        <div class="company-avatar">
+          {{ company?.companyName ? company.companyName.charAt(0) : '?' }}
+        </div>
+
+        <span
+          class="plan-badge"
+          [ngClass]="company.plan?.planName?.toLowerCase()">
+
+          {{ company.plan?.planName || 'No Plan' }}
+
+        </span>
+
+      </div>
+
+      <!-- NAME -->
+      <h5 class="company-name">
+        {{ company.companyName }}
+      </h5>
+
+      <!-- USERS -->
+      <div class="usage-container">
+
+        <div class="usage-bar">
+
+          <div
+            class="usage-fill"
+            [style.width.%]="getUsage(company)">
+          </div>
+
+        </div>
+
+        <span class="usage-text">
+
+          {{ company.users?.length || 0 }}
+          /
+          {{ company.plan?.maxUsers }}
+
+          Users
+
+        </span>
+
+      </div>
+
+      <!-- EXPIRY -->
+      <div
+        class="expiry-warning"
+        *ngIf="company.expiryDate && isExpiringSoon(company.expiryDate)">
+
+        ⚠ Expiring in
+        {{ getDaysLeft(company.expiryDate) }}
+        days
+
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="card-actions">
+
+        <button
+          class="btn btn-sm btn-outline-primary"
+          (click)="openModal(company)">
+
+          Edit
+
+        </button>
+
+        <button
+          class="btn btn-sm btn-outline-success">
+
+          Upgrade
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+    <!-- Edit Company Modal -->
+    <div class="modal fade" id="companyModal" tabindex="-1">
+
+        <div class="modal-dialog modal-lg">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">Edit Company</h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label>Company Name</label>
+                        <input class="form-control" [(ngModel)]="selectedCompany.companyName">
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input class="form-control" [(ngModel)]="selectedCompany.companyEmail">
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Plan</label>
+
+                        <select class="form-control" [(ngModel)]="selectedCompany.planId">
+
+                            <option *ngFor="let p of plans" [value]="p.planId">
+
+                                {{p.planName}}
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label>Expiry Date</label>
+
+                        <input type="date" class="form-control" [(ngModel)]="selectedCompany.expiryDate">
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+
+                    <button class="btn btn-success" (click)="updateCompany()">
+
+                        Update Company
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>

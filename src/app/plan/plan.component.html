@@ -1,0 +1,78 @@
+<h3>Plan Management</h3>
+
+<div class="card p-3 mb-4">
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <label>Plan Name</label>
+            <input class="form-control" [(ngModel)]="plan.planName">
+        </div>
+
+        <div class="col-md-2">
+            <label>Max Users</label>
+            <input class="form-control" type="number" [(ngModel)]="plan.maxUsers">
+        </div>
+
+        <div class="col-md-2">
+            <label>Duration Days</label>
+            <input class="form-control" type="number" [(ngModel)]="plan.durationInDays">
+        </div>
+
+        <div class="col-md-2">
+            <label>Price</label>
+            <input class="form-control" type="number" [(ngModel)]="plan.price">
+        </div>
+
+    </div>
+
+    <button class="btn btn-primary mt-3" (click)="savePlan()">
+        {{editMode ? 'Update Plan' : 'Create Plan'}}
+    </button>
+
+</div>
+
+<table class="table table-bordered">
+
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Users</th>
+            <th>Duration</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <tr *ngFor="let p of plans">
+
+            <td>{{p.planId}}</td>
+            <td>{{p.planName}}</td>
+            <td>{{p.maxUsers}}</td>
+            <td>{{p.durationInDays}}</td>
+            <td>{{p.price}}</td>
+
+            <td>
+
+                <button class="btn btn-warning btn-sm" (click)="editPlan(p)">
+                    Edit
+                </button>
+
+                <button class="btn btn-danger btn-sm" (click)="deletePlan(p.planId)">
+                    Delete
+                </button>
+                <button class="btn btn-primary btn-sm" (click)="assignModules(p.planId)">
+
+                    Assign Modules
+
+                </button>
+            </td>
+
+        </tr>
+
+    </tbody>
+
+</table>

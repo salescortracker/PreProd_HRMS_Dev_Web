@@ -58,7 +58,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CommonUploadComponent } from './shared/common-upload/common-upload.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LocationStrategy,HashLocationStrategy } from '@angular/common';
+import { LocationStrategy,HashLocationStrategy, DatePipe } from '@angular/common';
 import { EmployeeCertificationsComponent } from './features/employee-profile/employee-skills/employee-certifications/employee-certifications.component';
 import { EmployeeEducationComponent } from './features/employee-profile/employee-skills/employee-education/employee-education.component';
 import { EmployeeJobhistoryComponent } from './features/employee-profile/employee-skills/employee-jobhistory/employee-jobhistory.component';
@@ -114,6 +114,11 @@ import { SuperAdminSidebarComponent } from './super-admin-sidebar/super-admin-si
 import { SuperAdminLayoutComponent } from './super-admin-layout/super-admin-layout.component';
 import { SuperAdminFooterComponent } from './super-admin-footer/super-admin-footer.component';
 import { SuperadminModule } from './features/superadmin/superadmin.module';
+import { CreateCompanyComponent } from './create-company/create-company.component';
+import { PlanComponent } from './plan/plan.component';
+import { AssignmodulesComponent } from './assignmodules/assignmodules.component';
+import { CompanyListingComponent } from './company-listing/company-listing.component';
+import { TotalCompaniesComponent } from './total-companies/total-companies.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -214,7 +219,12 @@ import { SuperadminModule } from './features/superadmin/superadmin.module';
     VerifyOtpComponent,
     CompanyEventsComponent,
     AttendanceListComponent,
-    CompanyNewsCategoryComponent   
+    CompanyNewsCategoryComponent,
+    CreateCompanyComponent,
+    PlanComponent,
+    AssignmodulesComponent,
+    CompanyListingComponent,
+    TotalCompaniesComponent   
     
   ],
   imports: [
@@ -222,13 +232,14 @@ import { SuperadminModule } from './features/superadmin/superadmin.module';
     AppRoutingModule, FormsModule, HttpClientModule, NgxSpinnerModule,
     StrongPasswordDirective,SuperadminModule
 ],
-  providers: [
+  providers: [DatePipe,
     provideClientHydration(withEventReplay()),
    {provide: LocationStrategy, useClass: HashLocationStrategy},
      { provide: MAT_DATE_FORMATS, useValue: {
     parse: { dateInput: 'DD/MM/YYYY' },
-    display: { dateInput: 'DD/MM/YYYY' }
-  }}
+    display: { dateInput: 'DD/MM/YYYY' },
+  },
+  }
 
   ],
   bootstrap: [AppComponent]
