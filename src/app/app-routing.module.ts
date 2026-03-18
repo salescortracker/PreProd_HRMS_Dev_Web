@@ -49,6 +49,7 @@ import { EarningDeductionsComponent } from './pages/payroll/earning-deductions/e
 import { TaxSettingsComponent } from './admin/pages/payroll/tax-settings/tax-settings.component';
 import { PayGroupsComponent } from './pages/payroll/pay-groups/pay-groups.component';
 import { PayslipTemplateComponent } from './admin/pages/payroll/payslip-template/payslip-template.component';
+import { AttendanceListComponent } from './features/attendance/attendance-list/attendance-list.component';
 const routes: Routes = [
   { path: '', component: LoginComponent },
    { path: 'forgot-password', component: ForgotPasswordComponent },
@@ -87,6 +88,7 @@ const routes: Routes = [
 { path: 'company-news', component: ComanyNewsComponent },
 { path: 'company-policies', component: EmployeePolicyComponent },
 { path: 'my-team', component: MyTeamHierarchyComponent },
+{ path: 'attendance-list', component: AttendanceListComponent },
 { path: 'my-event', component: MyEventsComponent },
 {
   path: 'compensation',
