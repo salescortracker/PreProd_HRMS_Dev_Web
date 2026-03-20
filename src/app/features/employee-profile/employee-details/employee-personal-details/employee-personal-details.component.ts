@@ -25,6 +25,7 @@ username: any=sessionStorage.getItem('Name');
   editId: number | null = null; // store id for update
   bloodGroupList: any[] = [];
 maritalStatusList: any[] = [];
+canCreate: boolean = false;
    constructor(
     private fb: FormBuilder,
     private service: EmployeeResignationService
@@ -34,6 +35,7 @@ maritalStatusList: any[] = [];
     
   }
    ngOnInit(): void {
+    this.loadPermission();
     this.loadBloodGroups();      // 👈 add this
  this.loadMaritalStatuses();  // 👈 add this
     this.createForm();
@@ -198,4 +200,36 @@ loadMaritalStatuses() {
     error: (err) => console.error(err)
   });
 }
+loadPermission() {
+  debugger;
+
+  const userId = Number(sessionStorage.getItem("UserId"));
+
+  const menus = JSON.parse(sessionStorage.getItem("Menus") || "[]");
+
+  const familyMenu = menus.find((m: any) => m.menuName === "Family Details");
+
+  const menuId = familyMenu ? familyMenu.menuId : 0;
+    if (familyMenu) {
+    this.canCreate = familyMenu.canAdd;
+  //   this.canEdit = familyMenu.canEdit;
+  //   this.canDelete = familyMenu.canDelete;
+  //   this.canView = familyMenu.canView;
+   }
+
+  console.log("UserId:", userId);
+  console.log("MenuId:", menuId);
+
+  this.adminService.getPermission(userId, menuId, 'create').subscribe({
+    next: (res: boolean) => {
+      console.log("Create Permission:", res);
+      this.canCreate = res;
+    },
+    error: (err) => {
+      console.error("Permission API error:", err);
+      this.canCreate = false;
+    }
+  });
+}
+
 }

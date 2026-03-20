@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeResignationService } from '../employee-services/employee-resignation.service';
 import Swal from 'sweetalert2';
+import { AdminService } from '../../../admin/servies/admin.service';
 @Component({
   selector: 'app-employee-emergency-contact',
   standalone: false,
@@ -19,13 +20,14 @@ export class EmployeeEmergencyContactComponent {
   userId = Number(sessionStorage.getItem('UserId'));
   companyId =Number(sessionStorage.getItem('CompanyId'));
   regionId =Number(sessionStorage.getItem('RegionId'));
-
+canCreate: boolean = false;
   constructor(
     private fb: FormBuilder,
-    private empFamilyService: EmployeeResignationService
+    private empFamilyService: EmployeeResignationService,private adminService: AdminService
   ) {}
 
   ngOnInit(): void {
+    this.loadPermission();
     this.initForm();
     this.loadrelationship();
     this.getEmergencyContacts();
@@ -117,4 +119,35 @@ debugger;
     this.emergencyForm.patchValue({ userId: this.userId });
     this.isEdit = false;
   }
+  loadPermission() {
+  debugger;
+
+  const userId = Number(sessionStorage.getItem("UserId"));
+
+  const menus = JSON.parse(sessionStorage.getItem("Menus") || "[]");
+
+  const familyMenu = menus.find((m: any) => m.menuName === "Family Details");
+
+  const menuId = familyMenu ? familyMenu.menuId : 0;
+    if (familyMenu) {
+    this.canCreate = familyMenu.canAdd;
+  //   this.canEdit = familyMenu.canEdit;
+  //   this.canDelete = familyMenu.canDelete;
+  //   this.canView = familyMenu.canView;
+   }
+
+  console.log("UserId:", userId);
+  console.log("MenuId:", menuId);
+
+  this.adminService.getPermission(userId, menuId, 'create').subscribe({
+    next: (res: boolean) => {
+      console.log("Create Permission:", res);
+      this.canCreate = res;
+    },
+    error: (err) => {
+      console.error("Permission API error:", err);
+      this.canCreate = false;
+    }
+  });
+}
 }
