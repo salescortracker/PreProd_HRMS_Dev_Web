@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { EmployeeResignationService } from '../../employee-profile/employee-services/employee-resignation.service';
+import { AdminService } from '../../../admin/servies/admin.service';
 export interface LeaveCalendar {
   leaveRequestId: number;
   userId: number;            // maps to UserId in backend DTO
@@ -29,15 +30,19 @@ currentDate: Date = new Date();
   employees: { userId: number, employeeName: string }[] = [];
   selectedEmployee: number = 0; // 0 = All, else userId
 
+  // Weekoffs (Sat/Sun or custom configured days)
+  weekoffDays: Set<string> = new Set();
+
   // tooltip
   tooltipVisible = false;
   tooltipX = 0;
   tooltipY = 0;
   tooltipLeaves: LeaveCalendar[] = [];
-
+companyId = Number(sessionStorage.getItem('CompanyId') || 0);
+regionId = Number(sessionStorage.getItem('RegionId') || 0);
   // Sample leave data
   leaveData: LeaveCalendar[] = [];
-  constructor(private leaveService: EmployeeResignationService) {}
+  constructor(private leaveService: EmployeeResignationService, private adminService: AdminService) {}
 
 
   ngOnInit(): void {
@@ -47,8 +52,14 @@ currentDate: Date = new Date();
       return;
     }
 
+    // Load weekoffs (used in calendar rendering and leave-day calculations)
+    this.loadWeekoffs(userId);
+
     // generate month grid
     this.generateMonthDates(this.currentYear, this.currentMonth);
+
+    
+
 
     // Try manager leaves first — if manager has employees, treat as manager view.
     this.leaveService.getManagerLeaves(userId).subscribe({
@@ -80,6 +91,28 @@ currentDate: Date = new Date();
         this.selectedEmployee = userId;
       },
       error: err => console.error('GetUserLeaves error', err)
+    });
+  }
+
+  private loadWeekoffs(userId: number) {
+    this.adminService.getWeekoffLists(this.companyId, this.regionId).subscribe({
+      next: (res: any) => {
+        const data = res?.data || [];
+        const days: string[] = [];
+
+        data.forEach((w: any) => {
+          const value = (w.weekoffDate ?? w.WeekoffDate ?? '').toString().trim();
+          if (!value) return;
+
+          days.push(value);
+          if (value.length >= 3) days.push(value.substring(0, 3));
+        });
+
+        this.weekoffDays = new Set(days.map(d => d.toLowerCase()));
+      },
+      error: (err) => {
+        console.error('Weekoffs load error', err);
+      }
     });
   }
 
@@ -152,7 +185,7 @@ currentDate: Date = new Date();
   // returns leaves that fall on the given day number in current month/year, filtered by selectedEmployee
   getDayLeavesByNumber(day: number|null): LeaveCalendar[] {
     if (!day) return [];
-
+if (this.isWeekendForDay(day)) return [];
     const dateStr = `${this.currentYear}-${(this.currentMonth+1).toString().padStart(2,'0')}-${day.toString().padStart(2,'0')}`;
     return this.leaveData.filter(l => {
       return l.startDate <= dateStr && l.endDate >= dateStr &&
@@ -165,12 +198,28 @@ currentDate: Date = new Date();
     return this.getDayLeavesByNumber(day).length > 0;
   }
 
-  // weekend check (sat=6 sun=0)
+  private isWeekoffName(dayName: string): boolean {
+    const name = (dayName || '').toString().trim().toLowerCase();
+
+    // default to Sat/Sun when weekoff configuration not loaded yet
+    if (!this.weekoffDays || this.weekoffDays.size === 0) {
+      return name === 'saturday' || name === 'sunday' || name === 'sat' || name === 'sun';
+    }
+
+    return this.weekoffDays.has(name);
+  }
+
+  private isWeekoffDate(date: Date): boolean {
+    const weekdayLong = date.toLocaleString('en-US', { weekday: 'long' });
+    const weekdayShort = date.toLocaleString('en-US', { weekday: 'short' });
+    return this.isWeekoffName(weekdayLong) || this.isWeekoffName(weekdayShort);
+  }
+
+  // weekend check (configurable weekoff days)
   isWeekendForDay(day: number|null) {
     if (!day) return false;
     const d = new Date(this.currentYear, this.currentMonth, day);
-    const wd = d.getDay();
-    return wd === 0 || wd === 6;
+    return this.isWeekoffDate(d);
   }
 
   isToday(day: number|null) {
@@ -194,6 +243,11 @@ currentDate: Date = new Date();
   }
 
   getDayLeaves(dateStr: string) {
+    const date = new Date(dateStr);
+    if (isNaN(date.getTime()) || this.isWeekoffDate(date)) {
+      return [];
+    }
+
     return this.leaveData.filter(l => l.startDate <= dateStr && l.endDate >= dateStr &&
       (this.selectedEmployee === 0 || l.userId === this.selectedEmployee));
   }

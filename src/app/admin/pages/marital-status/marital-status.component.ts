@@ -109,6 +109,18 @@ marital: MaritalStatus = this.getEmptyStatus();
   onSubmit(): void { this.isEditMode ? this.updateStatus() : this.createStatus(); }
 
   createStatus(): void {
+
+
+  const exists = this.statuses.some(s =>
+    s.statusName.toLowerCase() === this.marital.statusName.toLowerCase() &&
+    s.companyID === this.marital.companyID &&
+    s.regionID === this.marital.regionID
+  );
+
+  if (exists) {
+    Swal.fire('Warning', 'Marital Status already exists!', 'warning');
+    return;
+  }
     this.spinner.show();
     this.adminService.createMaritalStatus(this.marital).subscribe({
       next: () => {
@@ -125,6 +137,18 @@ marital: MaritalStatus = this.getEmptyStatus();
   }
 
   updateStatus(): void {
+
+      const exists = this.statuses.some(s =>
+    s.statusName.toLowerCase() === this.marital.statusName.toLowerCase() &&
+    s.companyID === this.marital.companyID &&
+    s.regionID === this.marital.regionID &&
+    s.maritalStatusID !== this.marital.maritalStatusID
+  );
+
+  if (exists) {
+    Swal.fire('Warning', 'Duplicate marital status not allowed!', 'warning');
+    return;
+  }
     this.spinner.show();
     this.adminService.updateMaritalStatus(this.marital).subscribe({
       next: () => {

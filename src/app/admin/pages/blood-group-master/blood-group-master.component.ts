@@ -115,10 +115,13 @@ onBloodGroupInput() {
 }
 
 
-  editBloodGroup(b: BloodGroup): void {
-    this.bloodGroup = { ...b };
-    this.isEditMode = true;
-  }
+ editBloodGroup(b: BloodGroup): void {
+  this.bloodGroup = {
+    ...b,
+    description: b.description || ''   // ✅ avoid null
+  };
+  this.isEditMode = true;
+}
 
   deleteBloodGroup(b: BloodGroup): void {
     debugger
