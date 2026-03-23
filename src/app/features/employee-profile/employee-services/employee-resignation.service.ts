@@ -238,6 +238,10 @@ getUserLeaves(userId: number) {
 getManagerLeaves(managerId: number) {
   return this.http.get<any[]>(`${this.apiUrl}/GetManagerLeaves/${managerId}`);
 }
+// In employee-resignation.service.ts
+getWeekoffList(companyId: number, regionId: number): Observable<any> {
+  return this.http.get(`${this.apiUrl}/MasterData/weekoffCalender?companyId=${companyId}&regionId=${regionId}`);
+}
 
 // -------------------------------
   // SHIFT MASTER

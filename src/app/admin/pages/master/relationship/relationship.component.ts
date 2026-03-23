@@ -50,7 +50,7 @@ relationshipModel: any = {
   // Empty model
   getEmptyRelationship(): Relationship {
     return {
-      RelationshipID: 0,
+      relationshipId: 0,
       relationshipName: '',
       companyName: '',
       regionName: '',
@@ -73,11 +73,9 @@ loadCompanies(): void {
   }
 
   loadRegions(): void {
-    debugger;
     this.adminService.getRegions(null,this.userId).subscribe((res: any[]) => {
     this.regionMap = res.reduce((map, r) => {
-      debugger;
-      map[r.regionID] = r.regionName;
+      map[r.regionId] = r.regionName;
       this.regions = res;
       return map;
     }, {} as Record<number, string>);
@@ -86,7 +84,6 @@ loadCompanies(): void {
   // Load
   loadRelationships(): void {
 
-    debugger;
     this.spinner.show();
    this.adminService.getcmpregRelationships(this.userId)
   .subscribe({
@@ -100,7 +97,7 @@ loadCompanies(): void {
           companyName: this.companyMap[r.companyId] ?? '',
           regionName: this.regionMap[r.regionId] ?? ''
         }))
-        .sort((a: any, b: any) => b.RelationshipID - a.RelationshipID);
+        .sort((a: any, b: any) => b.RelationshipID - a.relationshipId);
 
       this.spinner.hide();
     },
@@ -115,6 +112,23 @@ loadCompanies(): void {
   onSubmit(): void {
     this.spinner.show();
     if (this.isEditMode) {
+
+  const exists = this.relationships.some(r =>
+    r.relationshipId !== this.relationship.relationshipId && // 👈 important
+    r.relationshipName.toLowerCase().trim() === this.relationship.relationshipName.toLowerCase().trim() &&
+    r.companyId === this.relationship.companyId &&
+    r.regionId === this.relationship.regionId
+  );
+
+  if (exists) {
+    this.spinner.hide();
+    Swal.fire('Warning', 'Relationship already exists!', 'warning');
+    return;
+  }
+
+  // continue update API
+}
+    if (this.isEditMode) {
       this.adminService.updateRelationship(this.relationship).subscribe({
         next: () => {
           this.spinner.hide();
@@ -128,6 +142,18 @@ loadCompanies(): void {
         }
       });
     } else {
+
+      const exists = this.relationships.some(r =>
+        r.relationshipName.toLowerCase() === this.relationship.relationshipName.toLowerCase() &&
+        r.companyId === this.relationship.companyId &&
+        r.regionId === this.relationship.regionId
+      );
+
+      if (exists) {
+        Swal.fire('Warning', 'Relationship already exists!', 'warning');
+        return;
+      }
+
       this.adminService.createRelationship(this.relationship).subscribe({
         next: () => {
           this.spinner.hide();
@@ -135,10 +161,11 @@ loadCompanies(): void {
           this.loadRelationships();
           this.resetForm();
         },
-        error: () => {
-          this.spinner.hide();
-          Swal.fire('Error', 'Create failed. Please contact IT Administrator.', 'error');
-        }
+        
+       error: (err) => {
+        this.spinner.hide();
+        Swal.fire('Error', err.error?.message || 'Create failed', 'error');
+      }
       });
     }
   }
@@ -158,7 +185,7 @@ loadCompanies(): void {
     }).then((result) => {
       if (result.isConfirmed) {
         this.spinner.show();
-        this.adminService.deleteRelationship(r.RelationshipID).subscribe({
+        this.adminService.deleteRelationship(r.relationshipId).subscribe({
           next: () => {
             this.spinner.hide();
             Swal.fire('Deleted', `${r.relationshipName} deleted successfully.`, 'success');

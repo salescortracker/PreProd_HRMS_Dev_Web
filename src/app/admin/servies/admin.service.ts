@@ -397,7 +397,7 @@ export interface KpiCategory {
 }
 
 export interface Relationship {
-  RelationshipID: number;
+  relationshipId: number;
   relationshipName: string;
   companyId: number;
   regionId: number;
@@ -1102,11 +1102,15 @@ export class AdminService {
     return this.http.post(`${this.baseUrl}/UserManagement/update`, fd);
   }
 
+  // deleteMaritalStatus(id: number): Observable<any> {
+  //   const fd = new FormData();
+  //   fd.append('id', id.toString());
+  //   return this.http.post(`${this.baseUrl}/UserManagement/delete${id}`);
+  // }
+
   deleteMaritalStatus(id: number): Observable<any> {
-    const fd = new FormData();
-    fd.append('id', id.toString());
-    return this.http.post(`${this.baseUrl}/UserManagement/delete`, fd);
-  }
+  return this.http.delete(`${this.baseUrl}/UserManagement/deletema/${id}`);
+}
   // ---------------- RELATIONSHIP MASTER ---------------- //
 
   getRelationships(userId: number, companyId: number, regionId: number) {
@@ -1132,11 +1136,11 @@ export class AdminService {
   }
 
   updateRelationship(data: any) {
-    return this.http.post<any>(`${this.baseUrl}/UpdateRelationship`, data);
+    return this.http.post<any>(`${this.baseUrl}/UserManagement/UpdateRelationship`, data);
   }
 
   deleteRelationship(id: number) {
-    return this.http.post<any>(`${this.baseUrl}/UserManagement/DeleteRelationship?id=${id}`, {});
+    return this.http.post<any>(`${this.baseUrl}/UserManagement/DeleteRelationship?relationshipId=${id}`, {});
   }
 
   // Policy Category
@@ -2311,4 +2315,11 @@ deleteCompanyNewsCategory(id: number) {
 getCategoriesByCompanyRegion(companyId: number, regionId: number) {
   return this.http.get(`${this.baseUrl}/MasterData/companynewscategory-by-company-region?companyId=${companyId}&regionId=${regionId}`);
 }
+
+
+getWeekoffLists(companyId: number, regionId: number) {
+    return this.http.get(`${this.baseUrl}/MasterData/weekoff-list?companyId=${companyId}&regionId=${regionId}`);
+  }
+
+
 }
