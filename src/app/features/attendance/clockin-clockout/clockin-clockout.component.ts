@@ -222,28 +222,51 @@ getSystemTime24(): string {
   const mm = now.getMinutes().toString().padStart(2, '0');
   return `${hh}:${mm}`;   // HH:mm
 }
-  clockIn() {
-    const now = new Date();
-debugger;
-// Extract HH:mm in 24-hour format
-const time24 = now.toISOString().substring(11, 16);
-    const payload = {
-      employeeCode: this.employeeCode,
-      employeeName: sessionStorage.getItem('Name') || '',
-      department: 0,
-      attendanceDate: new Date(),
-      actionType: this.todayClockIn === '--:--' ? 'ClockIn' : 'ClockOut',
-      actionTime: this.getSystemTime24(),
-      clockOutTime:this.todayClockIn==='--:--' ? '' : this.getSystemTime24(),
-      clockInTime: this.todayClockIn==='--:--' ? this.getSystemTime24() : '',
-      companyId: this.companyId,
-      regionId: this.regionId
-    };
+//   clockIn() {
+//     const now = new Date();
 
-    this.employeeResignationService.addClockInOut(payload).subscribe(() => {
-      this.loadTodayAttendance();
-    });
-  }
+// // Extract HH:mm in 24-hour format
+// const time24 = now.toISOString().substring(11, 16);
+//     const payload = {
+//       employeeCode: this.employeeCode,
+//       employeeName: sessionStorage.getItem('Name') || '',
+//       department: 0,
+//       attendanceDate: new Date(),
+//       actionType: this.todayClockIn === '--:--' ? 'ClockIn' : 'ClockOut',
+//       actionTime: this.getSystemTime24(),
+//       clockOutTime:this.todayClockIn==='--:--' ? '' : this.getSystemTime24(),
+//       clockInTime: this.todayClockIn==='--:--' ? this.getSystemTime24() : '',
+//       companyId: this.companyId,
+//       regionId: this.regionId
+//     };
+
+//     this.employeeResignationService.addClockInOut(payload).subscribe(() => {
+//       this.loadTodayAttendance();
+//     });
+//   }
+clockIn() {
+
+  const time = this.getSystemTime24();
+
+  const payload = {
+    employeeCode: this.employeeCode,
+    employeeName: sessionStorage.getItem('Name') || '',
+    department: 0,
+
+    attendanceDate: new Date(),
+
+    actionType: this.todayClockIn === '--:--' ? 'ClockIn' : 'ClockOut',
+
+    actionTime: time,
+
+    companyId: this.companyId,
+    regionId: this.regionId
+  };
+
+  this.employeeResignationService.addClockInOut(payload).subscribe(() => {
+    this.loadTodayAttendance();
+  });
+}
 
   delete(id: number) {
     this.employeeResignationService.deleteClockInOut(id).subscribe(() => {
