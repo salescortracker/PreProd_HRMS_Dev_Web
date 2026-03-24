@@ -21,7 +21,7 @@ sortDirection: 'asc' | 'desc' = 'asc';
   pageSize = 5;
   currentPage = 1;
   pageSizeOptions = [5, 10, 20, 50];
-
+employees: any[] = [];
   letters: EmployeeLetter[] = [];
 
   // File
@@ -40,6 +40,7 @@ sortDirection: 'asc' | 'desc' = 'asc';
     this.companyId = Number(sessionStorage.getItem("CompanyId"));
     this.regionId = Number(sessionStorage.getItem("RegionId"));
     this.loadEmployeeLetters();
+     this.loadEmployees(); 
   }
   
    loadEmployeeLetters() {
@@ -280,5 +281,27 @@ editLetter(item: EmployeeLetter) {
   this.form = this.resetForm();
   this.selectedFile = null;
   this.isEdit = false;
+}
+
+
+onEmployeeChange(code: any) {
+
+  const emp = this.employees.find(x => x.employeeCode == code);
+
+  if (emp) {
+    this.form.empCode = emp.employeeCode;
+    this.form.empName = emp.fullName;
+  }
+
+}
+
+loadEmployees() {
+  this.adminService.getEmployees(this.companyId, this.regionId)
+    .subscribe({
+      next: (res:any) => {
+        this.employees = res;
+      },
+      error: (err) => console.error(err)
+    });
 }
 }

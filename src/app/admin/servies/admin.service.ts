@@ -2304,6 +2304,12 @@ getCompanyNewsCategoryList(userId: number) {
   return this.http.get(`${this.baseUrl}/MasterData/companynewscategory-list/${userId}`);
 }
 
+getEmployees(companyId:number, regionId:number){
+  return this.http.get(
+    `${this.baseUrl}/Employee/GetEmployees?companyId=${companyId}&regionId=${regionId}`
+  );
+}
+  
 createCompanyNewsCategory(data: any) {
   return this.http.post(`${this.baseUrl}/MasterData/CreateCompanyNewsCategory`, data);
 }
