@@ -322,6 +322,8 @@ export interface ExpenseStatus {
   IsActive: boolean;
   CompanyID: number;
   RegionID: number;
+  createdBy: number;
+  userId: number;
 }
 export interface Company {
   companyId: number;
@@ -1358,20 +1360,20 @@ export class AdminService {
   }
   // EXPENSE STATUS CRUD
 
-  getExpenseStatus(companyId: number, regionId: number) {
-    return this.http.get<any>(`${this.baseUrl}/GetExpenseStatus?companyId=${companyId}&regionId=${regionId}`);
+  getExpenseStatus(userId: number) {
+    return this.http.get<any>(`${this.baseUrl}/Expenses/GetExpenseStatus?userId=${userId}`);
   }
 
   createExpenseStatus(data: ExpenseStatus) {
-    return this.http.post<any>(`${this.baseUrl}/CreateExpenseStatus`, data);
+    return this.http.post<any>(`${this.baseUrl}/Expenses/CreateExpenseStatus`, data);
   }
 
   updateExpenseStatus(data: ExpenseStatus) {
-    return this.http.put<any>(`${this.baseUrl}/UpdateExpenseStatus`, data);
+    return this.http.put<any>(`${this.baseUrl}/Expenses/UpdateExpenseStatus`, data);
   }
 
   deleteExpenseStatus(id: number) {
-    return this.http.delete<any>(`${this.baseUrl}/DeleteExpenseStatus/${id}`);
+    return this.http.delete<any>(`${this.baseUrl}/Expenses/DeleteExpenseStatus/${id}`);
   }
   // ------------------ EXPENSE CATEGORY TYPE ------------------
 

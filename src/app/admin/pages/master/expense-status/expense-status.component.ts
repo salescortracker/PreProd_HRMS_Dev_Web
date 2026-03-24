@@ -16,7 +16,8 @@ export class ExpenseStatusComponent {
  
   companyId = sessionStorage.getItem('CompanyId') ? Number(sessionStorage.getItem('CompanyId')) : 1;
   regionId = sessionStorage.getItem('RegionId') ? Number(sessionStorage.getItem('RegionId')) : 1;
-
+userId = sessionStorage.getItem("UserId") ? Number(sessionStorage.getItem("UserId")) : 0;
+  
   expense: ExpenseStatus = this.getEmptyExpense();
   expenseList: ExpenseStatus[] = [];
   expenseModel: any = {};
@@ -25,7 +26,8 @@ export class ExpenseStatusComponent {
   statusFilter: boolean | '' = '';
 
   isEditMode = false;
-
+companies: any[] = [];
+regions: any[] = [];
   // Pagination
   currentPage = 1;
   pageSize = 5;
@@ -40,6 +42,8 @@ export class ExpenseStatusComponent {
 
   ngOnInit(): void {
     this.loadExpenseStatus();
+      this.loadCompanies();
+  this.loadRegions();
   }
 
   getEmptyExpense(): ExpenseStatus {
@@ -47,24 +51,36 @@ export class ExpenseStatusComponent {
       ExpenseStatusID: 0,
       ExpenseStatusName: '',
       IsActive: true,
+      createdBy: this.userId,
+      userId: this.userId,
       CompanyID: this.companyId,
       RegionID: this.regionId
     };
   }
 
-  loadExpenseStatus(): void {
-    this.spinner.show();
-    this.admin.getExpenseStatus(this.companyId, this.regionId).subscribe({
-      next: res => {
-        this.expenseList = res.data?.data || res;
-        this.spinner.hide();
-      },
-      error: () => {
-        this.spinner.hide();
-        Swal.fire('Error', 'Failed to load Expense Status', 'error');
-      }
-    });
-  }
+loadExpenseStatus(): void {
+  this.spinner.show();
+  this.admin.getExpenseStatus(this.userId).subscribe({
+    next: (res:any) => {
+
+      const data = res.data?.data || res;
+
+      this.expenseList = data.map((x:any)=>({
+        ExpenseStatusID: x.expenseStatusID,
+        ExpenseStatusName: x.expenseStatusName,
+        IsActive: x.isActive,
+        CompanyID: x.companyID,
+        RegionID: x.regionID
+      }));
+
+      this.spinner.hide();
+    },
+    error: () => {
+      this.spinner.hide();
+      Swal.fire('Error', 'Failed to load Expense Status', 'error');
+    }
+  });
+}
 
   onSubmit(): void {
     this.spinner.show();
@@ -229,4 +245,21 @@ export class ExpenseStatusComponent {
       error: () => Swal.fire('Error', 'Upload failed!', 'error')
     });
   }
+
+
+
+
+  loadCompanies(): void {
+      this.admin.getCompanies(null,this.userId).subscribe({
+        next: (res:any) => (this.companies = res),
+        error: () => Swal.fire('Error', 'Failed to load companies.', 'error')
+      });
+    }
+  
+    loadRegions(): void {
+      this.admin.getRegions(null,this.userId).subscribe({
+        next: (res:any) => (this.regions = res),
+        error: () => Swal.fire('Error', 'Failed to load regions.', 'error')
+      });
+    }
 }
