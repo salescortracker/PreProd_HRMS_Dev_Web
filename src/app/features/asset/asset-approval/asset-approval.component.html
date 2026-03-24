@@ -2,20 +2,12 @@
 
   <div class="col-md-3">
     <label class="form-label">Asset Name</label>
-    <input
-      type="text"
-      class="form-control"
-      formControlName="assetName"
-      placeholder="Enter asset name">
+    <input type="text" class="form-control" formControlName="assetName" placeholder="Enter asset name">
   </div>
 
   <div class="col-md-3">
     <label class="form-label">Location</label>
-    <input
-      type="text"
-      class="form-control"
-      formControlName="location"
-      placeholder="Enter location">
+    <input type="text" class="form-control" formControlName="location" placeholder="Enter location">
   </div>
 
   <div class="col-md-2">
@@ -78,11 +70,7 @@
       <tbody>
         <tr *ngFor="let asset of pagedAssets">
           <td>
-            <input
-              type="checkbox"
-              [(ngModel)]="asset.checked"
-              [disabled]="asset.approvalStatus !== 'Pending'"
-            />
+            <input type="checkbox" [(ngModel)]="asset.checked" [disabled]="asset.approvalStatus !== 'Pending'" />
           </td>
 
           <td>{{ asset.assetName }}</td>
@@ -91,13 +79,11 @@
           <td>{{ asset.currencyCode }} {{ asset.assetCost }}</td>
 
           <td>
-            <span
-              class="badge"
-              [ngClass]="{
-                'bg-warning': asset.approvalStatus === 'Pending',
-                'bg-success': asset.approvalStatus === 'Approve',
-                'bg-danger': asset.approvalStatus === 'Reject'
-              }">
+            <span class="badge" [ngClass]="{
+  'bg-warning': asset.approvalStatus === 'Pending',
+  'bg-success': asset.approvalStatus === 'Approved',
+  'bg-danger': asset.approvalStatus === 'Rejected'
+}">
               {{ asset.approvalStatus }}
             </span>
           </td>
@@ -115,15 +101,11 @@
     <!-- ACTION BUTTONS -->
     <!-- ======================================================= -->
     <div class="mt-2">
-      <button
-        class="btn btn-success btn-sm me-2"
-        (click)="approveRejectAssets('Approve')">
+      <button class="btn btn-success btn-sm me-2" (click)="approveRejectAssets('Approved')">
         Approve Selected
       </button>
 
-      <button
-        class="btn btn-danger btn-sm"
-        (click)="approveRejectAssets('Reject')">
+      <button class="btn btn-danger btn-sm" (click)="approveRejectAssets('Rejected')">
         Reject Selected
       </button>
     </div>
@@ -131,47 +113,41 @@
     <!-- ======================================================= -->
     <!-- PAGINATION -->
     <!-- ======================================================= -->
-   <!-- ================= PAGINATION ================= -->
-<div class="d-flex justify-content-between align-items-center mt-3">
+    <!-- ================= PAGINATION ================= -->
+    <div class="d-flex justify-content-between align-items-center mt-3">
 
-  <!-- PAGE SIZE -->
-  <div>
-    <label>
-      Show
-      <select
-        class="form-select d-inline w-auto ms-2"
-        [(ngModel)]="pageSize"
-        (ngModelChange)="changePageSize($event)">
-        <option *ngFor="let size of pageSizeOptions" [value]="size">
-          {{ size }}
-        </option>
-      </select>
-      entries
-    </label>
-  </div>
+      <!-- PAGE SIZE -->
+      <div>
+        <label>
+          Show
+          <select class="form-select d-inline w-auto ms-2" [(ngModel)]="pageSize"
+            (ngModelChange)="changePageSize($event)">
+            <option *ngFor="let size of pageSizeOptions" [value]="size">
+              {{ size }}
+            </option>
+          </select>
+          entries
+        </label>
+      </div>
 
-  <!-- PAGE NAVIGATION -->
-  <div class="d-flex align-items-center">
-    <button
-      class="btn btn-outline-secondary btn-sm me-2"
-      (click)="changePage(currentPage - 1)"
-      [disabled]="currentPage === 1">
-      Previous
-    </button>
+      <!-- PAGE NAVIGATION -->
+      <div class="d-flex align-items-center">
+        <button class="btn btn-outline-secondary btn-sm me-2" (click)="changePage(currentPage - 1)"
+          [disabled]="currentPage === 1">
+          Previous
+        </button>
 
-    <span class="mx-2">
-      Page {{ currentPage }} of {{ totalPages }}
-    </span>
+        <span class="mx-2">
+          Page {{ currentPage }} of {{ totalPages }}
+        </span>
 
-    <button
-      class="btn btn-outline-secondary btn-sm ms-2"
-      (click)="changePage(currentPage + 1)"
-      [disabled]="currentPage === totalPages">
-      Next
-    </button>
-  </div>
+        <button class="btn btn-outline-secondary btn-sm ms-2" (click)="changePage(currentPage + 1)"
+          [disabled]="currentPage === totalPages">
+          Next
+        </button>
+      </div>
 
-</div>
+    </div>
 
   </div>
 </div>

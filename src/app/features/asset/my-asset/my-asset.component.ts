@@ -9,11 +9,11 @@ import { AssetDto, AssetService, AssetStatus } from '../asset.service';
   styleUrl: './my-asset.component.css'
 })
 export class MyAssetComponent {
-  
   assets: AssetDto[] = [];
   filteredAssets: AssetDto[] = [];
   statuses: AssetStatus[] = [];
   userId!: number;
+  
 
   // ✅ FILTER MODEL
   filter = {
@@ -26,9 +26,18 @@ export class MyAssetComponent {
   constructor(private assetService: AssetService) {}
 
   ngOnInit(): void {
+     const userId = sessionStorage.getItem("UserId");
+
+  if (!userId) {
+    console.error("UserId not found in session");
+    return;
+  }
+
+  this.userId = Number(userId);
+
     this.loadUserFromSession();
     this.loadStatuses();
-    this.loadAssets();
+    this.loadMyAssets();
   }
 
   /* =======================
@@ -53,18 +62,23 @@ export class MyAssetComponent {
   /* =======================
      LOAD ASSETS
   ======================= */
-  loadAssets(): void {
-    if (!this.userId) return;
+ loadMyAssets(): void {
 
-    this.assetService.getAssetsByUserId$(this.userId).subscribe({
-      next: (res) => {
-        this.assets = res;
-        this.filteredAssets = res; // ✅ initialize
+  this.assetService
+    .getAssetsByUserId$(this.userId)
+    .subscribe({
+      next: (data) => {
+
+        this.assets = data;
+        this.filteredAssets = [...data];
+
       },
-      error: () =>
-        Swal.fire('Error', 'Failed to load assets', 'error')
+      error: (err) => {
+        console.error("Error loading assets", err);
+      }
     });
-  }
+
+}
 
   /* =======================
      LOAD STATUSES

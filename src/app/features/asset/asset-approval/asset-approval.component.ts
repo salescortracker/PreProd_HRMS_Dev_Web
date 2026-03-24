@@ -38,20 +38,23 @@ filtersForm!: FormGroup;
   // 🔹 INIT
   // ============================================================
   ngOnInit(): void {
-    const currentUser = sessionStorage.getItem('currentUser');
 
-    if (!currentUser) {
-      Swal.fire('Error', 'Session expired', 'error');
-      return;
-    }
+  const currentUser = sessionStorage.getItem('currentUser');
 
-    const user = JSON.parse(currentUser);
-    this.managerId = Number(user.reportingManagerId);
-
-    this.buildForm();
-    this.loadStatuses();
-    this.loadAssetsForApproval();
+  if (!currentUser) {
+    Swal.fire('Error', 'Session expired', 'error');
+    return;
   }
+
+  const user = JSON.parse(currentUser);
+
+  // 🔹 Correct managerId
+  this.managerId = Number(user.userId);
+
+  this.buildForm();
+  this.loadStatuses();
+  this.loadAssetsForApproval();
+}
 
   // ============================================================
   // 🔹 BUILD FILTER FORM
@@ -69,7 +72,11 @@ filtersForm!: FormGroup;
   // 🔹 LOAD ASSETS
   // ============================================================
   loadAssetsForApproval(): void {
-    this.assetService.getPendingApprovals$(Number(sessionStorage.getItem("reportingManagerId"))).subscribe(res => {
+
+  this.assetService
+    .getPendingApprovals$(this.managerId)
+    .subscribe(res => {
+
       this.assets = res.map((a: any) => ({
         ...a,
         checked: false,
@@ -86,7 +93,7 @@ filtersForm!: FormGroup;
       this.noRecordsFound = false;
       this.currentPage = 1;
     });
-  }
+}
 
   // ============================================================
   // 🔹 LOAD STATUSES
@@ -195,35 +202,54 @@ filtersForm!: FormGroup;
   // ============================================================
   // 🔹 APPROVE / REJECT (ONE API)
   // ============================================================
-  approveRejectAssets(action: 'Approve' | 'Reject'): void {
-    const selected = this.assets.filter(
-      a => a.checked && a.approvalStatus === 'Pending'
-    );
+approveRejectAssets(action: 'Approved' | 'Rejected'): void {
 
-    if (!selected.length) {
-      Swal.fire('Warning', 'Select at least one asset', 'warning');
-      return;
-    }
+  const selectedAssets = this.assets
+    .filter(a => a.checked && a.approvalStatus === 'Pending')
+    .map(a => a.assetID);
 
-    Swal.fire({
-      title: `Confirm ${action}`,
-      icon: 'question',
-      showCancelButton: true
-    }).then(result => {
-      if (result.isConfirmed) {
-        selected.forEach(a => {
-          this.assetService
-            .approveOrRejectAsset$(a.assetID, this.managerId, action)
-            .subscribe(() => {
+  if (!selectedAssets.length) {
+    Swal.fire('Warning', 'Select at least one asset', 'warning');
+    return;
+  }
+
+  const payload = {
+    assetIds: selectedAssets,
+    managerId: this.managerId,
+    action: action
+  };
+
+  Swal.fire({
+    title: `Confirm ${action}`,
+    icon: 'question',
+    showCancelButton: true
+  }).then(result => {
+
+    if (result.isConfirmed) {
+
+      this.assetService
+        .approveRejectAssets(payload)
+        .subscribe(() => {
+
+          this.assets.forEach(a => {
+            if (selectedAssets.includes(a.assetID)) {
               a.approvalStatus = action;
               a.checked = false;
-            });
+            }
+          });
+
+          Swal.fire(
+            'Success',
+            `Assets ${action} successfully`,
+            'success'
+          );
+
         });
 
-        Swal.fire('Success', `Assets ${action}d successfully`, 'success');
-      }
-    });
-  }
+    }
+
+  });
+}
 
   // ============================================================
   // 🔹 TEMPLATE HELPER
