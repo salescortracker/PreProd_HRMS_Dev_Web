@@ -207,7 +207,7 @@ loadPermission() {
 
   const menus = JSON.parse(sessionStorage.getItem("Menus") || "[]");
 
-  const familyMenu = menus.find((m: any) => m.menuName === "Family Details");
+  const familyMenu = menus.find((m: any) => m.menuName === "Personal Details");
 
   const menuId = familyMenu ? familyMenu.menuId : 0;
     if (familyMenu) {

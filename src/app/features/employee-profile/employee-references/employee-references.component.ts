@@ -15,7 +15,8 @@ export class EmployeeReferencesComponent {
   isEdit = false;
   editId!: number;
   canCreate: boolean = false;
-
+ canEdit: boolean = false;
+ canDelete: boolean = false;
   constructor(
     private fb: FormBuilder,
     private referenceService: EmployeeResignationService,private adminService: AdminService
@@ -93,6 +94,10 @@ export class EmployeeReferencesComponent {
 
   // 🗑️ Delete
   deleteReference(id: number) {
+      if (!this.canDelete) {
+    Swal.fire("You don't have permission to delete this reference", "", "warning");
+    return;
+  }
     if (confirm('Are you sure you want to delete this reference?')) {
       this.referenceService.deleteReference(id)
         .subscribe(() => {
@@ -113,13 +118,13 @@ export class EmployeeReferencesComponent {
 
   const menus = JSON.parse(sessionStorage.getItem("Menus") || "[]");
 
-  const familyMenu = menus.find((m: any) => m.menuName === "Family Details");
+  const familyMenu = menus.find((m: any) => m.menuName === "References");
 
   const menuId = familyMenu ? familyMenu.menuId : 0;
     if (familyMenu) {
     this.canCreate = familyMenu.canAdd;
-  //   this.canEdit = familyMenu.canEdit;
-  //   this.canDelete = familyMenu.canDelete;
+     this.canEdit = familyMenu.canEdit;
+     this.canDelete = familyMenu.canDelete;
   //   this.canView = familyMenu.canView;
    }
 

@@ -21,6 +21,8 @@ export class EmployeeEmergencyContactComponent {
   companyId =Number(sessionStorage.getItem('CompanyId'));
   regionId =Number(sessionStorage.getItem('RegionId'));
 canCreate: boolean = false;
+canEdit: boolean = false;
+canDelete: boolean = false;
   constructor(
     private fb: FormBuilder,
     private empFamilyService: EmployeeResignationService,private adminService: AdminService
@@ -105,6 +107,10 @@ debugger;
 
   // 🗑️ Delete
   delete(id: number) {
+      if (!this.canDelete) {
+    Swal.fire("You don't have permission to delete this reference", "", "warning");
+    return;
+  }
     if (confirm('Are you sure you want to delete this contact?')) {
       this.empFamilyService.deleteEmergencyContact(id)
         .subscribe(() => {
@@ -126,13 +132,13 @@ debugger;
 
   const menus = JSON.parse(sessionStorage.getItem("Menus") || "[]");
 
-  const familyMenu = menus.find((m: any) => m.menuName === "Family Details");
+  const familyMenu = menus.find((m: any) => m.menuName === "Emergency Contact");
 
   const menuId = familyMenu ? familyMenu.menuId : 0;
     if (familyMenu) {
     this.canCreate = familyMenu.canAdd;
-  //   this.canEdit = familyMenu.canEdit;
-  //   this.canDelete = familyMenu.canDelete;
+     this.canEdit = familyMenu.canEdit;
+     this.canDelete = familyMenu.canDelete;
   //   this.canView = familyMenu.canView;
    }
 
