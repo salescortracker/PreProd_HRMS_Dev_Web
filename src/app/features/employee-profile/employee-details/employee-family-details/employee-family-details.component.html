@@ -1,7 +1,13 @@
 <div class="form-container">
-      <div *ngIf="!canCreate" style="color:red;">
+      <!-- <div *ngIf="!canCreate" style="color:red;">
         You don't have permission to add employee family details
-      </div>
+      </div> -->
+
+      <div *ngIf="(!isEdit && !canCreate) || (isEdit && !canEdit)" style="color:red;">
+  {{ isEdit 
+      ? "You don't have permission to update employee family details"
+      : "You don't have permission to add employee family details" }}
+</div>
 
   <form [formGroup]="familyForm" (ngSubmit)="submit()" class="form-grid">
     
@@ -55,7 +61,7 @@
     
 
     <div style="flex-basis: 100%;">
-      <button type="submit"  class="submit-btn" *ngIf="canCreate">
+      <button type="submit"  class="submit-btn"   *ngIf="(isEdit && canEdit) || (!isEdit && canCreate)">
         {{ isEdit ? 'Update' : 'Save' }}
       </button>
     </div>
@@ -80,7 +86,7 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let f of familyList">
+      <tr *ngFor="let f of familyList" >
         <td>{{ f.name }}</td>
         <td>{{ f.relationship }}</td>
         <td>{{ f.dateOfBirth | date:'dd/MM/yyyy' }}</td>
@@ -90,8 +96,8 @@
         <td>{{ f.address }}</td>
         <td>{{ f.isDependent ? 'Yes' : 'No' }}</td>
         <td class="action-icons">
-          <i class="fa-solid fa-pen" (click)="edit(f)"></i>
-          <i class="fa-solid fa-trash" (click)="delete(f.familyId)"></i>
+          <i class="fa-solid fa-pen" *ngIf="canEdit" (click)="edit(f)"></i>
+          <i class="fa-solid fa-trash" *ngIf="canDelete" (click)="delete(f.familyId)"></i>
         </td>
       </tr>
     </tbody>

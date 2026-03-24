@@ -11,6 +11,31 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class EmployeeSkillsComponent {
 activeTab = 'skills';
 
+canJobHistory: boolean = false;
+canEducation: boolean = false;
+canCertification: boolean = false;
+ngOnInit(){
+  this.loadTabPermissions();
+}
+loadTabPermissions() {
+
+  const menus = JSON.parse(sessionStorage.getItem("Menus") || "[]");
+
+  const jobHistory = menus.find((m:any) => 
+      m.menuName?.trim().toLowerCase() === "job history");
+
+  const education = menus.find((m:any) => 
+      m.menuName?.trim().toLowerCase() === "education");
+
+  const certification = menus.find((m:any) => 
+      m.menuName?.trim().toLowerCase() === "certification");
+
+  this.canJobHistory = jobHistory?.canView ?? false;
+  this.canEducation = education?.canView ?? false;
+  this.canCertification = certification?.canView ?? false;
+
+}
+
   // Skills & Job History
   skillsJobHistory = [
     { label: 'Employer', type: 'text', required: true, placeholder: 'Enter employer name' },

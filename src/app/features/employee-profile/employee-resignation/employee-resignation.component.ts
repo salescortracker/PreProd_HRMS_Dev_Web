@@ -18,6 +18,8 @@ type ColumnKey =
   styleUrl: './employee-resignation.component.css'
 })
 export class EmployeeResignationComponent {
+  canViewResignation = false;
+  canViewApproval=false;
   resignations: EmployeeResignation[] = [];
   filteredResignations: EmployeeResignation[] = [];
   resignationModel: EmployeeResignation = { resignationType: '' };
@@ -45,8 +47,21 @@ export class EmployeeResignationComponent {
 
   ngOnInit(): void {
     this.loadResignations();
+    this.loadPermissions();
+
   }
 
+loadPermissions() {
+
+  const menus = JSON.parse(sessionStorage.getItem("Menus") || "[]");
+
+  const resignation = menus.find((m:any) =>
+      m.menuName?.trim().toLowerCase() === "resignation/exit");
+
+  this.canViewResignation = resignation?.canView ?? false;
+  this.canViewApproval=resignation?.canView ?? false;;
+
+}
   loadResignations() {
     this.resignationService.getAll(this.companyId, this.regionId, this.roleId).subscribe({
       next: (data) => {

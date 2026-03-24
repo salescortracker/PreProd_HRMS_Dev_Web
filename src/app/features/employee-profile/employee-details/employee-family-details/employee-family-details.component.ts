@@ -22,7 +22,8 @@ familyForm!: FormGroup;
   menuId = Number(sessionStorage.getItem("menuId"));
   //canCreate: boolean = true;
   canCreate: boolean = false;
- 
+  canEdit: boolean = false;
+  canDelete: boolean = false;
   constructor(
     private fb: FormBuilder,
     private empFamilyService: EmployeeResignationService,
@@ -134,8 +135,8 @@ loadPermission() {
   const menuId = familyMenu ? familyMenu.menuId : 0;
     if (familyMenu) {
     this.canCreate = familyMenu.canAdd;
-  //   this.canEdit = familyMenu.canEdit;
-  //   this.canDelete = familyMenu.canDelete;
+     this.canEdit = familyMenu.canEdit;
+     this.canDelete = familyMenu.canDelete;
   //   this.canView = familyMenu.canView;
    }
 
@@ -161,14 +162,29 @@ loadPermission() {
     this.familyForm.patchValue(row);
   }
 
+  // delete(id: number) {
+  //   if (confirm('Are you sure?')) {
+  //     this.empFamilyService.deleteempfamily(id).subscribe(() => {
+  //       this.loadFamily();
+  //         Swal.fire("Deleted successfully!", '', 'success');
+  //     });
+  //   }
+  // }
+
   delete(id: number) {
-    if (confirm('Are you sure?')) {
-      this.empFamilyService.deleteempfamily(id).subscribe(() => {
-        this.loadFamily();
-          Swal.fire("Deleted successfully!", '', 'success');
-      });
-    }
+
+  if (!this.canDelete) {
+    Swal.fire("You don't have permission to delete this record", "", "warning");
+    return;
   }
+
+  if (confirm('Are you sure?')) {
+    this.empFamilyService.deleteempfamily(id).subscribe(() => {
+      this.loadFamily();
+      Swal.fire("Deleted successfully!", '', 'success');
+    });
+  }
+}
 
   resetForm() {
     this.familyForm.reset();
