@@ -18,7 +18,8 @@ export class HeaderComponent {
  roleName:any='';
  userName:any='';
  superadmin:any;
-
+ profileImage: string | null = null;
+  userId: number | null = null;
  isClockedIn = false;
 
 clockStatus = 'Not Clocked In';
@@ -32,6 +33,17 @@ private timerRef: any;
  constructor(private router: Router, private employeeResignationService: EmployeeResignationService, private adminService: AdminService) {}
   ngOnInit() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    const storedUserId = sessionStorage.getItem('UserId');
+    if (storedUserId) {
+      this.userId = +storedUserId;
+
+      const savedImage = sessionStorage.getItem(`profileImage_${this.userId}`);
+
+      if (savedImage) {
+        this.profileImage = savedImage;
+      }
+    }
+    //this.loadProfileImage(this.userId);
     this.role = currentUser.role;
     sessionStorage.setItem('role', this.role);
     this.roleName= sessionStorage.getItem('roleName');
