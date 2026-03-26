@@ -407,6 +407,7 @@ export interface Relationship {
   isActive: boolean;
 }
 export interface MenuItem {
+  menuId?: number; 
   label: string;           // <-- what UI expects
   link?: string;
   icon?: string;
@@ -670,6 +671,7 @@ export interface MaritalStatus {
   description?: string;
   isActive: boolean;
   companyName?: string;
+
   regionName?: string;
   userId: Number;
 }
@@ -679,6 +681,20 @@ export interface AccountType {
   companyId: number;
   regionId: number;
   isActive: boolean;
+
+  regionName?: string;
+  userId: Number;
+}
+export interface CompanyNewsCategory {
+  categoryId: number;
+  categoryName: string;
+  companyId: number;
+  regionId: number;
+  isActive: boolean;
+  userId: number;
+  companyName?: string;
+  regionName?: string;
+ 
 }
 
 @Injectable({
@@ -2218,7 +2234,8 @@ getAccountTypesByCompanyRegion(companyId: number, regionId: number, params?: any
       `${this.baseUrl}/MasterData/GetDepartmentsForDropdown?companyId=${companyId}&regionId=${regionId}`
     );
   }
-  // ================= Recruitment Notice Period =================
+  // ================= Recruitment Notice Period ==========
+  
 
   getRecruitmentNoticePeriodList(userId: number) {
     return this.http.get(`${this.baseUrl}/MasterData/recruitmentnoticeperiod-list?userId=${userId}`);
@@ -2251,5 +2268,110 @@ getAccountTypesByCompanyRegion(companyId: number, regionId: number, params?: any
   deleteAccountType(id: number) {
     return this.http.post(`${this.baseUrl}/MasterData/DeleteAccountType?id=${id}`, {});
   }
+
+
+
+  getRecruitmentNoticePeriodList(userId: number) {
+    return this.http.get(`${this.baseUrl}/MasterData/recruitmentnoticeperiod-list?userId=${userId}`);
+  }
+
+  createRecruitmentNoticePeriod(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/CreateRecruitmentNoticePeriod`, data);
+  }
+
+  updateRecruitmentNoticePeriod(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/UpdateRecruitmentNoticePeriod`, data);
+  }
+
+  deleteRecruitmentNoticePeriod(id: number) {
+    return this.http.post(`${this.baseUrl}/MasterData/DeleteRecruitmentNoticePeriod?id=${id}`, {});
+  }
+
+
+  /// Employee Attendances & Reports 
+
+  // =============================
+  // GET EMPLOYEES
+  // =============================
+
+
+getPermission(userId: number, menuId: number, action: string) {
+  return this.http.get<boolean>(
+    `${this.baseUrl}/Employee/GetPermission?userId=${userId}&menuId=${menuId}&action=${action}`
+  );
+}
+  getEmployees(companyId: number, regionId: number) {
+
+    let params = new HttpParams()
+      .set('companyId', companyId)
+      .set('regionId', regionId);
+
+    return this.http.get(`${this.baseUrl}/Attendance/GetEmployees`, { params });
+  }
+
+  // =============================
+  // SAVE ATTENDANCE
+  // =============================
+  saveAttendance(data: any) {
+    return this.http.post(`${this.baseUrl}/Attendance/SaveAttendance`, data);
+  }
+
+  // =============================
+  // WEEKLY REPORT
+  // =============================
+  weeklyReport(companyId: number, regionId: number) {
+
+    let params = new HttpParams()
+      .set('companyId', companyId)
+      .set('regionId', regionId);
+
+    return this.http.get(`${this.baseUrl}/Attendance/WeeklyReport`, { params });
+  }
+
+  // =============================
+  // MONTHLY REPORT
+  // =============================
+  monthlyReport(companyId: number, regionId: number) {
+
+    let params = new HttpParams()
+      .set('companyId', companyId)
+      .set('regionId', regionId);
+
+    return this.http.get(`${this.baseUrl}/Attendance/MonthlyReport`, { params });
+  }
+
+  // =============================
+  // DATES RANGE REPORT
+  // =============================
+dateRangeReport(companyId: number, regionId: number, fromDate: string, toDate: string) {
+
+  let params = new HttpParams()
+    .set('companyId', companyId)
+    .set('regionId', regionId)
+    .set('fromDate', fromDate)
+    .set('toDate', toDate);
+
+  return this.http.get(`${this.baseUrl}/Attendance/DateRangeReport`, { params });
+}
+
+getCompanyNewsCategoryList(userId: number) {
+  return this.http.get(`${this.baseUrl}/MasterData/companynewscategory-list/${userId}`);
+}
+
+createCompanyNewsCategory(data: any) {
+  return this.http.post(`${this.baseUrl}/MasterData/CreateCompanyNewsCategory`, data);
+}
+
+updateCompanyNewsCategory(data: any) {
+  debugger;
+  return this.http.post(`${this.baseUrl}/MasterData/UpdateCompanyNewsCategory`, data);
+}
+
+deleteCompanyNewsCategory(id: number) {
+  return this.http.post(`${this.baseUrl}/MasterData/DeleteCompanyNewsCategory?id=${id}`, {});
+}
+getCategoriesByCompanyRegion(companyId: number, regionId: number) {
+  return this.http.get(`${this.baseUrl}/MasterData/companynewscategory-by-company-region?companyId=${companyId}&regionId=${regionId}`);
+}
 
 }

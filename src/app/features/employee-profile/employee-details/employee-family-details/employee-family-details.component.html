@@ -1,7 +1,10 @@
 <div class="form-container">
+      <div *ngIf="!canCreate" style="color:red;">
+        You don't have permission to add employee family details
+      </div>
 
   <form [formGroup]="familyForm" (ngSubmit)="submit()" class="form-grid">
-
+    
     <div class="form-group">
       <label>Name <span class="required">*</span></label>
       <input type="text" formControlName="name" placeholder="Enter full name">
@@ -49,9 +52,10 @@
       <input type="checkbox" formControlName="isDependent">
       <label>Is Dependent?</label>
     </div>
+    
 
     <div style="flex-basis: 100%;">
-      <button type="submit" class="submit-btn">
+      <button type="submit"  class="submit-btn" *ngIf="canCreate">
         {{ isEdit ? 'Update' : 'Save' }}
       </button>
     </div>
