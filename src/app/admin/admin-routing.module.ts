@@ -64,6 +64,7 @@ import { InterviewLevelComponent } from './pages/master/interview-level/intervie
 import { ScreeningResultComponent } from './pages/master/screening-result/screening-result.component';
 import { RecruitmentNoticePeriodComponent } from './pages/master/recruitment-notice-period/recruitment-notice-period.component';
 import { CompanyEventsComponent } from './pages/company-events/company-events.component';
+import { AccountTypeComponent } from '../account-type/account-type.component';
 import { CompanyNewsCategoryComponent } from '../company-news-category/company-news-category.component';
 
 const routes: Routes = [
@@ -135,6 +136,7 @@ const routes: Routes = [
          { path: 'screening-result', component: ScreeningResultComponent },
          { path: 'interview-level', component: InterviewLevelComponent },
            { path: 'company-events', component: CompanyEventsComponent },
+           {path: 'account-type', component: AccountTypeComponent},
            { path: 'company-news-category', component: CompanyNewsCategoryComponent },
       // Add more admin pages here
     ]

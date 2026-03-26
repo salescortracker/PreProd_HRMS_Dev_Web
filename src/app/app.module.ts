@@ -106,6 +106,7 @@ import { ResetPasswordComponent } from './features/login/reset-password/reset-pa
 import { VerifyOtpComponent } from './features/login/verify-otp/verify-otp.component';
 import { CompanyEventsComponent } from './features/company-events/company-events/company-events.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { AccountTypeComponent } from './account-type/account-type.component';
 import { AttendanceListComponent } from './features/attendance/attendance-list/attendance-list.component';
 import { CompanyNewsCategoryComponent } from './company-news-category/company-news-category.component';
 @NgModule({
@@ -207,7 +208,8 @@ import { CompanyNewsCategoryComponent } from './company-news-category/company-ne
     ResetPasswordComponent,
     VerifyOtpComponent,
     CompanyEventsComponent,
-    AttendanceListComponent,
+    AccountTypeComponent
+    AttendanceListComponent
     CompanyNewsCategoryComponent
    
     
