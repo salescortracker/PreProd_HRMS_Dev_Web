@@ -671,6 +671,17 @@ export interface MaritalStatus {
   description?: string;
   isActive: boolean;
   companyName?: string;
+
+  regionName?: string;
+  userId: Number;
+}
+export interface AccountType {
+  accountTypeId: number;
+  accountType1: string;
+  companyId: number;
+  regionId: number;
+  isActive: boolean;
+
   regionName?: string;
   userId: Number;
 }
@@ -683,6 +694,7 @@ export interface CompanyNewsCategory {
   userId: number;
   companyName?: string;
   regionName?: string;
+ 
 }
 
 @Injectable({
@@ -743,6 +755,13 @@ export class AdminService {
   getCompanies(params?: any, userId?: number): Observable<Company[]> {
     return this.getAll<Company>('UserManagement/GetCompany?userId=' + userId, params);
   }
+
+getAccountTypesByCompanyRegion(companyId: number, regionId: number, params?: any): Observable<AccountType[]> {
+  return this.getAll<AccountType>(
+    'MasterData/account-type-by-company-region?companyId=' + companyId + '&regionId=' + regionId,
+    params
+  );
+}
 
   getCompanyById(id: number): Observable<Company> {
     return this.getById<Company>('UserManagement/GetCompanyById', id);
@@ -2215,7 +2234,42 @@ export class AdminService {
       `${this.baseUrl}/MasterData/GetDepartmentsForDropdown?companyId=${companyId}&regionId=${regionId}`
     );
   }
-  // ================= Recruitment Notice Period =================
+  // ================= Recruitment Notice Period ==========
+  
+
+  getRecruitmentNoticePeriodList(userId: number) {
+    return this.http.get(`${this.baseUrl}/MasterData/recruitmentnoticeperiod-list?userId=${userId}`);
+  }
+
+  createRecruitmentNoticePeriod(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/CreateRecruitmentNoticePeriod`, data);
+  }
+
+  updateRecruitmentNoticePeriod(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/UpdateRecruitmentNoticePeriod`, data);
+  }
+
+  deleteRecruitmentNoticePeriod(id: number) {
+    return this.http.post(`${this.baseUrl}/MasterData/DeleteRecruitmentNoticePeriod?id=${id}`, {});
+  }
+
+  getAccountTypes(userId: number) {
+    return this.http.get(`${this.baseUrl}/MasterData/account-type-list?userId=${userId}`);
+  }
+
+  createAccountType(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/CreateAccountType`, data);
+  }
+
+  updateAccountType(data: any) {
+    return this.http.post(`${this.baseUrl}/MasterData/UpdateAccountType`, data);
+  }
+
+  deleteAccountType(id: number) {
+    return this.http.post(`${this.baseUrl}/MasterData/DeleteAccountType?id=${id}`, {});
+  }
+
+
 
   getRecruitmentNoticePeriodList(userId: number) {
     return this.http.get(`${this.baseUrl}/MasterData/recruitmentnoticeperiod-list?userId=${userId}`);
@@ -2319,4 +2373,5 @@ deleteCompanyNewsCategory(id: number) {
 getCategoriesByCompanyRegion(companyId: number, regionId: number) {
   return this.http.get(`${this.baseUrl}/MasterData/companynewscategory-by-company-region?companyId=${companyId}&regionId=${regionId}`);
 }
+
 }
