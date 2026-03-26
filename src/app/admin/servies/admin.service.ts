@@ -407,6 +407,7 @@ export interface Relationship {
   isActive: boolean;
 }
 export interface MenuItem {
+  menuId?: number; 
   label: string;           // <-- what UI expects
   link?: string;
   icon?: string;
@@ -2238,6 +2239,13 @@ export class AdminService {
   // =============================
   // GET EMPLOYEES
   // =============================
+
+
+getPermission(userId: number, menuId: number, action: string) {
+  return this.http.get<boolean>(
+    `${this.baseUrl}/Employee/GetPermission?userId=${userId}&menuId=${menuId}&action=${action}`
+  );
+}
   getEmployees(companyId: number, regionId: number) {
 
     let params = new HttpParams()
